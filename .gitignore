@@ -2,3 +2,6 @@
 **/bin
 **/obj
 database.sqlite
+
+dotnet.sln
+dotnet.sln.DotSettings.user
