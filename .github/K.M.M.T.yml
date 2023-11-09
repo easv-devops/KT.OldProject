@@ -29,4 +29,4 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run tests once API is running
-        run: cd Tests && sleep 60 && dotnet test
+        run: cd test && sleep 60 && dotnet test
