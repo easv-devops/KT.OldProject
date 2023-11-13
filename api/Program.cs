@@ -46,8 +46,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseSecurityHeaders();
 
-app.UseSpaStaticFiles();
-app.UseSpa(conf => { conf.Options.SourcePath = frontEndRelativePath; });
+//app.UseSpaStaticFiles();
+//app.UseSpa(conf => { conf.Options.SourcePath = frontEndRelativePath; });
 
 app.MapControllers();
 app.UseMiddleware<JwtBearerHandler>();

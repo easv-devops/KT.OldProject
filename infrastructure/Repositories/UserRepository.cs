@@ -28,7 +28,7 @@ RETURNING
     ;
 ";
         using var connection = _dataSource.OpenConnection();
-        return connection.QueryFirst<User>(sql, new { fullName, street, zip, email,  admin });
+        return connection.QueryFirst<User>(sql, new { fullName, street, zip, email,admin });
     }
 
     public User? GetById(int id)
