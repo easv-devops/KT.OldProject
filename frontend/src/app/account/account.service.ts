@@ -1,11 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import {environment} from "../../environments/environment.prod";
 
 export interface User {
     id: number;
     fullName: string;
     email: string;
-    avatarUrl: string | null;
     isAdmin: boolean;
 }
 
@@ -16,9 +16,10 @@ export interface Credentials {
 
 export interface Registration {
     fullName: string;
-    email: String;
+    address: string;
+    zipcode: number;
+    email: string;
     password: string;
-    avatarUrl: string | null,
 }
 
 @Injectable()
@@ -31,9 +32,5 @@ export class AccountService {
 
     login(value: Credentials) {
         return this.http.post<{ token: string }>('/api/account/login', value);
-    }
-
-    register(value: Registration) {
-        return this.http.post<any>('/api/account/register', value);
     }
 }

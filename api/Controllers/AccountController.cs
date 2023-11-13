@@ -35,7 +35,7 @@ public class AccountController : ControllerBase
     [Route("/api/account/register")]
     public IActionResult Register([FromBody] RegisterCommandModel model)
     {
-        var user = _service.Register(model);
+        _service.Register(model);
         return Created();
     }
 

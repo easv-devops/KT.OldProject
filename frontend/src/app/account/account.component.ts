@@ -17,11 +17,6 @@ import { AccountService, User } from "./account.service";
           </ion-item>
 
           <ion-item>
-            <ion-img [src]="account.avatarUrl"></ion-img>
-            <ion-input label="Avatar URL" [value]="account.avatarUrl" [readonly]="true"></ion-input>
-          </ion-item>
-
-          <ion-item>
             <ion-toggle [checked]="account.isAdmin">Administrator</ion-toggle>
           </ion-item>
         </ion-list>

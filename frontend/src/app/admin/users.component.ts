@@ -11,9 +11,6 @@ import { TokenService } from "src/services/token.service";
       <ion-button (click)="logout()">Logout</ion-button>
       <ion-list [inset]="true">
         <ion-item [id]="'card_'+user.id" *ngFor="let user of users$ | async">
-          <ion-avatar slot="start">
-            <img [src]="user.avatarUrl">
-          </ion-avatar>
           <ion-label>
             <h2>{{user.fullName}}</h2>
             <p>Email: {{user.email}}</p>
