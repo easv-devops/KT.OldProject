@@ -4,6 +4,7 @@ using infrastructure.Repositories;
 using Microsoft.Extensions.Logging;
 using Service;
 using service.Models.Command;
+using PasswordHash = Service.PasswordHash;
 
 namespace service.Services;
 
@@ -26,7 +27,7 @@ public class AccountService
         try
         {
             var passwordHash = _passwordHashRepository.GetByEmail(model.Email);
-            var hashAlgorithm = PasswordHashAlgorithm.Create(passwordHash.Algorithm);
+            var hashAlgorithm = new PasswordHash();
             var isValid = hashAlgorithm.VerifyHashedPassword(model.Password, passwordHash.Hash, passwordHash.Salt);
             if (isValid) return _userRepository.GetById(passwordHash.UserId);
         }
@@ -40,7 +41,7 @@ public class AccountService
 
     public User Register(RegisterCommandModel model)
     {
-        var hashAlgorithm = PasswordHashAlgorithm.Create();
+        var hashAlgorithm = new PasswordHash();
         var salt = hashAlgorithm.GenerateSalt();
         var hash = hashAlgorithm.HashPassword(model.Password, salt);
         var user = _userRepository.Create(model.FullName, model.Street,model.Zip, model.Email);
