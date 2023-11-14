@@ -47,47 +47,5 @@ WHERE id = @id;
         using var connection = _dataSource.OpenConnection();
         return connection.QueryFirstOrDefault<User>(sql, new { id });
     }
-
-    public IEnumerable<User> GetByIds(IEnumerable<int> ids)
-    {
-        const string sql = $@"
-SELECT
-   id as {nameof(User.Id)},
-    full_name as {nameof(User.FullName)},
-    street as {nameof(User.Street)},
-    zip as {nameof(User.Zip)},
-    email as {nameof(User.Email)},
-    admin as {nameof(User.IsAdmin)}
-FROM users
-WHERE id IN @ids;
-";
-        using var connection = _dataSource.OpenConnection();
-        return connection.Query<User>(sql, new { ids });
-    }
-
-    public IEnumerable<User> GetAll()
-    {
-        const string sql = $@"
-SELECT
-   id as {nameof(User.Id)},
-    full_name as {nameof(User.FullName)},
-    street as {nameof(User.Street)},
-    zip as {nameof(User.Zip)},
-    email as {nameof(User.Email)},
-    admin as {nameof(User.IsAdmin)}
-FROM users
-";
-        using var connection = _dataSource.OpenConnection();
-        return connection.Query<User>(sql);
-    }
-
-    public int Count()
-    {
-        const string sql = $@"
-SELECT count(*)
-FROM users
-";
-        using var connection = _dataSource.OpenConnection();
-        return connection.ExecuteScalar<int>(sql);
-    }
+    
 }

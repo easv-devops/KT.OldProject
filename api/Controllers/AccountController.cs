@@ -38,14 +38,4 @@ public class AccountController : ControllerBase
         _service.Register(model);
         return Created();
     }
-
-    [RequireAuthentication]
-    [HttpGet]
-    [Route("/api/account/whoami")]
-    public IActionResult WhoAmI()
-    {
-        var data = HttpContext.GetSessionData();
-        var user = _service.Get(data);
-        return Ok(user);
-    }
 }

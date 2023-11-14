@@ -49,8 +49,4 @@ public class AccountService
         return user;
     }
     
-    public User? Get(SessionData data)
-    {
-        return _userRepository.GetById(data.UserId);
-    }
 }

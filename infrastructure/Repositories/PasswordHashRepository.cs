@@ -38,15 +38,5 @@ VALUES (@userId, @hash, @salt, @algorithm)
         using var connection = _dataSource.OpenConnection();
         connection.Execute(sql, new { userId, hash, salt, algorithm });
     }
-
-    public void Update(int userId, string hash, string salt, string algorithm)
-    {
-        const string sql = $@"
-UPDATE password_hash
-SET hash = @hash, salt = @salt, algorithm = @algorithm
-WHERE user_id = @userId
-";
-        using var connection = _dataSource.OpenConnection();
-        connection.Execute(sql, new { userId, hash, salt, algorithm });
-    }
+    
 }
