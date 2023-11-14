@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {TabsComponent} from './tabs.component';
-import {HomeComponent} from './posts/home.component';
+import {HomeComponent} from './home.component';
 
 import {AccountComponent} from './account/account.component';
 import {LoginComponent} from './account/login.component';

@@ -16,11 +16,10 @@ import { HeaderComponent } from './header.component';
 import { RegisterComponent } from './account/register.component';
 import { LoginComponent } from './account/login.component';
 import { AccountComponent } from './account/account.component';
-import { HomeComponent } from './posts/home.component';
+import { HomeComponent } from './home.component';
 import { UsersComponent } from './admin/users.component';
 import { AuthenticatedGuard } from './guards';
 import { AccountService } from './account/account.service';
-import { HomeService } from './posts/home.service';
 
 
 @NgModule({
@@ -48,7 +47,6 @@ import { HomeService } from './posts/home.service';
     TokenService,
     AuthenticatedGuard,
     AccountService,
-    HomeService,
 
   ],
   bootstrap: [AppComponent],
