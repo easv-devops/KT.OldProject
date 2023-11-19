@@ -26,6 +26,10 @@ if (builder.Environment.IsProduction())
 builder.Services.AddSingleton<UserRepository>();
 builder.Services.AddSingleton<PasswordHashRepository>();
 builder.Services.AddSingleton<AccountService>();
+builder.Services.AddSingleton<AvatarService>();
+builder.Services.AddSingleton<AvatarRepository>();
+
+
 builder.Services.AddJwtService();
 builder.Services.AddSwaggerGenWithBearerJWT();
 

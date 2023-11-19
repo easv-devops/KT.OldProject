@@ -1,9 +1,9 @@
 
 
-DROP TABLE IF EXISTS followers;
 DROP TABLE IF EXISTS password_hash;
-DROP TABLE IF EXISTS posts;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS avatar;
+
 
 create table users
 (
@@ -17,7 +17,20 @@ create table users
 
 INSERT INTO users (full_name, street, zip,email,  admin)
 VALUES ('Joe Doe', 'A vej', '6710','test@example.com', true);
-VALUES ('Annaliese Woodley', 'awoodley4@reddit.com', 'https://robohash.org/veritatisetenim.png?size=50x50&set=set1');
+
+
+
+create table avatar
+(
+    avatar_id         SERIAL PRIMARY KEY,
+    avatar_name  VARCHAR(50)  NOT NULL,
+    price        integer   not NULL
+    );
+
+INSERT INTO avatar (avatar_name,price)
+VALUES ('Nummer1', 10);
+
+
 
 
 create table password_hash
