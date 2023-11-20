@@ -3,6 +3,8 @@
 DROP TABLE IF EXISTS password_hash;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS avatar;
+DROP TABLE IF EXISTS ordre;
+DROP TABLE IF EXISTS customer_buy;
 
 
 create table users
@@ -22,7 +24,7 @@ VALUES ('Joe Doe', 'A vej', '6710','test@example.com', true);
 
 create table avatar
 (
-    avatar_id         SERIAL PRIMARY KEY,
+    avatar_id     SERIAL PRIMARY KEY,
     avatar_name  VARCHAR(50)  NOT NULL,
     price        integer   not NULL
     );
@@ -30,7 +32,24 @@ create table avatar
 INSERT INTO avatar (avatar_name,price)
 VALUES ('Nummer1', 10);
 
+create table ordre
+(
+    order_id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users (id)
+);
+INSERT INTO ordre (user_id)
+VALUES (1);
 
+
+create table customer_buy
+(
+    customer_buy_id SERIAL PRIMARY KEY,
+    order_id INTEGER NOT NUll,
+    avatar_id INTEGER NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES ordre (order_id),
+    FOREIGN KEY (avatar_id) REFERENCES avatar (avatar_id)
+);
 
 
 create table password_hash
