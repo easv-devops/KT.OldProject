@@ -4,15 +4,10 @@ import { User, HomeService } from './products.service';
 
 @Component({
   template: `
-    <app-title [title]="'Products'"></app-title>
-
-    <ion-content>
-
-      <ion-label> spidd up</ion-label>
 
 
-    </ion-content>
-    <ion-label> spidd up</ion-label>
+
+
 
 
   `

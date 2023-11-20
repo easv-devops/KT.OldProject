@@ -4,11 +4,11 @@ import { Component } from "@angular/core";
   template: `
       <ion-tabs>
           <ion-tab-bar slot="bottom">
-              <ion-tab-button tab="Products">
+              <ion-tab-button tab="products">
                   <ion-icon name="reader-outline"></ion-icon>
                   Products
               </ion-tab-button>
-              <ion-tab-button tab="Cart">
+              <ion-tab-button tab="cart">
                   <ion-icon name="cart-outline"></ion-icon>
                   Cart
               </ion-tab-button>

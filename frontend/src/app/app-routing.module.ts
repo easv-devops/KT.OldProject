@@ -7,6 +7,7 @@ import {LoginComponent} from './account/login.component';
 import {RegisterComponent} from './account/register.component';
 import {UsersComponent} from './admin/users.component';
 import {AuthenticatedGuard} from './guards';
+import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,11 @@ const routes: Routes = [
         component: UsersComponent,
         canActivate: [AuthenticatedGuard]
       },
+      {
+        path: 'cart',
+        component: CartComponent,
+        canActivate: [AuthenticatedGuard]
+      }
     ]
   }
 ];
