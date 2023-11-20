@@ -1,8 +1,7 @@
 import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {TabsComponent} from './tabs.component';
-import {HomeComponent} from './posts/home.component';
-
+import {ProductsComponent} from './products/products.component';
 import {AccountComponent} from './account/account.component';
 import {LoginComponent} from './account/login.component';
 import {RegisterComponent} from './account/register.component';
@@ -15,8 +14,8 @@ const routes: Routes = [
     component: TabsComponent,
     children: [
       {
-        path: 'home',
-        component: HomeComponent,
+        path: 'products',
+        component: ProductsComponent,
         canActivate: [AuthenticatedGuard]
       },
 

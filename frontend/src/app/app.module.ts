@@ -16,11 +16,11 @@ import { HeaderComponent } from './header.component';
 import { RegisterComponent } from './account/register.component';
 import { LoginComponent } from './account/login.component';
 import { AccountComponent } from './account/account.component';
-import { HomeComponent } from './posts/home.component';
+import { ProductsComponent } from './products/products.component';
 import { UsersComponent } from './admin/users.component';
 import { AuthenticatedGuard } from './guards';
 import { AccountService } from './account/account.service';
-import { HomeService } from './posts/home.service';
+import { HomeService } from './products/products.service';
 
 
 @NgModule({
@@ -28,7 +28,7 @@ import { HomeService } from './posts/home.service';
     AppComponent,
     HeaderComponent,
     TabsComponent,
-    HomeComponent,
+    ProductsComponent,
     UsersComponent,
     AccountComponent,
     RegisterComponent,
