@@ -50,6 +50,8 @@ create table customer_buy
     FOREIGN KEY (order_id) REFERENCES ordre (order_id),
     FOREIGN KEY (avatar_id) REFERENCES avatar (avatar_id)
 );
+INSERT INTO customer_buy (order_id, avatar_id) 
+VALUES (1,1); 
 
 
 create table password_hash
