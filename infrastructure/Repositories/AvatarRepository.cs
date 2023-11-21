@@ -59,6 +59,14 @@ RETURNING *";
         }
     }
     
-    
+    public Avatar CheckIfNameExist(string avatar_name)    {
+
+        var sql = $@"SELECT * FROM avatar WHERE avatar_name = @avatar_name;";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return conn.QueryFirstOrDefault<Avatar>(sql, new { avatar_name });
+        }
+    }
     
 }

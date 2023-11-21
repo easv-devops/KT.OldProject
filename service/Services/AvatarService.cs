@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.Design;
 using infrastructure.DataModels;
 using infrastructure.Repositories;
 
@@ -33,18 +34,22 @@ public class AvatarService
     
     public Avatar CreateAvatar(string avatar_name, int price)
     {
-        try
-        {
-            return _avatarRepository.CreateAvatar(avatar_name, price);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw new ValidationException("Error in creating an Avatar");
-        }
-       
-    }
 
+        if (!ReferenceEquals(_avatarRepository.CheckIfNameExist(avatar_name), null))
+            throw new ValidationException("Already exists");
+        
+        try
+            {
+                return _avatarRepository.CreateAvatar(avatar_name, price);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw new ValidationException("Error in creating an Avatar");
+            }
+        }
+        
+    
     
     public Avatar UpdateAvatar(int avatar_id, string avatar_name, int price)
     {
@@ -80,11 +85,6 @@ public class AvatarService
         
         
     }
-    
-    
-    
-    
-    
     
     
     

@@ -1,9 +1,9 @@
 
-
 DROP TABLE IF EXISTS password_hash;
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS customer_buy;
 DROP TABLE IF EXISTS avatar;
-
+DROP TABLE IF EXISTS ordre;
+DROP TABLE IF EXISTS users;
 
 create table users
 (
