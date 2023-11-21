@@ -4,7 +4,8 @@ import { firstValueFrom } from "rxjs";
 import { ToastController } from "@ionic/angular";
 import { TokenService } from "src/services/token.service";
 import { Router } from "@angular/router";
-import { AccountService, Credentials } from "./account.service";
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../environments/environment.prod";
 
 @Component({
   template: `
@@ -59,7 +60,7 @@ export class LoginComponent {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly service: AccountService,
+    private readonly http: HttpClient,
     private readonly router: Router,
     private readonly toast: ToastController,
     private readonly token: TokenService
@@ -67,7 +68,7 @@ export class LoginComponent {
 
   async submit() {
     if (this.form.invalid) return;
-    const { token } = await firstValueFrom(this.service.login(this.form.value as Credentials));
+    const { token } = await firstValueFrom(this.http.post<{ token: string }>(environment.baseUrl + '/api/account/login', this.form.getRawValue()));
     this.token.setToken(token);
 
     this.router.navigateByUrl('/home');
