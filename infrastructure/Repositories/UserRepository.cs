@@ -27,8 +27,10 @@ RETURNING
     admin as {nameof(User.IsAdmin)}
     ;
 ";
-        using var connection = _dataSource.OpenConnection();
-        return connection.QueryFirst<User>(sql, new { fullName, street, zip, email,admin });
+        using (var connection = _dataSource.OpenConnection())
+        {
+            return connection.QueryFirst<User>(sql, new { fullName, street, zip, email, admin });
+        }
     }
 
     public User? GetById(int id)
@@ -44,8 +46,10 @@ SELECT
 FROM users
 WHERE id = @id;
 ";
-        using var connection = _dataSource.OpenConnection();
-        return connection.QueryFirstOrDefault<User>(sql, new { id });
+        using (var connection = _dataSource.OpenConnection())
+        {
+            return connection.QueryFirstOrDefault<User>(sql, new { id });
+        }
     }
 
     public IEnumerable<User> GetByIds(IEnumerable<int> ids)
