@@ -15,7 +15,7 @@ public class OrdreRepository
 
     public IEnumerable<Ordre> GetAllOrdre()
     {
-        var sql = @"SELECT * FROM avatar ORDER BY ordre_id;";
+        var sql = @"SELECT * FROM avatar ORDER BY ordre.id;";
 
         using (var conn = _dataSource.OpenConnection())
         {
@@ -34,23 +34,23 @@ public class OrdreRepository
         }
     }
 
-    public Ordre UpdateOrdre(int ordre_id, int user_id)
+    public Ordre UpdateOrdre(int id, int user_id)
     {
-        var sql = @"Update ordre Set user_id = @user_id WHERE ordre_id = @ordre_id RETURNING *;";
+        var sql = @"Update ordre Set user_id = @user_id WHERE ordre.id = @ordre.id RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<Ordre>(sql, new { ordre_id, user_id});
+            return conn.QueryFirst<Ordre>(sql, new { id, user_id});
         }
     }
 
-    public void DeleteOrdre(int ordre_id)
+    public void DeleteOrdre(int id)
     {
-        var sql = @"DELETE FROM ordre WHERE ordre_id = @ordre_id RETURNING *;";
+        var sql = @"DELETE FROM ordre WHERE id = @id RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            conn.QueryFirst<Ordre>(sql, new { ordre_id});
+            conn.QueryFirst<Ordre>(sql, new { id});
         }
     }
 }

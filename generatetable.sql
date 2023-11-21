@@ -34,7 +34,7 @@ VALUES ('Nummer1', 10);
 
 create table ordre
 (
-    order_id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
@@ -44,7 +44,7 @@ VALUES (1);
 
 create table customer_buy
 (
-    customer_buy_id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     order_id INTEGER NOT NUll,
     avatar_id INTEGER NOT NULL,
     FOREIGN KEY (order_id) REFERENCES ordre (order_id),

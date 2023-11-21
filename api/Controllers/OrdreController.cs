@@ -36,16 +36,16 @@ public class OrdreController : Controller
     }
 
     [HttpPut]
-    [Route("/ordre/{ordre_id}")]
-    public Object putOrdre([FromBody] int ordre_id, [FromBody] Ordre ordre)
+    [Route("/ordre/{id}")]
+    public Object putOrdre([FromBody] int id, [FromBody] Ordre ordre)
     {
-        return _orderService.UpdateOrdre(ordre_id, ordre.user_id);
+        return _orderService.UpdateOrdre(id, ordre.user_id);
     }
 
     [HttpDelete]
-    [Route("/ordre/{ordre_id}")]
-    public void deleteOrdre([FromRoute] int ordre_id)
+    [Route("/ordre/{id}")]
+    public void deleteOrdre([FromRoute] int id)
     {
-        _orderService.deleteOrdre(ordre_id);
+        _orderService.deleteOrdre(id);
     }
 }
