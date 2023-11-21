@@ -28,7 +28,10 @@ builder.Services.AddSingleton<PasswordHashRepository>();
 builder.Services.AddSingleton<AccountService>();
 builder.Services.AddSingleton<AvatarService>();
 builder.Services.AddSingleton<AvatarRepository>();
-
+builder.Services.AddSingleton<CustomerBuyRepository>();
+builder.Services.AddSingleton<CustomerBuyService>();
+builder.Services.AddSingleton<OrdreRepository>();
+builder.Services.AddSingleton<OrdreService>();
 
 builder.Services.AddJwtService();
 builder.Services.AddSwaggerGenWithBearerJWT();
