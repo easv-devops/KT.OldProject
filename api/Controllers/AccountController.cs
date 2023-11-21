@@ -33,9 +33,8 @@ public class AccountController : ControllerBase
 
     [HttpPost]
     [Route("/api/account/register")]
-    public IActionResult Register([FromBody] RegisterCommandModel model)
+    public object Register([FromBody] RegisterCommandModel model)
     {
-        _service.Register(model);
-        return Created();
+      return _service.Register(model);
     }
 }
