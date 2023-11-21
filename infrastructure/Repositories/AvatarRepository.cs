@@ -39,7 +39,8 @@ public class AvatarRepository
     public Avatar UpdateAvatar(int avatar_id, string avatar_name, int price)
     {
         var sql =
-            @"UPDATE avatar SET avatar_name = @avatar_name, price = @price RETURNING *;";
+            @"UPDATE avatar SET avatar_name = @avatar_name, price = @price where avatar_id = @avatar_id
+RETURNING *";
 
         using (var conn = _dataSource.OpenConnection())
         {
