@@ -21,8 +21,8 @@ SELECT
     hash as {nameof(PasswordHash.Hash)},
     salt as {nameof(PasswordHash.Salt)},
     algorithm as {nameof(PasswordHash.Algorithm)}
-FROM password_hash
-JOIN users ON password_hash.user_id = users.id
+FROM account.password_hash
+JOIN account.users ON account.password_hash.user_id = account.users.id
 WHERE email = @email;
 ";
         using var connection = _dataSource.OpenConnection();
@@ -32,7 +32,7 @@ WHERE email = @email;
     public void Create(int userId, string hash, string salt, string algorithm)
     {
         const string sql = $@"
-INSERT INTO password_hash (user_id, hash, salt, algorithm)
+INSERT INTO account.password_hash (user_id, hash, salt, algorithm)
 VALUES (@userId, @hash, @salt, @algorithm)
 ";
         using var connection = _dataSource.OpenConnection();

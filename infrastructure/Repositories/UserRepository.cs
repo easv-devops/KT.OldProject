@@ -13,14 +13,14 @@ public class UserRepository
         _dataSource = dataSource;
     }
 
-    public User Create(string fullName, string street, int zip,string email,  bool admin = false)
+    public User Create(string full_name, string street, int zip,string email,  bool admin = false)
     {
         const string sql = $@"
-INSERT INTO users (full_name, street,zip,email,  admin)
-VALUES (@fullName, @street, @zip,@email,  @admin)
+INSERT INTO account.users (full_name, street, zip, email, admin)
+VALUES (@full_name, @street, @zip,@email, @admin)
 RETURNING
     id as {nameof(User.Id)},
-    full_name as {nameof(User.FullName)},
+    full_name as {nameof(User.full_name)},
     street as {nameof(User.Street)},
     zip as {nameof(User.Zip)},
     email as {nameof(User.Email)},
@@ -29,7 +29,7 @@ RETURNING
 ";
         using (var connection = _dataSource.OpenConnection())
         {
-            return connection.QueryFirst<User>(sql, new { fullName, street, zip, email, admin });
+            return connection.QueryFirst<User>(sql, new { full_name, street, zip, email, admin });
         }
     }
 
@@ -38,12 +38,12 @@ RETURNING
         const string sql = $@"
 SELECT
    id as {nameof(User.Id)},
-    full_name as {nameof(User.FullName)},
+    full_name as {nameof(User.full_name)},
     street as {nameof(User.Street)},
     zip as {nameof(User.Zip)},
     email as {nameof(User.Email)},
     admin as {nameof(User.IsAdmin)}
-FROM users
+FROM account.users
 WHERE id = @id;
 ";
         using (var connection = _dataSource.OpenConnection())
