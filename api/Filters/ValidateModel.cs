@@ -6,7 +6,7 @@ namespace api.Filters;
 
 public class ValidateModel : ActionFilterAttribute
 {
-    /*
+    
     public override void OnActionExecuting(ActionExecutingContext context)
     {
         if (context.ModelState.IsValid)
@@ -23,5 +23,5 @@ public class ValidateModel : ActionFilterAttribute
             StatusCode = 400
         };
     }
-    */
+    
 }

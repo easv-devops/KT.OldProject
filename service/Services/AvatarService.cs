@@ -1,4 +1,5 @@
-﻿using infrastructure.DataModels;
+﻿using System.ComponentModel.DataAnnotations;
+using infrastructure.DataModels;
 using infrastructure.Repositories;
 
 namespace service.Services;
@@ -15,24 +16,69 @@ public class AvatarService
     
     public IEnumerable<Avatar> GetAllAvatars()
     {
-        return _avatarRepository.GetAllAvatars();
+        try
+        {
+            return _avatarRepository.GetAllAvatars();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new ValidationException("Error in getting all  Avatars");
+        }
+        
+        
+       
     }
     
     
     public Avatar CreateAvatar(string avatar_name, int price)
     {
-        return _avatarRepository.CreateAvatar(avatar_name, price);
+        try
+        {
+            return _avatarRepository.CreateAvatar(avatar_name, price);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new ValidationException("Error in creating an Avatar");
+        }
+       
     }
 
     
     public Avatar UpdateAvatar(int avatar_id, string avatar_name, int price)
     {
-        return _avatarRepository.UpdateAvatar(avatar_id, avatar_name, price);
+      
+        try
+        {
+            return _avatarRepository.UpdateAvatar(avatar_id, avatar_name, price);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new ValidationException("Error in updating an Avatar");
+        }
+        
+        
     }
     
     public void deleteAvatar(int avatar_id)
     {
-        _avatarRepository.DeleteAvatar(avatar_id);
+        try
+        {
+             _avatarRepository.DeleteAvatar(avatar_id);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new ValidationException("Error in deleting an Avatar");
+        }
+        
+        
+        
+        
+        
+        
     }
     
     
