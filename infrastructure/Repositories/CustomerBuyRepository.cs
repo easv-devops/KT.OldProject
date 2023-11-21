@@ -37,7 +37,7 @@ public class CustomerBuyRepository
     public CustomerBuy UpdateCustomerBuy(int customer_buy_id, int order_id, int avatar_id)
     {
         var sql =
-            @"UPDATE customer_buy SET order_id = @order_id, avatar_id = @avatar_id RETURNING *;";
+            @"UPDATE customer_buy SET order_id = @order_id, avatar_id = @avatar_id WHERE customer_buy_id = @customer_buy_id RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
