@@ -22,9 +22,9 @@ public class OrdreService
         return _ordreRepository.CreateOrdre(user_id);
     }
 
-    public Ordre UpdateOrdre(int ordre_id, int user_id)
+    public Ordre UpdateOrdre(int id, int user_id)
     {
-        return _ordreRepository.UpdateOrdre(ordre_id, user_id);
+        return _ordreRepository.UpdateOrdre(id, user_id);
     }
 
     public void deleteOrdre(int ordre_id)

@@ -35,10 +35,10 @@ public class CustomerBuyController : Controller
     }
 
     [HttpPut]
-    [Route("/customerbuy{customer_buy_id}")]
-    public object putCustomerBuy([FromBody] int customer_buy_id, [FromBody] CustomerBuy customer_buy)
+    [Route("/customerbuy{id}")]
+    public object putCustomerBuy([FromBody] int id, [FromBody] CustomerBuy customerBuy)
     {
-        return _customerBuyService.UpdateCustomerBuy(customer_buy_id, customer_buy.order_id, customer_buy.avatar_id);
+        return _customerBuyService.UpdateCustomerBuy(id, customerBuy.order_id, customerBuy.avatar_id);
     }
 
     [HttpDelete]

@@ -15,7 +15,7 @@ public class OrdreRepository
 
     public IEnumerable<Ordre> GetAllOrdre()
     {
-        var sql = @"SELECT * FROM avatar ORDER BY ordre.id;";
+        var sql = @"SELECT * FROM ordre ORDER BY id;";
 
         using (var conn = _dataSource.OpenConnection())
         {
@@ -36,7 +36,7 @@ public class OrdreRepository
 
     public Ordre UpdateOrdre(int id, int user_id)
     {
-        var sql = @"Update ordre Set user_id = @user_id WHERE ordre.id = @ordre.id RETURNING *;";
+        var sql = @"Update ordre Set user_id = @user_id WHERE id = @id RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
