@@ -8,10 +8,7 @@ import { Component } from "@angular/core";
                   <ion-icon name="home-outline"></ion-icon>
                   Home
               </ion-tab-button>
-              <ion-tab-button tab="posts">
-                  <ion-icon name="library-outline"></ion-icon>
-                  Posts
-              </ion-tab-button>
+
               <ion-tab-button tab="account">
                   <ion-icon name="person-outline"></ion-icon>
                   Account

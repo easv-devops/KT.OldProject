@@ -3,8 +3,3 @@ export interface User {
   fullName: string;
   email: string;
 }
-
-export class ResponseDto<T> {
-  responseData?: T;
-  messageToClient?: string;
-}
