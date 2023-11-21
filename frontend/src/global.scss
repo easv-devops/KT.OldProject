@@ -24,3 +24,27 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+ion-item {
+  --min-height: 100px;
+  //-webkit-text-fill-color: blue;
+
+
+}
+
+/*
+
+.item-md ion-thumbnail ion-img,
+
+.item-md ion-thumbnail img,
+
+.item ion-thumbnail ion-img,
+
+.item ion-thumbnail img {
+
+  width: 100px;
+
+  height: 100px;
+
+}
+*/
