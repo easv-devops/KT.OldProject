@@ -1,4 +1,5 @@
-﻿using infrastructure.DataModels;
+﻿using api.TransferModels;
+using infrastructure.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using service.Services;
 
@@ -15,17 +16,14 @@ public class OrderController : Controller
 
     [HttpGet]
     [Route("/order/all")]
-    public IEnumerable<Order> GetAllOrder()
+    public ResponseDto GetAllOrder()
     {
-        try
+        return new ResponseDto()
         {
-            return _orderService.GetAllOrder();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw new Exception("Error when getting all Ordre", e);
-        }
+            MessageToClient = "Succesfully got all Order",
+            ResponseData = _orderService.GetAllOrder()
+        };
+        
     }
 
     [HttpPost]
@@ -34,14 +32,7 @@ public class OrderController : Controller
     {
         return _orderService.CreateOrder(order.user_id);
     }
-
-    [HttpPut]
-    [Route("/order/{id}")]
-    public Object putOrder([FromBody] int id, [FromBody] Order order)
-    {
-        return _orderService.UpdateOrder(id, order.user_id);
-    }
-
+    
     [HttpDelete]
     [Route("/order/{id}")]
     public void deleteOrder([FromRoute] int id)

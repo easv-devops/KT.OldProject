@@ -1,4 +1,5 @@
-﻿using infrastructure.DataModels;
+﻿using api.TransferModels;
+using infrastructure.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using service.Services;
 namespace api.Controllers;
@@ -14,8 +15,12 @@ public class CustomerBuyController : Controller
 
     [HttpGet]
     [Route("/customerbuy/all")]
-    public IEnumerable<CustomerBuy> GetAllCustomerBuy()
+    public ResponseDto GetAllCustomerBuy()
     {
+        return new ResponseDto()
+        {
+            MessageToClient = "Succesfully got "
+        }
         try
         {
             return _customerBuyService.GetAllCustomerBuy();
@@ -33,14 +38,7 @@ public class CustomerBuyController : Controller
     {
         return _customerBuyService.CreateCustomerBuy(customerbuy.order_id, customerbuy.avatar_id);
     }
-
-    [HttpPut]
-    [Route("/customerbuy{id}")]
-    public object putCustomerBuy([FromBody] int id, [FromBody] CustomerBuy customerBuy)
-    {
-        return _customerBuyService.UpdateCustomerBuy(id, customerBuy.order_id, customerBuy.avatar_id);
-    }
-
+    
     [HttpDelete]
     [Route("/customerbuy{customer_buy}")]
     public void deleteCustomerBuy([FromBody] int customer_buy_id)
