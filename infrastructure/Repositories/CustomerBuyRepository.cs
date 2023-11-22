@@ -16,7 +16,7 @@ public class CustomerBuyRepository
     public IEnumerable<CustomerBuy> GetAllCustomerBuy()
     {
         var sql =
-            @"SELECT * FROM customer_buy ORDER BY id;";
+            @"SELECT * FROM account.customer_buy ORDER BY id;";
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.Query<CustomerBuy>(sql);
@@ -26,7 +26,7 @@ public class CustomerBuyRepository
     public CustomerBuy CreateCustomerBuy(int order_id, int avatar_id)
     {
         var sql =
-            @"INSERT INTO customer_buy (order_id, avatar_id) VALUES (@order_id, @avatar_id) RETURNING *;";
+            @"INSERT INTO account.customer_buy (order_id, avatar_id) VALUES (@order_id, @avatar_id) RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
@@ -37,7 +37,7 @@ public class CustomerBuyRepository
     public CustomerBuy UpdateCustomerBuy(int id, int order_id, int avatar_id)
     {
         var sql =
-            @"UPDATE customer_buy SET order_id = @order_id, avatar_id = @avatar_id WHERE id = @customer_buy_id RETURNING *;";
+            @"UPDATE account.customer_buy SET order_id = @order_id, avatar_id = @avatar_id WHERE id = @customer_buy_id RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
@@ -47,7 +47,7 @@ public class CustomerBuyRepository
 
     public void DeleteCustomerBuy(int customer_buy_id)
     {
-        var sql = @"DELETE FROM customer_buy WHERE customer_buy.id = @customer_buy_id RETURNING *;";
+        var sql = @"DELETE FROM account.customer_buy WHERE account.customer_buy.id = @customer_buy_id RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {

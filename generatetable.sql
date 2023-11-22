@@ -43,6 +43,7 @@ INSERT INTO account.order (user_id)
 VALUES (1);
 
 
+
 create table account.customer_buy
 (
     id SERIAL PRIMARY KEY,

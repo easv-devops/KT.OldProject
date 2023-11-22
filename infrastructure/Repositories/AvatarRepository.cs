@@ -16,7 +16,7 @@ public class AvatarRepository
     
     public IEnumerable<Avatar> GetAllAvatars()
     {
-        var sql = @"SELECT * FROM avatar ORDER BY avatar_id;";
+        var sql = @"SELECT * FROM account.avatar ORDER BY avatar_id;";
 
         using (var conn = _dataSource.OpenConnection())
         {
@@ -28,7 +28,7 @@ public class AvatarRepository
     public Avatar CreateAvatar(string avatar_name, int price)
     {
         var sql =
-            @" INSERT INTO avatar (avatar_name, price) VALUES (@avatar_name, @price) RETURNING *;";
+            @" INSERT INTO account.avatar (avatar_name, price) VALUES (@avatar_name, @price) RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
@@ -39,7 +39,7 @@ public class AvatarRepository
     public Avatar UpdateAvatar(int avatar_id, string avatar_name, int price)
     {
         var sql =
-            @"UPDATE avatar SET avatar_name = @avatar_name, price = @price where avatar_id = @avatar_id
+            @"UPDATE account.avatar SET avatar_name = @avatar_name, price = @price where avatar_id = @avatar_id
 RETURNING *";
 
         using (var conn = _dataSource.OpenConnection())
@@ -51,7 +51,7 @@ RETURNING *";
     
     public void DeleteAvatar(int avatar_id)
     {
-        var sql = @"DELETE FROM avatar WHERE avatar_id = @avatar_id RETURNING *;";
+        var sql = @"DELETE FROM account.avatar WHERE avatar_id = @avatar_id RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
@@ -61,7 +61,7 @@ RETURNING *";
     
     public Avatar CheckIfNameExist(string avatar_name)    {
 
-        var sql = $@"SELECT * FROM avatar WHERE avatar_name = @avatar_name;";
+        var sql = $@"SELECT * FROM account.avatar WHERE avatar_name = @avatar_name;";
 
         using (var conn = _dataSource.OpenConnection())
         {

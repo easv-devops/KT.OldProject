@@ -2,7 +2,7 @@
 
 namespace infrastructure.DataModels;
 
-public class Ordre
+public class Order
 {
     public int id { get; set; }
     public int user_id { get; set; }

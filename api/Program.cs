@@ -30,8 +30,8 @@ builder.Services.AddSingleton<AvatarService>();
 builder.Services.AddSingleton<AvatarRepository>();
 builder.Services.AddSingleton<CustomerBuyRepository>();
 builder.Services.AddSingleton<CustomerBuyService>();
-builder.Services.AddSingleton<OrdreRepository>();
-builder.Services.AddSingleton<OrdreService>();
+builder.Services.AddSingleton<OrderRepository>();
+builder.Services.AddSingleton<OrderService>();
 
 builder.Services.AddJwtService();
 builder.Services.AddSwaggerGenWithBearerJWT();
