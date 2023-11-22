@@ -23,18 +23,44 @@ public class AccountController : ControllerBase
 
     [HttpPost]
     [Route("/api/account/login")]
-    public IActionResult Login([FromBody] LoginCommandModel model)
+    public ResponseDto Login([FromBody] LoginCommandModel model)
     {
         var user = _service.Authenticate(model);
-        if (user == null) return Unauthorized();
+
+
+
+        if (ReferenceEquals(user, null))
+            return new ResponseDto()
+            {
+                MessageToClient = "Unauthorized ",
+                ResponseData =Unauthorized() 
+            };
+            
+        
         var token = _jwtService.IssueToken(SessionData.FromUser(user!));
-        return Ok(new { token });
+        
+        
+        return new ResponseDto()
+        {
+            MessageToClient = "Welcome "+ user.full_name,
+            ResponseData =new { token }
+        };
+        
+        
+        
     }
 
     [HttpPost]
     [Route("/api/account/register")]
-    public object Register([FromBody] RegisterCommandModel model)
+    public ResponseDto Register([FromBody] RegisterCommandModel model)
     {
-      return _service.Register(model);
+    
+        return new ResponseDto()
+        {
+            MessageToClient = "Register new user",
+            ResponseData =_service.Register(model)
+        };
+       
+     
     }
 }
