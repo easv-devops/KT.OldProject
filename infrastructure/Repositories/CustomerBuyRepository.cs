@@ -33,18 +33,7 @@ public class CustomerBuyRepository
             return conn.QueryFirst<CustomerBuy>(sql, new { order_id, avatar_id });
         }
     }
-
-    public CustomerBuy UpdateCustomerBuy(int id, int order_id, int avatar_id)
-    {
-        var sql =
-            @"UPDATE account.customer_buy SET order_id = @order_id, avatar_id = @avatar_id WHERE id = @customer_buy_id RETURNING *;";
-
-        using (var conn = _dataSource.OpenConnection())
-        {
-            return conn.QueryFirst<CustomerBuy>(sql, new {id, order_id, avatar_id});
-        }
-    }
-
+    
     public void DeleteCustomerBuy(int customer_buy_id)
     {
         var sql = @"DELETE FROM account.customer_buy WHERE account.customer_buy.id = @customer_buy_id RETURNING *;";

@@ -20,12 +20,7 @@ public class CustomerBuyService
     {
         return _customerBuyRepository.CreateCustomerBuy(order_id, avatar_id);
     }
-
-    public CustomerBuy UpdateCustomerBuy(int id, int order_id, int avatar_id)
-    {
-        return _customerBuyRepository.UpdateCustomerBuy(id, order_id, avatar_id);
-    }
-
+    
     public void deleteCustomerBuy(int customer_buy_id)
     {
         _customerBuyRepository.DeleteCustomerBuy(customer_buy_id);

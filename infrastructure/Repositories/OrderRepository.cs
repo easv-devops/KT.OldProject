@@ -33,17 +33,7 @@ public class OrderRepository
             return conn.QueryFirst<Order>(sql, new { user_id});
         }
     }
-
-    public Order UpdateOrder(int id, int user_id)
-    {
-        var sql = @"Update account.order Set user_id = @user_id WHERE id = @id RETURNING *;";
-
-        using (var conn = _dataSource.OpenConnection())
-        {
-            return conn.QueryFirst<Order>(sql, new { id, user_id});
-        }
-    }
-
+    
     public void DeleteOrder(int id)
     {
         var sql = @"DELETE FROM account.order WHERE id = @id RETURNING *;";

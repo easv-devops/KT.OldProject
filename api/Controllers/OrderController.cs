@@ -1,4 +1,6 @@
-﻿using infrastructure.DataModels;
+﻿using api.Filters;
+using api.TransferModels;
+using infrastructure.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using service.Services;
 
@@ -15,37 +17,39 @@ public class OrderController : Controller
 
     [HttpGet]
     [Route("/order/all")]
-    public IEnumerable<Order> GetAllOrder()
+    public ResponseDto GetAllOrder()
     {
-        try
+        return new ResponseDto()
         {
-            return _orderService.GetAllOrder();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw new Exception("Error when getting all Ordre", e);
-        }
+            MessageToClient = "Succesfully got all Order",
+            ResponseData = _orderService.GetAllOrder()
+        };
+        
     }
 
     [HttpPost]
+    [ValidateModel]
     [Route("/order")]
-    public object postOrder([FromBody] Order order)
+    public ResponseDto postOrder([FromBody] Order order)
     {
-        return _orderService.CreateOrder(order.user_id);
+        HttpContext.Response.StatusCode = StatusCodes.Status201Created;
+        return new ResponseDto()
+        {
+            MessageToClient = "Successfully created an order",
+            ResponseData = _orderService.CreateOrder(order.user_id)
+        };
     }
-
-    [HttpPut]
-    [Route("/order/{id}")]
-    public Object putOrder([FromBody] int id, [FromBody] Order order)
-    {
-        return _orderService.UpdateOrder(id, order.user_id);
-    }
-
+    
     [HttpDelete]
+    [ValidateModel]
     [Route("/order/{id}")]
     public void deleteOrder([FromRoute] int id)
     {
+        HttpContext.Response.StatusCode = 204;
+        new ResponseDto()
+        {
+            MessageToClient = "Succesfully deleted an order"
+        };
         _orderService.deleteOrder(id);
     }
 }
