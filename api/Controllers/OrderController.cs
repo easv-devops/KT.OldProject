@@ -1,4 +1,5 @@
-﻿using api.TransferModels;
+﻿using api.Filters;
+using api.TransferModels;
 using infrastructure.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using service.Services;
@@ -27,16 +28,28 @@ public class OrderController : Controller
     }
 
     [HttpPost]
+    [ValidateModel]
     [Route("/order")]
-    public object postOrder([FromBody] Order order)
+    public ResponseDto postOrder([FromBody] Order order)
     {
-        return _orderService.CreateOrder(order.user_id);
+        HttpContext.Response.StatusCode = StatusCodes.Status201Created;
+        return new ResponseDto()
+        {
+            MessageToClient = "Successfully created an order",
+            ResponseData = _orderService.CreateOrder(order.user_id)
+        };
     }
     
     [HttpDelete]
+    [ValidateModel]
     [Route("/order/{id}")]
     public void deleteOrder([FromRoute] int id)
     {
+        HttpContext.Response.StatusCode = 204;
+        new ResponseDto()
+        {
+            MessageToClient = "Succesfully deleted an order"
+        };
         _orderService.deleteOrder(id);
     }
 }
