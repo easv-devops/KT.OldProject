@@ -11,11 +11,8 @@ public class User
     public string password { get; set; }
 }
 
-public class ResponseUser
+public class Avatar
 {
-    public int user_id { get; set; }
-    public string full_name { get; set; }
-    public string street { get; set; }
-    public int zip { get; set; }
-    public string email { get; set; }
+    public string avatar_name { get; set; }
+    public int price { get; set; }
 }

@@ -16,7 +16,7 @@ public class Tests
     public async Task UserCanSuccessfullyBeCreated(string full_name, string street, int zip, string email, string password)
     {
         Helper.TriggerRebuild();
-        var testUser = new User()
+        var testUser = new User
         {
             full_name = full_name,
             street = street,
@@ -25,7 +25,7 @@ public class Tests
             password = password
         };
         
-        await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "account/register", testUser);
+        await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "api/account/register", testUser);
 
         await using (var conn = await Helper.DataSource.OpenConnectionAsync())
         {
