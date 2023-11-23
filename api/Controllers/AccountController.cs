@@ -1,6 +1,7 @@
 using System.Security.Authentication;
 using api.Filters;
 using api.TransferModels;
+using infrastructure.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using service;
 using service.Models.Command;
@@ -42,7 +43,7 @@ public class AccountController : ControllerBase
         
         return new ResponseDto()
         {
-            MessageToClient = "Welcome "+ user.full_name,
+            MessageToClient = "Welcome "+ user.FullName,
             ResponseData =new { token }
         };
         
@@ -60,7 +61,14 @@ public class AccountController : ControllerBase
             MessageToClient = "Register new user",
             ResponseData =_service.Register(model)
         };
-       
-     
     }
+
+    [HttpGet]
+    [Route("api/account/getinfo")]
+
+    public User GetInfo()
+    {
+        return _service.GetAccountInfo();
+    }
+    
 }

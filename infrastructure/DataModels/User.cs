@@ -3,7 +3,7 @@ namespace infrastructure.DataModels;
 public class User
 {
     public int Id { get; set; }
-    public required string full_name { get; set; }
+    public required string FullName { get; set; }
     
     public required string Street { get; set; }
     
