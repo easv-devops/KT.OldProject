@@ -54,13 +54,10 @@ public class AccountController : ControllerBase
     [Route("/api/account/register")]
     public ResponseDto Register([FromBody] RegisterCommandModel model)
     {
-    
         return new ResponseDto()
         {
             MessageToClient = "Register new user",
             ResponseData =_service.Register(model)
         };
-       
-     
     }
 }

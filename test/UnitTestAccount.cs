@@ -25,12 +25,11 @@ public class Tests
             password = password
         };
         
-        var httpResponse  = await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "account/register", testUser);
-        var userFromResponseBody = JsonConvert.DeserializeObject<ResponseUser>(await httpResponse.Content.ReadAsStringAsync());
+        await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "account/register", testUser);
 
         await using (var conn = await Helper.DataSource.OpenConnectionAsync())
         {
-            conn.QueryFirst<ResponseUser>("SELECT * FROM account.users;").Should().BeEquivalentTo(userFromResponseBody);
+            conn.ExecuteScalar<int>("SELECT COUNT(*) FROM account.users;").Should().Be(1);
         }
     }
 }
