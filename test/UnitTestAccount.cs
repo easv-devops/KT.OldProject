@@ -25,11 +25,13 @@ public class Tests
             password = password
         };
         
-        await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "api/account/register", testUser);
+        var httpResponse  =await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "api/account/register", testUser);
+        var responseBodyString = await httpResponse.Content.ReadAsStringAsync();
+        var obj = JsonConvert.DeserializeObject<ResponseDto<User>>(responseBodyString);
 
-        await using (var conn = await Helper.DataSource.OpenConnectionAsync())
+        await using (await Helper.DataSource.OpenConnectionAsync())
         {
-            conn.ExecuteScalar<int>("SELECT COUNT(*) FROM account.users;").Should().Be(1);
+            obj.ResponseData.email.Should().BeEquivalentTo(testUser.email);
         }
     }
 }

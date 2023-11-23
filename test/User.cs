@@ -16,3 +16,8 @@ public class Avatar
     public string avatar_name { get; set; }
     public int price { get; set; }
 }
+public class ResponseDto<T>
+{
+    public string MessageToClient { get; set; }
+    public T? ResponseData { get; set; }
+}
