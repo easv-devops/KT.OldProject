@@ -43,14 +43,14 @@ public class AvatarController : Controller
         {
             
             MessageToClient = "Succesfully created an Avatar",
-            ResponseData = _avatarService.CreateAvatar(avatar.avatar_name, avatar.price)
+            ResponseData = _avatarService.CreateAvatar(avatar.avatar_name, avatar.avatar_price)
         };
     }
         
 
     [HttpPut]
     [Route("/avatar/{avatar_id}")]
-    public ResponseDto putAvatar([FromRoute] int avatar_id, [FromBody] Avatar avatar)
+    public ResponseDto putAvatar([FromRoute] int id, [FromBody] Avatar avatar)
     {
 
         
@@ -58,7 +58,7 @@ public class AvatarController : Controller
         {
             
             MessageToClient = "Succesfully updated an Avatar",
-            ResponseData =  _avatarService.UpdateAvatar(avatar_id, avatar.avatar_name, avatar.price)
+            ResponseData =  _avatarService.UpdateAvatar(id, avatar.avatar_name, avatar.avatar_price)
         };
         
         
@@ -79,9 +79,4 @@ public class AvatarController : Controller
            };
         _avatarService.deleteAvatar(avatar_id);
     }
-    
-        
-  
-    
-    
 }

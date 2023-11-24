@@ -20,7 +20,7 @@ import { ProductsComponent } from './products/products.component';
 import { UsersComponent } from './admin/users.component';
 import { AuthenticatedGuard } from './guards';
 import { AccountService } from './account/account.service';
-import { HomeService } from './products/products.service';
+import { ProductsService } from './products/products.service';
 
 
 @NgModule({
@@ -48,7 +48,7 @@ import { HomeService } from './products/products.service';
     TokenService,
     AuthenticatedGuard,
     AccountService,
-    HomeService,
+    ProductsService,
 
   ],
   bootstrap: [AppComponent],

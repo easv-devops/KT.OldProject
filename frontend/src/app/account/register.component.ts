@@ -91,6 +91,8 @@ import {HttpClient} from "@angular/common/http";
   `,
   styleUrls: ['./form.css'],
 })
+
+
 export class RegisterComponent {
   form = this.fb.group({
     fullName: ['', Validators.required],
@@ -101,12 +103,16 @@ export class RegisterComponent {
     passwordRepeat: ['', [Validators.required, CustomValidators.matchOther('password')]]
   });
 
+
+
   get fullName() { return this.form.controls.fullName; }
   get street() { return this.form.controls.street; }
   get zip() { return this.form.controls.zip; }
   get email() { return this.form.controls.email; }
   get password() { return this.form.controls.password }
   get passwordRepeat() { return this.form.controls.passwordRepeat }
+
+
 
   constructor(
     private readonly http: HttpClient,
@@ -115,6 +121,8 @@ export class RegisterComponent {
     private readonly toast: ToastController
   ) {
   }
+
+
 
   async submit() {
     if (this.form.invalid) return;

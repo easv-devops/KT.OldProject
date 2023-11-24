@@ -7,7 +7,7 @@ import { AccountService, User } from "./account.service";
     <app-title title="Account"></app-title>
     <ion-content>
       <form>
-        <ion-list class="field-list" *ngIf="account$ | async as account; else loading">
+        <ion-list class="field-list" *ngIf="account$ | async as account;">
           <ion-item>
             <ion-input label="Name" [value]="account.fullName"></ion-input>
           </ion-item>
@@ -22,9 +22,6 @@ import { AccountService, User } from "./account.service";
         </ion-list>
         <ion-button>Update</ion-button>
       </form>
-      <ng-template #loading>
-        <ion-spinner></ion-spinner>
-      </ng-template>
     </ion-content>
   `,
   styleUrls: ['./form.css'],
