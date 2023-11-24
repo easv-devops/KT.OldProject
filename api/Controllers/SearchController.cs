@@ -1,4 +1,4 @@
-﻿/*
+﻿
 using api.Filters;
 using api.TransferModels;
 using infrastructure.DataModels;
@@ -30,4 +30,3 @@ public class SearchController : ControllerBase
         };
     }
 }
-*/
