@@ -17,7 +17,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\service\service.csproj" />
-        <ProjectReference Include="..\test\test.csproj" />
     </ItemGroup>
 
 </Project>
