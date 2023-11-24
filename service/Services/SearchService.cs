@@ -1,4 +1,5 @@
-﻿using infrastructure.DataModels;
+﻿/*
+using infrastructure.DataModels;
 using infrastructure.Repositories;
 
 namespace service.Services;
@@ -17,3 +18,4 @@ public class SearchService
         return _searchRepository.SearchAvatar(searchQuery);
     }
 }
+*/
