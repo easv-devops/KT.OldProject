@@ -4,6 +4,7 @@ using infrastructure;
 using infrastructure.Repositories;
 using service;
 using service.Services;
+using EmailService = service.Services.EmailService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,7 @@ builder.Services.AddSingleton<OrderRepository>();
 builder.Services.AddSingleton<OrderService>();
 builder.Services.AddSingleton<SearchService>();
 builder.Services.AddSingleton<SearchRepository>();
+builder.Services.AddSingleton<EmailService>();
 
 builder.Services.AddJwtService();
 builder.Services.AddSwaggerGenWithBearerJWT();
