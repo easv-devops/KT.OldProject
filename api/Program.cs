@@ -32,6 +32,8 @@ builder.Services.AddSingleton<CustomerBuyRepository>();
 builder.Services.AddSingleton<CustomerBuyService>();
 builder.Services.AddSingleton<OrderRepository>();
 builder.Services.AddSingleton<OrderService>();
+builder.Services.AddSingleton<SearchService>();
+builder.Services.AddSingleton<SearchRepository>();
 
 builder.Services.AddJwtService();
 builder.Services.AddSwaggerGenWithBearerJWT();
