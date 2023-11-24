@@ -27,11 +27,13 @@ create table account.avatar
 (
     avatar_id     SERIAL PRIMARY KEY,
     avatar_name  VARCHAR(50)  NOT NULL,
-    price        integer   not NULL
+    price        integer   not NULL,
+    information VARCHAR(300),
+    deleted bool not null DEFAULT FALSE
     );
 
-INSERT INTO account.avatar (avatar_name,price)
-VALUES ('Nummer1', 10);
+INSERT INTO account.avatar (avatar_name,price, information, deleted)
+VALUES ('Nummer1', 10, null, false);
 
 create table account.order
 (

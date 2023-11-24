@@ -15,6 +15,8 @@ public class Avatar
 {
     public string avatar_name { get; set; }
     public int price { get; set; }
+    public string information { get; set; }
+    public  bool deleted { get; set; }
 }
 public class ResponseDto<T>
 {
