@@ -32,7 +32,7 @@ public class AvatarService
     }
     
     
-    public Avatar CreateAvatar(string avatar_name, int price)
+    public Avatar CreateAvatar(string avatar_name, int price, string information)
     {
 
         if (!ReferenceEquals(_avatarRepository.CheckIfNameExist(avatar_name), null))
@@ -40,7 +40,7 @@ public class AvatarService
         
         try
             {
-                return _avatarRepository.CreateAvatar(avatar_name, price);
+                return _avatarRepository.CreateAvatar(avatar_name, price, information);
             }
             catch (Exception e)
             {
@@ -51,12 +51,12 @@ public class AvatarService
         
     
     
-    public Avatar UpdateAvatar(int avatar_id, string avatar_name, int price)
+    public Avatar UpdateAvatar(int avatar_id, string avatar_name, int price,string information)
     {
       
         try
         {
-            return _avatarRepository.UpdateAvatar(avatar_id, avatar_name, price);
+            return _avatarRepository.UpdateAvatar(avatar_id, avatar_name, price,information);
         }
         catch (Exception e)
         {

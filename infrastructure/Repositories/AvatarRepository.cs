@@ -16,7 +16,7 @@ public class AvatarRepository
     
     public IEnumerable<Avatar> GetAllAvatars()
     {
-        var sql = @"SELECT * FROM account.avatar ORDER BY avatar_id;";
+        var sql = @"SELECT * FROM account.avatar where deleted=false ORDER BY avatar_id;";
 
         using (var conn = _dataSource.OpenConnection())
         {
@@ -25,34 +25,37 @@ public class AvatarRepository
     }
     
     
-    public Avatar CreateAvatar(string avatar_name, int price)
+    public Avatar CreateAvatar(string avatar_name, int avatar_price, string information)
     {
         var sql =
-            @" INSERT INTO account.avatar (avatar_name, price) VALUES (@avatar_name, @price) RETURNING *;";
+            @" INSERT INTO account.avatar (avatar_name, avatar_price, information,deleted) VALUES (@avatar_name, @avatar_price, @information, false) RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<Avatar>(sql, new { avatar_name, price });
+            return conn.QueryFirst<Avatar>(sql, new { avatar_name, avatar_price, information });
         }
     }
     
-    public Avatar UpdateAvatar(int avatar_id, string avatar_name, int price)
+    public Avatar UpdateAvatar(int avatar_id, string avatar_name, int avatar_price, string information)
     {
         var sql =
-            @"UPDATE account.avatar SET avatar_name = @avatar_name, price = @price where avatar_id = @avatar_id
+            @"UPDATE account.avatar SET avatar_name = @avatar_name, avatar_price = @avatar_price, information = @information where avatar_id = @avatar_id
 RETURNING *";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<Avatar>(sql, new { avatar_id, avatar_name, price});
+            return conn.QueryFirst<Avatar>(sql, new { avatar_id, avatar_name, avatar_price,information});
         }
     }
 
     
     public void DeleteAvatar(int avatar_id)
     {
-        var sql = @"DELETE FROM account.avatar WHERE avatar_id = @avatar_id RETURNING *;";
-
+        
+        var sql =
+            @"UPDATE account.avatar SET deleted = true where avatar_id = @avatar_id
+RETURNING *"; 
+       
         using (var conn = _dataSource.OpenConnection())
         {
             conn.QueryFirst<Avatar>(sql, new { avatar_id });
