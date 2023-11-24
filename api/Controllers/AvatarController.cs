@@ -43,7 +43,7 @@ public class AvatarController : Controller
         {
             
             MessageToClient = "Succesfully created an Avatar",
-            ResponseData = _avatarService.CreateAvatar(avatar.Name, avatar.Price)
+            ResponseData = _avatarService.CreateAvatar(avatar.avatar_name, avatar.avatar_price)
         };
     }
         
@@ -58,7 +58,7 @@ public class AvatarController : Controller
         {
             
             MessageToClient = "Succesfully updated an Avatar",
-            ResponseData =  _avatarService.UpdateAvatar(id, avatar.Name, avatar.Price)
+            ResponseData =  _avatarService.UpdateAvatar(id, avatar.avatar_name, avatar.avatar_price)
         };
         
         

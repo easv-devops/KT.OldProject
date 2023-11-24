@@ -4,8 +4,10 @@ namespace infrastructure.DataModels;
 
 public class Avatar
 {
-    public int Id { get; set; }
+    public int avatar_id { get; set; }
+    
     [MinLength(3)]
-    public string Name { get; set;  }
-    public int Price { get; set;  }
+    public string avatar_name { get; set; }
+    
+    public int avatar_price { get; set;  }
 }

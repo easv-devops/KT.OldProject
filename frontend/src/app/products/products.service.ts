@@ -1,12 +1,15 @@
 import {HttpClient} from "@angular/common/http"
 import {Injectable} from "@angular/core";
 import { environment } from "src/environments/environment.prod";
-import {Observable} from "rxjs";
 
+export interface ResponseDto<T> {
+  responseData: T;
+
+}
 export interface Avatar {
-  id: number;
-  name: string;
-  price: number;
+  avatar_id: number;
+  avatar_name: string;
+  avatar_price: number;
 }
 
 @Injectable()
@@ -15,7 +18,7 @@ export class ProductsService {
   }
 
   public getAllProducts(){
-    return this.http.get<Avatar[]>("/avatar/all")
+    return this.http.get<ResponseDto<Avatar[]>>(environment.baseUrl + "/avatar/all")
   }
 
 }
