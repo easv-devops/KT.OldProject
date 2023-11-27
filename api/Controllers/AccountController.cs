@@ -43,7 +43,7 @@ public class AccountController : ControllerBase
         
         return new ResponseDto()
         {
-            MessageToClient = "Welcome "+ user.FullName,
+            MessageToClient = "Welcome "+ user.full_name,
             ResponseData =new { token }
         };
         

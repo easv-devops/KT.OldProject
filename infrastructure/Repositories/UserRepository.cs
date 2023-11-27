@@ -20,7 +20,7 @@ INSERT INTO account.users (full_name, street, zip, email, admin)
 VALUES (@full_name, @street, @zip,@email, @admin)
 RETURNING
     id as {nameof(User.Id)},
-    full_name as {nameof(User.FullName)},
+    full_name as {nameof(User.full_name)},
     street as {nameof(User.Street)},
     zip as {nameof(User.Zip)},
     email as {nameof(User.Email)},
@@ -38,7 +38,7 @@ RETURNING
         const string sql = $@"
 SELECT
    id as {nameof(User.Id)},
-    full_name as {nameof(User.FullName)},
+    full_name as {nameof(User.full_name)},
     street as {nameof(User.Street)},
     zip as {nameof(User.Zip)},
     email as {nameof(User.Email)},
@@ -57,7 +57,7 @@ WHERE id = @id;
         const string sql = $@"
 SELECT
    id as {nameof(User.Id)},
-    full_name as {nameof(User.FullName)},
+    full_name as {nameof(User.full_name)},
     street as {nameof(User.Street)},
     zip as {nameof(User.Zip)},
     email as {nameof(User.Email)},
