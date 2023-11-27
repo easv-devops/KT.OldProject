@@ -6,6 +6,7 @@ using service.Services;
 
 namespace api.Controllers;
 
+[ApiController]
 public class AvatarController : Controller
 {
     private readonly AvatarService _avatarService;
@@ -41,7 +42,6 @@ public class AvatarController : Controller
         HttpContext.Response.StatusCode = StatusCodes.Status201Created;
         return new ResponseDto()
         {
-            
             MessageToClient = "Succesfully created an Avatar",
             ResponseData = _avatarService.CreateAvatar(avatar.avatar_name, avatar.avatar_price, avatar.information)
         };
@@ -52,31 +52,22 @@ public class AvatarController : Controller
     [Route("/avatar/{avatar_id}")]
     public ResponseDto putAvatar([FromRoute] int avatar_id, [FromBody] Avatar avatar)
     {
-
-        
         return new ResponseDto()
         {
-            
             MessageToClient = "Succesfully updated an Avatar",
             ResponseData =  _avatarService.UpdateAvatar(avatar_id, avatar.avatar_name, avatar.avatar_price,avatar.information)
         };
-        
-        
-        
     }
-
     
     [HttpDelete]
     [ValidateModel]
     [Route("/avatar/{avatar_id}")]
-    public void deleteAvatar([FromRoute] int avatar_id)
+    public object deleteAvatar([FromRoute] int avatar_id)
     {
-
-        HttpContext.Response.StatusCode = 204;
-        new ResponseDto()
+        _avatarService.deleteAvatar(avatar_id);
+        return  new ResponseDto()
         {
             MessageToClient = "Succesfully deleted avatar"
-           };
-        _avatarService.deleteAvatar(avatar_id);
+        };
     }
 }
