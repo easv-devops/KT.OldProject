@@ -23,9 +23,11 @@ public class UnitTestAvatar
         {
             var avatar = new Avatar()
             {
+                avatar_id = i,
                 avatar_name = "Kajkage",
                 avatar_price = 25,
-                information = "Dette er en kajkage"
+                information = "Dette er en kajkage",
+                deleted = false
             };
             expected.Add(avatar);
             var sql =
@@ -67,17 +69,18 @@ public class UnitTestAvatar
     }
     */
     
-    [TestCase("Kaj-avatar", 1000, "", false )]
-    [TestCase("Andrea-avatar", 2000, "", false )]
-    public async Task AvatarCanSuccessfullyBeCreated(string avatar_name, int avatar_price, string information, bool deleted)
+    [TestCase("Kaj-avatar", 1000, "")]
+    [TestCase("Andrea-avatar", 2000, "")]
+    public async Task AvatarCanSuccessfullyBeCreated(string avatar_name, int avatar_price, string information)
     {
         Helper.TriggerRebuild();
         var testAvatar = new Avatar
         {
+            avatar_id = 1,
             avatar_name = avatar_name,
             avatar_price = avatar_price,
             information = information,
-            deleted = deleted
+            deleted = false
         };
 
         var httpResponse = await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "avatar", testAvatar);
@@ -97,9 +100,11 @@ public class UnitTestAvatar
       Helper.TriggerRebuild();
       var testAvatar = new Avatar()
       {
+          avatar_id = 1,
           avatar_name = avatar_name,
           avatar_price = avatar_price,
-          information = information
+          information = information,
+          deleted = false
       };
 
       var httpResponse = await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "avatar", testAvatar);
@@ -111,20 +116,22 @@ public class UnitTestAvatar
     }
     
     [TestCase("Bent-avatar", 4, "This is a picture of Bent")]
-    [TestCase("Klavs-avatar", 5, "This is a picture of Klavs")]
+    [TestCase( "Klavs-avatar", 5, "This is a picture of Klavs")]
     public async Task AvatarCanSuccessfullyBeUpdated(string avatar_name, int avatar_price, string information)
     {
         Helper.TriggerRebuild();
         await using (var conn = await Helper.DataSource.OpenConnectionAsync())
         {
-            conn.Execute("INSERT INTO account.avatar(avatar_name, avatar_price, information) VALUES ('Erik', 11, 'This is a picture of Erik') RETURNING *;");
+            conn.Execute("INSERT INTO account.avatar(avatar_id, avatar_name, avatar_price, information, deleted) VALUES ( 1, 'Erik', 11, 'This is a picture of Erik', false) RETURNING *;");
         }
 
         var testAvatar = new Avatar()
         {
+            avatar_id = 1,
             avatar_name = avatar_name,
             avatar_price = avatar_price,
-            information = information
+            information = information,
+            deleted = false
         };
         
         var httpResponse = await new HttpClient().PutAsJsonAsync(Helper.ApiBaseUrl + "avatar/1", testAvatar);
@@ -149,9 +156,11 @@ public class UnitTestAvatar
 
         var testAvatar = new Avatar()
         {
+            avatar_id = 1,
             avatar_name = avatar_name,
             avatar_price = avatar_price,
-            information = information
+            information = information,
+            deleted = false
         };
         
         var httpResponse = await new HttpClient().PutAsJsonAsync(Helper.ApiBaseUrl + "avatar/1", testAvatar);

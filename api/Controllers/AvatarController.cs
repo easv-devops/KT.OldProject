@@ -38,8 +38,6 @@ public class AvatarController : Controller
     [Route("/avatar")]
     public ResponseDto postAvatar([FromBody] Avatar avatar)
     {
-
-        HttpContext.Response.StatusCode = StatusCodes.Status201Created;
         return new ResponseDto()
         {
             MessageToClient = "Succesfully created an Avatar",
@@ -55,7 +53,7 @@ public class AvatarController : Controller
         return new ResponseDto()
         {
             MessageToClient = "Succesfully updated an Avatar",
-            ResponseData =  _avatarService.UpdateAvatar(avatar)
+            ResponseData =  _avatarService.UpdateAvatar(avatar_id ,avatar)
         };
     }
     

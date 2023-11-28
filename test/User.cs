@@ -15,6 +15,7 @@ public class User
 
 public class Avatar
 {
+    public int avatar_id { get; set; }
     public string avatar_name { get; set; }
     public int avatar_price { get; set; }
     public string information { get; set; }

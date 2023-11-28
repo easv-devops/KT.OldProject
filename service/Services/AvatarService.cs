@@ -51,12 +51,12 @@ public class AvatarService
         
     
     
-    public Avatar UpdateAvatar(Avatar avatar)
+    public Avatar UpdateAvatar(int avatar_id, Avatar avatar)
     {
       
         try
         {
-            return _avatarRepository.UpdateAvatar(avatar);
+            return _avatarRepository.UpdateAvatar(avatar_id,avatar);
         }
         catch (Exception e)
         {

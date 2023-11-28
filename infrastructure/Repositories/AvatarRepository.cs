@@ -36,7 +36,7 @@ public class AvatarRepository
         }
     }
     
-    public Avatar UpdateAvatar(Avatar avatar)
+    public Avatar UpdateAvatar(int avatar_id, Avatar avatar)
     {
         var sql =
             @"UPDATE account.avatar SET avatar_name = @avatar_name, avatar_price = @avatar_price, information = @information where avatar_id = @avatar_id
@@ -44,7 +44,7 @@ RETURNING *";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<Avatar>(sql, new { avatar_id=avatar.avatar_id, avatar_name=avatar.avatar_name, avatar_price=avatar.avatar_price,information=avatar.information});
+            return conn.QueryFirst<Avatar>(sql, new { avatar_id, avatar_name=avatar.avatar_name, avatar_price=avatar.avatar_price,information=avatar.information});
         }
     }
 
