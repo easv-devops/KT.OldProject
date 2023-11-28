@@ -11,6 +11,7 @@ public class User
     public int zip { get; set; }
     public string email { get; set; }
     public string password { get; set; }
+    
 }
 
 public class Avatar

@@ -78,15 +78,18 @@ public class AvatarService
             Console.WriteLine(e);
             throw new ValidationException("Error in deleting an Avatar");
         }
-        
-        
-        
-        
-        
-        
     }
-    
-    
-    
-    
+
+    public string GetAvatarInformation(int avatar_id)
+    {
+        try
+        {
+            return _avatarRepository.GetAvatarInformation(avatar_id);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new ValidationException("Error in getting all avatar information");
+        }
+    }
 }

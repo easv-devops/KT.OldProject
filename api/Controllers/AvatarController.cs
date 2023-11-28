@@ -68,4 +68,16 @@ public class AvatarController : Controller
             MessageToClient = "Succesfully deleted avatar"
         };
     }
+    [HttpGet]
+    [ValidateModel]
+    [Route("/avatar/{avatar_id}")]
+    public ResponseDto getAvatarInformation([FromRoute]int avatar_id)
+    {
+        return new ResponseDto()
+        {
+            MessageToClient = "Succesfully got all AvatarInformation",
+            ResponseData =  _avatarService.GetAvatarInformation(avatar_id)
+        };
+    }
+    
 }
