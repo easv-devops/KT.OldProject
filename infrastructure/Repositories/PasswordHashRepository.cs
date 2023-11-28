@@ -40,3 +40,4 @@ VALUES (@userId, @hash, @salt, @algorithm)
     }
     
 }
+

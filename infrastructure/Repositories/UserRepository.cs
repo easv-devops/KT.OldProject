@@ -19,7 +19,7 @@ public class UserRepository
 INSERT INTO account.users (full_name, street, zip, email, admin)
 VALUES (@full_name, @street, @zip,@email, @admin)
 RETURNING
-    user_id as {nameof(User.user_id)},
+    id as {nameof(User.user_id)},
     full_name as {nameof(User.full_name)},
     street as {nameof(User.Street)},
     zip as {nameof(User.Zip)},
@@ -37,14 +37,14 @@ RETURNING
     {
         const string sql = $@"
 SELECT
-    user_id as {nameof(User.user_id)},
+   id as {nameof(User.user_id)},
     full_name as {nameof(User.full_name)},
     street as {nameof(User.Street)},
     zip as {nameof(User.Zip)},
     email as {nameof(User.Email)},
     admin as {nameof(User.IsAdmin)}
 FROM account.users
-WHERE order_id = @order_id;
+WHERE id = @id;
 ";
         using (var connection = _dataSource.OpenConnection())
         {
@@ -56,14 +56,14 @@ WHERE order_id = @order_id;
     {
         const string sql = $@"
 SELECT
-    user_id as {nameof(User.user_id)},
+   id as {nameof(User.user_id)},
     full_name as {nameof(User.full_name)},
     street as {nameof(User.Street)},
     zip as {nameof(User.Zip)},
     email as {nameof(User.Email)},
     admin as {nameof(User.IsAdmin)}
 FROM account.users
-WHERE order_id = 2;
+WHERE id = 2;
 ";
         using (var connection = _dataSource.OpenConnection())
         {
