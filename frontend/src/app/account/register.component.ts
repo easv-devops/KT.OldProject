@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
-import {first, firstValueFrom} from "rxjs";
+import {firstValueFrom} from "rxjs";
 import { ToastController } from "@ionic/angular";
 import { CustomValidators } from "../custom-validators";
-import { AccountService, Registration } from "./account.service";
+import { AccountService} from "./account.service";
 import {environment} from "../../environments/environment.prod";
 import {HttpClient} from "@angular/common/http";
 

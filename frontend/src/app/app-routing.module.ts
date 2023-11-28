@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {NoPreloading, PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {TabsComponent} from './tabs.component';
 import {ProductsComponent} from './products/products.component';
 import {AccountComponent} from './account/account.component';
@@ -8,7 +8,6 @@ import {RegisterComponent} from './account/register.component';
 import {UsersComponent} from './admin/users.component';
 import {AuthenticatedGuard} from './guards';
 import { CartComponent } from './cart/cart.component';
-import {CheckoutComponent} from "./checkout/checkout.component";
 
 const routes: Routes = [
   {
@@ -45,13 +44,9 @@ const routes: Routes = [
         path: 'cart',
         component: CartComponent,
         canActivate: [AuthenticatedGuard]
-      },
 
-      {
-        path: 'checkout',
-        component: CheckoutComponent,
-        canActivate: [AuthenticatedGuard]
-      },
+
+      }
 
     ]
 
@@ -60,7 +55,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
+    RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})
   ],
   exports: [RouterModule]
 })
