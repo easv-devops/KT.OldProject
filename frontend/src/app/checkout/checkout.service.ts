@@ -1,15 +1,9 @@
 import {Injectable} from "@angular/core";
 
-@Injectable({
-  providedIn: 'root',
-})
-export class CartService{
 
-
-
-
+@Injectable()
+export class CheckoutService {
   constructor() {
   }
-
 
 }

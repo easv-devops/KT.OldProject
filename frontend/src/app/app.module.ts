@@ -21,6 +21,10 @@ import { UsersComponent } from './admin/users.component';
 import { AuthenticatedGuard } from './guards';
 import { AccountService } from './account/account.service';
 import { ProductsService } from './products/products.service';
+import {CartService} from "./cart/cart.service";
+import {CartComponent} from "./cart/cart.component";
+import {CheckoutComponent} from "./checkout/checkout.component";
+import {CheckoutService} from "./checkout/checkout.service";
 
 
 @NgModule({
@@ -33,6 +37,8 @@ import { ProductsService } from './products/products.service';
     AccountComponent,
     RegisterComponent,
     LoginComponent,
+    CartComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +55,8 @@ import { ProductsService } from './products/products.service';
     AuthenticatedGuard,
     AccountService,
     ProductsService,
+    CartService,
+    CheckoutService
 
   ],
   bootstrap: [AppComponent],
