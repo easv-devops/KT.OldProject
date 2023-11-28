@@ -19,7 +19,7 @@ public class UserRepository
 INSERT INTO account.users (full_name, street, zip, email, admin)
 VALUES (@full_name, @street, @zip,@email, @admin)
 RETURNING
-    order_id as {nameof(User.Id)},
+    user_id as {nameof(User.user_id)},
     full_name as {nameof(User.full_name)},
     street as {nameof(User.Street)},
     zip as {nameof(User.Zip)},
@@ -37,7 +37,7 @@ RETURNING
     {
         const string sql = $@"
 SELECT
-   order_id as {nameof(User.Id)},
+    user_id as {nameof(User.user_id)},
     full_name as {nameof(User.full_name)},
     street as {nameof(User.Street)},
     zip as {nameof(User.Zip)},
@@ -56,7 +56,7 @@ WHERE order_id = @order_id;
     {
         const string sql = $@"
 SELECT
-   order_id as {nameof(User.Id)},
+    user_id as {nameof(User.user_id)},
     full_name as {nameof(User.full_name)},
     street as {nameof(User.Street)},
     zip as {nameof(User.Zip)},

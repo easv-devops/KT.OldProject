@@ -12,8 +12,8 @@ namespace Tests;
 public class Tests
 {
     
-    [TestCase("Bo", "Bogade 1", 1000, "bob@cool.com", "123456789" )]
-    [TestCase("Ib","Bogade 2", 1000, "Ib@cool.com", "123456789" )]
+    [TestCase("Boo", "Bogade 1", 1001, "bob@cool.com", "123456789" )]
+    [TestCase("Ibb","Bogade 2", 1001, "Ib@cool.com", "123456789" )]
     public async Task UserCanSuccessfullyBeCreated(string full_name, string street, int zip, string email, string password)
     {
         Helper.TriggerRebuild();
@@ -39,6 +39,7 @@ public class Tests
     [TestCase("t", "Bogade 1", 1000, "bobyugbhnj@cool.com", "123456789" )]
     [TestCase("Birgitte", "j", 1000, "bobyugbhnj@cool.com", "123456789" )]
     [TestCase("Benter", "Bobogade 2", 1000, "cool.com", "123456789" )]
+    [TestCase("Benter", "Bobogade 2", 555, "bobyugbhnj@cool.com", "123456789" )]
 
     public async Task CanNotCreateUserWithInvalidCharacter(string full_name, string street, int zip, string email, string password)
     {
@@ -59,6 +60,4 @@ public class Tests
            httpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
     }
-    
-    //Email not the same
 }

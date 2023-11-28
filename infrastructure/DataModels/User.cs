@@ -4,7 +4,7 @@ namespace infrastructure.DataModels;
 
 public class User
 {
-    public int Id { get; set; }
+    public int user_id { get; set; }
     public required string full_name { get; set; }
     
     public required string Street { get; set; }
