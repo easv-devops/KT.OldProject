@@ -1,9 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { ReactiveFormsModule } from "@angular/forms";
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
@@ -23,9 +21,6 @@ import { AccountService } from './account/account.service';
 import { ProductsService } from './products/products.service';
 import {CartService} from "./cart/cart.service";
 import {CartComponent} from "./cart/cart.component";
-import {CheckoutComponent} from "./checkout/checkout.component";
-import {CheckoutService} from "./checkout/checkout.service";
-
 
 @NgModule({
   declarations: [
@@ -37,8 +32,7 @@ import {CheckoutService} from "./checkout/checkout.service";
     AccountComponent,
     RegisterComponent,
     LoginComponent,
-    CartComponent,
-    CheckoutComponent
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -56,8 +50,6 @@ import {CheckoutService} from "./checkout/checkout.service";
     AccountService,
     ProductsService,
     CartService,
-    CheckoutService
-
   ],
   bootstrap: [AppComponent],
 })

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Avatar} from "../products/products.service";
-import {key} from "ionicons/icons";
+import {ToastController} from "@ionic/angular";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-cart',
@@ -24,7 +25,7 @@ import {key} from "ionicons/icons";
           </ion-col>
         </ion-row>
       </ion-grid>
-      <ion-button class="button" [routerLink]="'/checkout'" fill="clear" > CHECKOUT
+      <ion-button class="button" (click)="checkOut()" fill="clear" > CHECKOUT
         <ion-icon name="cart-outline"></ion-icon>
       </ion-button>
     </ion-content>
@@ -36,25 +37,31 @@ export class CartComponent  implements OnInit {
   jsonArray: any;
   myArr : Avatar[];
 
-  constructor() {
+
+
+
+  constructor(private readonly toast: ToastController, private readonly router: Router) {
+
+    this.router.routeReuseStrategy.shouldReuseRoute = () => {
+      return false;
+    };
 
     this.jsonArray = sessionStorage.getItem("cart");
     this.myArr = JSON.parse(this.jsonArray);
-
-
 
   }
 
   ngOnInit() {
 
-  }
 
+  }
 
   removeAvatar(avatar: Avatar) {
 
     if (this.myArr.length === 1) {
       sessionStorage.removeItem("cart");
       this.myArr.pop();
+
     } else {
 
 
@@ -68,4 +75,23 @@ export class CartComponent  implements OnInit {
     }
 
   }
+
+  async checkOut() {
+
+
+    (await this.toast.create({
+      message: 'Order Confirmed! Check your e-mail!',
+      color: 'success',
+      duration: 5000,
+      icon: 'success',
+    })).present();
+
+
+    sessionStorage.removeItem("cart");
+    setTimeout(() => {
+      document.location.reload();
+    }, 3000);
+
+  }
+
 }
