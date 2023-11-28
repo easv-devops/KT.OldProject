@@ -27,25 +27,25 @@ public class EmailService
         message.To.Add(new MailboxAddress("Customer", user.Email));
         message.Subject = "Your order confirmation";
 
-        message.Body = new TextPart("plain")
-        {
-            Text = @"Hello "+ user.full_name+"\n"
-            +       user.Street+"\n"
-            +       user.Zip+"\n"+"\n"           
-            +       "You have ordered:"
-            
-            
-        };
+
+        string emailBody=""; 
 
         foreach (Avatar avatar in _emailRespository.GetOrdersAvatars(order_id))
+            emailBody = emailBody + avatar.avatar_name+"\n";
+        
+        
+        message.Body = new TextPart("plain")
         {
-            Console.WriteLine(avatar.avatar_name);
-           
-        }
-        
-        
-        
-        
+            Text =" Hello "+ user.full_name + "\n"+"\n"+
+                  "Thanks for your order of the following items: "+"\n"+"\n"         
+                           + emailBody +"\n"+
+                "Your items is attached to this email." +"\n"+"\n"+
+                  "" +
+                  "Kind regards The Webshop Inc." 
+                  
+        };
+
+       
         
         using (var client = new MailKit.Net.Smtp.SmtpClient())
         {
