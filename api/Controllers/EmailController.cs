@@ -16,10 +16,10 @@ public class EmailController
     }
  
     [HttpPost]
-    [Route("/email")]
-    public ResponseDto SendEmail([FromBody] Order order)
+    [Route("/email/{order_id}")]
+    public ResponseDto SendEmail([FromRoute] int order_id)
     {
-    _emailService.SendEmail();
+    _emailService.SendEmail(order_id);
         
         return new ResponseDto()
         {
