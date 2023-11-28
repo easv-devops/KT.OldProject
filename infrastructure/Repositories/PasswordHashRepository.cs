@@ -22,7 +22,7 @@ SELECT
     salt as {nameof(PasswordHash.Salt)},
     algorithm as {nameof(PasswordHash.Algorithm)}
 FROM account.password_hash
-JOIN account.users ON account.password_hash.user_id = account.users.id
+JOIN account.users ON account.password_hash.user_id = account.users.order_id
 WHERE email = @email;
 ";
         using var connection = _dataSource.OpenConnection();

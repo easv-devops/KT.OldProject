@@ -32,15 +32,15 @@ public class AvatarService
     }
     
     
-    public Avatar CreateAvatar(string avatar_name, int price, string information)
+    public Avatar CreateAvatar(Avatar avatar)
     {
 
-        if (!ReferenceEquals(_avatarRepository.CheckIfNameExist(avatar_name), null))
+        if (!ReferenceEquals(_avatarRepository.CheckIfNameExist(avatar.avatar_name), null))
             throw new ValidationException("Already exists");
         
         try
             {
-                return _avatarRepository.CreateAvatar(avatar_name, price, information);
+                return _avatarRepository.CreateAvatar(avatar);
             }
             catch (Exception e)
             {
@@ -51,12 +51,12 @@ public class AvatarService
         
     
     
-    public Avatar UpdateAvatar(int avatar_id, string avatar_name, int price,string information)
+    public Avatar UpdateAvatar(Avatar avatar)
     {
       
         try
         {
-            return _avatarRepository.UpdateAvatar(avatar_id, avatar_name, price,information);
+            return _avatarRepository.UpdateAvatar(avatar);
         }
         catch (Exception e)
         {

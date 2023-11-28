@@ -43,7 +43,7 @@ public class AvatarController : Controller
         return new ResponseDto()
         {
             MessageToClient = "Succesfully created an Avatar",
-            ResponseData = _avatarService.CreateAvatar(avatar.avatar_name, avatar.avatar_price, avatar.information)
+            ResponseData = _avatarService.CreateAvatar(avatar)
         };
     }
         
@@ -55,7 +55,7 @@ public class AvatarController : Controller
         return new ResponseDto()
         {
             MessageToClient = "Succesfully updated an Avatar",
-            ResponseData =  _avatarService.UpdateAvatar(avatar_id, avatar.avatar_name, avatar.avatar_price,avatar.information)
+            ResponseData =  _avatarService.UpdateAvatar(avatar)
         };
     }
     

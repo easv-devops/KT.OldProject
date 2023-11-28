@@ -16,9 +16,9 @@ public class CustomerBuyService
         return _customerBuyRepository.GetAllCustomerBuy();
     }
 
-    public CustomerBuy CreateCustomerBuy(int order_id, int avatar_id)
+    public CustomerBuy CreateCustomerBuy(CustomerBuy customerBuy)
     {
-        return _customerBuyRepository.CreateCustomerBuy(order_id, avatar_id);
+        return _customerBuyRepository.CreateCustomerBuy(customerBuy);
     }
     
     public void deleteCustomerBuy(int customer_buy_id)

@@ -42,14 +42,14 @@ public class OrderController : Controller
     
     [HttpDelete]
     [ValidateModel]
-    [Route("/order/{id}")]
-    public void deleteOrder([FromRoute] int id)
+    [Route("/order/{order_id}")]
+    public void deleteOrder([FromRoute] int order_id)
     {
         HttpContext.Response.StatusCode = 204;
         new ResponseDto()
         {
             MessageToClient = "Succesfully deleted an order"
         };
-        _orderService.deleteOrder(id);
+        _orderService.deleteOrder(order_id);
     }
 }

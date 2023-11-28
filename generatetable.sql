@@ -37,7 +37,7 @@ VALUES ('Nummer1', 10, null, false);
 
 create table account.order
 (
-    id SERIAL PRIMARY KEY,
+    order_id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES account.users (id)
 );
@@ -51,7 +51,7 @@ create table account.customer_buy
     id SERIAL PRIMARY KEY,
     order_id INTEGER NOT NUll,
     avatar_id INTEGER NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES account.order (id),
+    FOREIGN KEY (order_id) REFERENCES account.order (order_id),
     FOREIGN KEY (avatar_id) REFERENCES account.avatar (avatar_id)
 );
 INSERT INTO account.customer_buy (order_id, avatar_id) 

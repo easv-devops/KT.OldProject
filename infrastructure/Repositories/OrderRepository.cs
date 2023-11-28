@@ -15,7 +15,7 @@ public class OrderRepository
 
     public IEnumerable<Order> GetAllOrder()
     {
-        var sql = @"SELECT * FROM account.order ORDER BY id;";
+        var sql = @"SELECT * FROM account.order ORDER BY order_id;";
 
         using (var conn = _dataSource.OpenConnection())
         {
@@ -34,13 +34,13 @@ public class OrderRepository
         }
     }
     
-    public void DeleteOrder(int id)
+    public void DeleteOrder(int order_id)
     {
-        var sql = @"DELETE FROM account.order WHERE id = @id RETURNING *;";
+        var sql = @"DELETE FROM account.order WHERE order_id = @order_id RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            conn.QueryFirst<Order>(sql, new { id});
+            conn.QueryFirst<Order>(sql, new { order_id});
         }
     }
 }

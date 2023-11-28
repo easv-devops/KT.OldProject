@@ -25,18 +25,18 @@ public class AvatarRepository
     }
     
     
-    public Avatar CreateAvatar(string avatar_name, int avatar_price, string information)
+    public Avatar CreateAvatar(Avatar avatar)
     {
         var sql =
             @" INSERT INTO account.avatar (avatar_name, avatar_price, information,deleted) VALUES (@avatar_name, @avatar_price, @information, false) RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<Avatar>(sql, new { avatar_name, avatar_price, information });
+            return conn.QueryFirst<Avatar>(sql, new { avatar_name=avatar.avatar_name, avatar_price=avatar.avatar_price, information=avatar.information });
         }
     }
     
-    public Avatar UpdateAvatar(int avatar_id, string avatar_name, int avatar_price, string information)
+    public Avatar UpdateAvatar(Avatar avatar)
     {
         var sql =
             @"UPDATE account.avatar SET avatar_name = @avatar_name, avatar_price = @avatar_price, information = @information where avatar_id = @avatar_id
@@ -44,7 +44,7 @@ RETURNING *";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<Avatar>(sql, new { avatar_id, avatar_name, avatar_price,information});
+            return conn.QueryFirst<Avatar>(sql, new { avatar_id=avatar.avatar_id, avatar_name=avatar.avatar_name, avatar_price=avatar.avatar_price,information=avatar.information});
         }
     }
 

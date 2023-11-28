@@ -16,21 +16,21 @@ public class CustomerBuyRepository
     public IEnumerable<CustomerBuy> GetAllCustomerBuy()
     {
         var sql =
-            @"SELECT * FROM account.customer_buy ORDER BY id;";
+            @"SELECT * FROM account.customer_buy ORDER BY order_id;";
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.Query<CustomerBuy>(sql);
         }
     }
 
-    public CustomerBuy CreateCustomerBuy(int order_id, int avatar_id)
+    public CustomerBuy CreateCustomerBuy(CustomerBuy customerBuy)
     {
         var sql =
             @"INSERT INTO account.customer_buy (order_id, avatar_id) VALUES (@order_id, @avatar_id) RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<CustomerBuy>(sql, new { order_id, avatar_id });
+            return conn.QueryFirst<CustomerBuy>(sql, new { order_id=customerBuy.order_id, avatar_id=customerBuy.avatar_id });
         }
     }
     

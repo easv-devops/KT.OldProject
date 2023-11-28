@@ -34,17 +34,17 @@ public class CustomerBuyController : Controller
         return new ResponseDto()
         {
             MessageToClient = "Succesfully created an customerbuy ", 
-            ResponseData = _customerBuyService.CreateCustomerBuy(customerbuy.order_id, customerbuy.avatar_id)
+            ResponseData = _customerBuyService.CreateCustomerBuy(customerbuy)
         };
       
     }
     
     [HttpDelete]
     [ValidateModel]
-    [Route("/customerbuy/{customer_buy}")]
-    public void deleteCustomerBuy([FromBody] int customer_buy_id)
+    [Route("/customerbuy/{customer_buy_id}")]
+    public void deleteCustomerBuy([FromRoute] int customer_buy_id)
     {
-        HttpContext.Response.StatusCode = 204;
+        
         new ResponseDto()
         {
             MessageToClient = "Successfully deleted customerbuy"
