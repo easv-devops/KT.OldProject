@@ -36,7 +36,7 @@ public class CustomerBuyRepository
     
     public void DeleteCustomerBuy(int customer_buy_id)
     {
-        var sql = @"DELETE FROM account.customer_buy WHERE account.customer_buy.id = @customer_buy_id RETURNING *;";
+        var sql = @"DELETE FROM account.customer_buy WHERE account.customer_buy.customer_buy_id = @customer_buy_id RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {

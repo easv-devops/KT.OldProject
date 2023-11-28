@@ -44,7 +44,7 @@ SELECT
     email as {nameof(User.Email)},
     admin as {nameof(User.IsAdmin)}
 FROM account.users
-WHERE user_id = @id;
+WHERE user_id = @customer_buy_id;
 ";
         using (var connection = _dataSource.OpenConnection())
         {

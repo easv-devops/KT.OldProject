@@ -48,12 +48,13 @@ VALUES (1);
 
 create table account.customer_buy
 (
-    id SERIAL PRIMARY KEY,
+    customer_buy_id SERIAL PRIMARY KEY,
     order_id INTEGER NOT NUll,
+    avatar_id INTEGER NOT NUll,
     FOREIGN KEY (order_id) REFERENCES account.order (order_id),
-    FOREIGN KEY (id) REFERENCES account.avatar (avatar_id)
+    FOREIGN KEY (avatar_id) REFERENCES account.avatar (avatar_id)
 );
-INSERT INTO account.customer_buy (order_id, id) 
+INSERT INTO account.customer_buy (order_id, avatar_id) 
 VALUES (1,1); 
 
 

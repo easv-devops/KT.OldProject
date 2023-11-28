@@ -4,7 +4,7 @@ namespace infrastructure.DataModels;
 
 public class CustomerBuy
 {
-    public int id { get; set; }
+    public int customer_buy_id { get; set; }
     
     public int order_id { get; set; }
     
