@@ -71,5 +71,14 @@ RETURNING *";
             return conn.QueryFirstOrDefault<Avatar>(sql, new { avatar_name });
         }
     }
-    
+    public string GetAvatarInformation(int avatar_id)
+    {
+        var sql = @"SELECT information FROM account.avatar where deleted = false AND avatar_id = @avatar_id;";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return conn.QueryFirst<string>(sql, new { avatar_id });
+        }
+    }
+
 }
