@@ -45,21 +45,10 @@ public class OrderRepository
     }
 
  
-    public User GetAnUser(int order_id)
-    {
-        var sql = @"SELECT * 
-        FROM account.users
-        INNER JOIN account.order on account.order.user_id=account.users.user_id 
-        where account.order.user_id=@order_id";
-
-        using (var conn = _dataSource.OpenConnection())
-        {
-            return conn.QueryFirst<User>(sql, new { order_id });
-        }
+  
     }
     
     
     
     
     
-}

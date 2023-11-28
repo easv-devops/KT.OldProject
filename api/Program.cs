@@ -36,6 +36,7 @@ builder.Services.AddSingleton<OrderService>();
 builder.Services.AddSingleton<SearchService>();
 builder.Services.AddSingleton<SearchRepository>();
 builder.Services.AddSingleton<EmailService>();
+builder.Services.AddSingleton<EmailRespository>();
 
 builder.Services.AddJwtService();
 builder.Services.AddSwaggerGenWithBearerJWT();
