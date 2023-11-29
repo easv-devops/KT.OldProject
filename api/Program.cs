@@ -69,6 +69,5 @@ app.UseSecurityHeaders();
 //app.UseSpa(conf => { conf.Options.SourcePath = frontEndRelativePath; });
 
 app.MapControllers();
-app.UseMiddleware<JwtBearerHandler>();
 app.UseMiddleware<GlobalExceptionHandler>();
 app.Run();
