@@ -29,7 +29,7 @@ public class EmailService
          
         makeEmailHeader();
         makeEmailBody();
-  
+        attachment();
         sendEmail();
       
     }
@@ -54,38 +54,37 @@ public class EmailService
 
         
             builder.TextBody = " Hello " + user.full_name + "\n" + "\n" +
-                               "Thanks for your order of the following items: " + "\n" + "\n"
+                               "Thanks for your order no: "+_order_id +" including the following items: " + "\n" + "\n"
                                + emailBody + "\n" +
                                "Your items is attached to this email." + "\n" + "\n" +
                                "" +
                                "Kind regards The Webshop Inc."; 
-                  
-      
-            
-            
-            WebClient webClient = new WebClient();
+      }
 
-            foreach (Avatar avatar in _emailRespository.GetOrdersAvatars(_order_id))
-            {
-                string fileName = avatar.avatar_name + ".png";
-                webClient.DownloadFile("https://robohash.org/"+fileName, Path.Combine(fileName));   
-                builder.Attachments.Add (Path.Combine(fileName));
+
+    public void attachment()
+    {
+        WebClient webClient = new WebClient();
+
+        foreach (Avatar avatar in _emailRespository.GetOrdersAvatars(_order_id))
+        {
+            string fileName = avatar.avatar_name + ".png";
+            webClient.DownloadFile("https://robohash.org/"+fileName, Path.Combine(fileName));   
+            builder.Attachments.Add (Path.Combine(fileName));
                 
-            }   
+        }   
             
-            message.Body = builder.ToMessageBody();
+        message.Body = builder.ToMessageBody();
 
 
-            foreach (Avatar avatar in _emailRespository.GetOrdersAvatars(_order_id))
-            {
-                string fileName = avatar.avatar_name + ".png";
-                File.Delete(Path.Combine(fileName));
-            }   
-            
-            
+        foreach (Avatar avatar in _emailRespository.GetOrdersAvatars(_order_id))
+        {
+            string fileName = avatar.avatar_name + ".png";
+            File.Delete(Path.Combine(fileName));
+        }   
     }
-
-   
+    
+    
     
     
     public void sendEmail()
