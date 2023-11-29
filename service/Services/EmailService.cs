@@ -9,8 +9,7 @@ public class EmailService
 {
     
     private readonly EmailRespository _emailRespository;
-    private  User user;
-    private  int _order_id;
+ 
     private MimeMessage message = new MimeMessage();
     private BodyBuilder builder = new BodyBuilder ();
     
@@ -24,18 +23,18 @@ public class EmailService
     
     public void SendEmail(int order_id)
     {
-        _order_id = order_id;
-        user = _emailRespository.GetOrdersUser(_order_id);
+       
+      User user = _emailRespository.GetOrdersUser(order_id);
          
-        makeEmailHeader();
-        makeEmailBody();
-        attachment();
+        makeEmailHeader(user);
+        makeEmailBody(order_id, user);
+        attachment(order_id);
         sendEmail();
       
     }
 
 
-    void makeEmailHeader()
+    void makeEmailHeader(User user)
     {
         message.From.Add(new MailboxAddress("The Webshop Inc.", Environment.GetEnvironmentVariable("fromemail")));
         message.To.Add(new MailboxAddress("Customer", user.Email));
@@ -44,17 +43,17 @@ public class EmailService
     }
     
     
-    public void makeEmailBody()
+    public void makeEmailBody(int order_id, User user)
     {
         string emailBody=""; 
 
-        foreach (Avatar avatar in _emailRespository.GetOrdersAvatars(_order_id))
+        foreach (Avatar avatar in _emailRespository.GetOrdersAvatars(order_id))
             emailBody = emailBody + avatar.avatar_name+"\n";
 
 
         
             builder.TextBody = " Hello " + user.full_name + "\n" + "\n" +
-                               "Thanks for your order no: "+_order_id +" including the following items: " + "\n" + "\n"
+                               "Thanks for your order no: "+order_id +" including the following items: " + "\n" + "\n"
                                + emailBody + "\n" +
                                "Your items is attached to this email." + "\n" + "\n" +
                                "" +
@@ -62,11 +61,11 @@ public class EmailService
       }
 
 
-    public void attachment()
+    public void attachment(int order_id)
     {
         WebClient webClient = new WebClient();
 
-        foreach (Avatar avatar in _emailRespository.GetOrdersAvatars(_order_id))
+        foreach (Avatar avatar in _emailRespository.GetOrdersAvatars(order_id))
         {
             string fileName = avatar.avatar_name + ".png";
             webClient.DownloadFile("https://robohash.org/"+fileName, Path.Combine(fileName));   
@@ -77,13 +76,12 @@ public class EmailService
         message.Body = builder.ToMessageBody();
 
 
-        foreach (Avatar avatar in _emailRespository.GetOrdersAvatars(_order_id))
+        foreach (Avatar avatar in _emailRespository.GetOrdersAvatars(order_id))
         {
             string fileName = avatar.avatar_name + ".png";
             File.Delete(Path.Combine(fileName));
         }   
     }
-    
     
     
     
