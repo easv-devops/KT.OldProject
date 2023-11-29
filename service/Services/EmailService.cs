@@ -10,8 +10,7 @@ public class EmailService
     
     private readonly EmailRespository _emailRespository;
  
-    private MimeMessage message = new MimeMessage();
-    private BodyBuilder builder = new BodyBuilder ();
+    
     
     
 
@@ -24,18 +23,21 @@ public class EmailService
     
     public void SendEmail(int order_id)
     {
-       
+     
+     MimeMessage message = new MimeMessage();
+     BodyBuilder builder = new BodyBuilder ();
+        
       User user = _emailRespository.GetOrdersUser(order_id);
          
-        makeEmailHeader(order_id, user);
-        makeEmailBody(order_id, user);
-        attachment(order_id);
-        sendEmail();
+        makeEmailHeader(order_id, user, message);
+        makeEmailBody(order_id, user, builder);
+        attachment(order_id,builder,message);
+        sendEmail(message);
       
     }
 
 
-    void makeEmailHeader(int order_id,User user)
+    void makeEmailHeader(int order_id,User user,MimeMessage message)
     {
         
         
@@ -46,7 +48,7 @@ public class EmailService
     }
     
     
-    public void makeEmailBody(int order_id, User user)
+    public void makeEmailBody(int order_id, User user,BodyBuilder builder)
     {
         string emailBody=""; 
 
@@ -64,7 +66,7 @@ public class EmailService
       }
 
 
-    public void attachment(int order_id)
+    public void attachment(int order_id,BodyBuilder builder, MimeMessage message)
     {
         WebClient webClient = new WebClient();
 
@@ -88,7 +90,7 @@ public class EmailService
     
     
     
-    public void sendEmail()
+    public void sendEmail(MimeMessage message)
     {
         using (var client = new MailKit.Net.Smtp.SmtpClient())
         {
