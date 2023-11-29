@@ -13,6 +13,7 @@ public class EmailService
     private MimeMessage message = new MimeMessage();
     private BodyBuilder builder = new BodyBuilder ();
     
+    
 
     public EmailService(EmailRespository emailRespository)
     {
@@ -26,7 +27,7 @@ public class EmailService
        
       User user = _emailRespository.GetOrdersUser(order_id);
          
-        makeEmailHeader(user);
+        makeEmailHeader(order_id, user);
         makeEmailBody(order_id, user);
         attachment(order_id);
         sendEmail();
@@ -34,9 +35,11 @@ public class EmailService
     }
 
 
-    void makeEmailHeader(User user)
+    void makeEmailHeader(int order_id,User user)
     {
-        message.From.Add(new MailboxAddress("The Webshop Inc.", Environment.GetEnvironmentVariable("fromemail")));
+        
+        
+        message.From.Add(new MailboxAddress("The Webshop Inc. order no: " + order_id, Environment.GetEnvironmentVariable("fromemail")));
         message.To.Add(new MailboxAddress("Customer", user.Email));
         message.Subject = "Your order confirmation";
 

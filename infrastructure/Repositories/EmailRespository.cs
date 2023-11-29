@@ -18,7 +18,7 @@ public class EmailRespository
         var sql = @"SELECT * 
         FROM account.users
         INNER JOIN account.order on account.order.user_id=account.users.user_id 
-        where account.order.user_id=@order_id";
+        where account.order.order_id=@order_id";
 
         using (var conn = _dataSource.OpenConnection())
         {

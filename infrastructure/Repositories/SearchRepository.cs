@@ -16,7 +16,7 @@ public class SearchRepository
 
     public IEnumerable<Avatar> SearchAvatar(string searchQuery)
     {
-        var sql = $@"SELECT * FROM account.avatar WHERE avatar_name ILIKE '%{searchQuery}%';";
+        var sql = $@"SELECT * FROM account.avatar WHERE avatar_name ILIKE '%{searchQuery}%' and deleted=false;";
 
         using (var conn = _dataSource.OpenConnection())
         {
