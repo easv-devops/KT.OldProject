@@ -23,9 +23,11 @@ public class AccountService
 
     public User? Authenticate(LoginCommandModel model)
     {
+        
         try
         {
             var passwordHash = _passwordHashRepository.GetByEmail(model.Email);
+           Console.WriteLine("Test  : "+passwordHash.Hash);
             var hashAlgorithm = new PasswordHash();
             var isValid = hashAlgorithm.VerifyHashedPassword(model.Password, passwordHash.Hash, passwordHash.Salt);
             if (isValid) return _userRepository.GetById(passwordHash.UserId);

@@ -68,6 +68,7 @@ public class AvatarController : Controller
     [Route("/avatar/{avatar_id}")]
     public ResponseDto getAvatarInformation([FromRoute]int avatar_id)
     {
+        
         return new ResponseDto()
         {
             MessageToClient = "Succesfully got all AvatarInformation",

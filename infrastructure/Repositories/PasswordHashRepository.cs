@@ -17,7 +17,7 @@ public class PasswordHashRepository
     {
         const string sql = $@"
     SELECT 
-    user_id as {nameof(PasswordHash.UserId)},
+    users.user_id as {nameof(PasswordHash.UserId)},
     hash as {nameof(PasswordHash.Hash)},
     salt as {nameof(PasswordHash.Salt)},
     algorithm as {nameof(PasswordHash.Algorithm)}
