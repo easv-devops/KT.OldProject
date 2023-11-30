@@ -3,6 +3,7 @@ using api.TransferModels;
 using infrastructure.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using service.Services;
+
 namespace api.Controllers;
 
 public class CustomerBuyController : Controller
@@ -36,7 +37,6 @@ public class CustomerBuyController : Controller
             MessageToClient = "Succesfully created an customerbuy ", 
             ResponseData = _customerBuyService.CreateCustomerBuy(customerbuy)
         };
-      
     }
     
     [HttpDelete]
@@ -44,11 +44,10 @@ public class CustomerBuyController : Controller
     [Route("/customerbuy/{customer_buy_id}")]
     public void deleteCustomerBuy([FromRoute] int customer_buy_id)
     {
-        
+        _customerBuyService.deleteCustomerBuy(customer_buy_id);
         new ResponseDto()
         {
             MessageToClient = "Successfully deleted customerbuy"
         };
-        _customerBuyService.deleteCustomerBuy(customer_buy_id);
     }
 }

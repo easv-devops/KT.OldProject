@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.Design;
 using infrastructure.DataModels;
 using infrastructure.Repositories;
 

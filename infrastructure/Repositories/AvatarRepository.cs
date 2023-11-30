@@ -80,5 +80,4 @@ RETURNING *";
             return conn.QueryFirst<string>(sql, new { avatar_id });
         }
     }
-
 }

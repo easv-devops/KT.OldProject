@@ -1,6 +1,6 @@
 using Dapper;
-using infrastructure.DataModels;
 using Npgsql;
+using infrastructure.DataModels;
 
 namespace infrastructure.Repositories;
 
@@ -13,7 +13,7 @@ public class UserRepository
         _dataSource = dataSource;
     }
 
-    public User Create(string full_name, string street, int zip,string email,  bool admin = false)
+    public User Create(RegisterCommandModel model)
     {
         const string sql = $@"
 INSERT INTO account.users (full_name, street, zip, email, admin)
@@ -29,7 +29,7 @@ RETURNING
 ";
         using (var connection = _dataSource.OpenConnection())
         {
-            return connection.QueryFirst<User>(sql, new { full_name, street, zip, email, admin });
+            return connection.QueryFirst<User>(sql, new { full_name = model.full_name, street = model.Street, zip = model.Zip, email = model.Email, admin = false });
         }
     }
 
@@ -70,5 +70,4 @@ WHERE user_id = 2;
             return connection.QueryFirstOrDefault<User>(sql);
         }
     }
-    
 }

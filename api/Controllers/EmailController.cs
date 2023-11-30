@@ -1,6 +1,4 @@
-﻿using api.Filters;
-using api.TransferModels;
-using infrastructure.DataModels;
+﻿using api.TransferModels;
 using Microsoft.AspNetCore.Mvc;
 using service.Services;
 
@@ -18,16 +16,12 @@ public class EmailController
     [HttpPost]
     [Route("/email/{order_id}")]
     public ResponseDto SendEmail([FromRoute] int order_id)
-    {
-    _emailService.SendEmail(order_id);
+    { 
+        _emailService.SendEmail(order_id);
         
         return new ResponseDto()
         {
             MessageToClient = "Successfully created an order",
-    };
+        }; 
     }
-    
-    
-    
-    
 }

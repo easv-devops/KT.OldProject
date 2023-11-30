@@ -1,6 +1,6 @@
 ﻿using Dapper;
-using infrastructure.DataModels;
 using Npgsql;
+using infrastructure.DataModels;
 
 namespace infrastructure.Repositories;
 
@@ -43,12 +43,4 @@ public class OrderRepository
             conn.QueryFirst<Order>(sql, new { order_id });
         }
     }
-
- 
-  
-    }
-    
-    
-    
-    
-    
+}

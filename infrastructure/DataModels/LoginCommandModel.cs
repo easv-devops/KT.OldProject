@@ -1,4 +1,4 @@
-namespace service.Models.Command;
+namespace infrastructure.DataModels;
 
 public class LoginCommandModel
 {

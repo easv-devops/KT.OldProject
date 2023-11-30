@@ -1,5 +1,6 @@
 ﻿using infrastructure.DataModels;
 using infrastructure.Repositories;
+
 namespace service.Services;
 
 public class CustomerBuyService

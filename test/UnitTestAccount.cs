@@ -40,7 +40,6 @@ public class Tests
     [TestCase("Birgitte", "j", 1000, "bobyugbhnj@cool.com", "123456789" )]
     [TestCase("Benter", "Bobogade 2", 1000, "cool.com", "123456789" )]
     [TestCase("Benter", "Bobogade 2", 555, "bobyugbhnj@cool.com", "123456789" )]
-
     public async Task CanNotCreateUserWithInvalidCharacter(string full_name, string street, int zip, string email, string password)
     {
         Helper.TriggerRebuild();

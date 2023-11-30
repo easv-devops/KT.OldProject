@@ -1,5 +1,4 @@
-﻿
-using Dapper;
+﻿using Dapper;
 using infrastructure.DataModels;
 using Npgsql;
 

@@ -1,6 +1,6 @@
 ﻿using Dapper;
-using infrastructure.DataModels;
 using Npgsql;
+using infrastructure.DataModels;
 
 namespace infrastructure.Repositories;
 
@@ -43,5 +43,4 @@ public class CustomerBuyRepository
             conn.QueryFirst<CustomerBuy>(sql, new {customer_buy_id});
         }
     }
-    
 }

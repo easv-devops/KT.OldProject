@@ -24,7 +24,6 @@ public class OrderController : Controller
             MessageToClient = "Succesfully got all Order",
             ResponseData = _orderService.GetAllOrder()
         };
-        
     }
 
     [HttpPost]
@@ -46,10 +45,10 @@ public class OrderController : Controller
     public void deleteOrder([FromRoute] int order_id)
     {
         HttpContext.Response.StatusCode = 204;
+        _orderService.deleteOrder(order_id);
         new ResponseDto()
         {
             MessageToClient = "Succesfully deleted an order"
         };
-        _orderService.deleteOrder(order_id);
     }
 }

@@ -21,16 +21,11 @@ public class AvatarController : Controller
     [Route("/avatar/all")]
     public ResponseDto GetAllAvatars()
     {
-        
         return new ResponseDto()
         {
-            
             MessageToClient = "Succesfully got all Avatars",
             ResponseData =  _avatarService.GetAllAvatars()
         };
-        
-        
-        
     }
     
     [HttpPost]
@@ -79,5 +74,4 @@ public class AvatarController : Controller
             ResponseData =  _avatarService.GetAvatarInformation(avatar_id)
         };
     }
-    
 }

@@ -1,7 +1,5 @@
-﻿
-using api.Filters;
+﻿using api.Filters;
 using api.TransferModels;
-using infrastructure.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using service.Services;
 

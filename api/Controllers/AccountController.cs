@@ -1,10 +1,8 @@
-using System.Security.Authentication;
 using api.Filters;
 using api.TransferModels;
 using infrastructure.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using service;
-using service.Models.Command;
 using service.Services;
 
 namespace api.Controllers;
@@ -27,28 +25,21 @@ public class AccountController : ControllerBase
     public ResponseDto Login([FromBody] LoginCommandModel model)
     {
         var user = _service.Authenticate(model);
-
-
-
+        
         if (ReferenceEquals(user, null))
             return new ResponseDto()
             {
                 MessageToClient = "Unauthorized ",
                 ResponseData =Unauthorized() 
             };
-            
         
         var token = _jwtService.IssueToken(SessionData.FromUser(user!));
-        
         
         return new ResponseDto()
         {
             MessageToClient = "Welcome "+ user.full_name,
             ResponseData =new { token }
         };
-        
-        
-        
     }
 
     [HttpPost]
@@ -64,10 +55,9 @@ public class AccountController : ControllerBase
 
     [HttpGet]
     [Route("api/account/getinfo")]
-
     public User GetInfo()
     {
+        //Hardcoded til account 2?
         return _service.GetAccountInfo();
     }
-    
 }

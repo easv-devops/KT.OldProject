@@ -3,7 +3,6 @@ using infrastructure.DataModels;
 using infrastructure.Repositories;
 using Microsoft.Extensions.Logging;
 using Service;
-using service.Models.Command;
 using PasswordHash = Service.PasswordHash;
 
 namespace service.Services;
@@ -44,7 +43,7 @@ public class AccountService
         var hashAlgorithm = new PasswordHash();
         var salt = hashAlgorithm.GenerateSalt();
         var hash = hashAlgorithm.HashPassword(model.password, salt);
-        var user = _userRepository.Create(model.full_name, model.Street,model.Zip, model.Email);
+        var user = _userRepository.Create(model);
         _passwordHashRepository.Create(user.user_id, hash, salt, hashAlgorithm.GetName());
         return user;
     }

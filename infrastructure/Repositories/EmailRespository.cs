@@ -24,26 +24,18 @@ public class EmailRespository
         {
             return conn.QueryFirst<User>(sql, new { order_id });
         }
-
     }
     
-
-   
     public IEnumerable<Avatar> GetOrdersAvatars(int order_id)
     {
-        
         var sql = @" SELECT * 
         FROM account.avatar
         INNER JOIN account.customer_buy on account.customer_buy.avatar_id=account.avatar.avatar_id 
          where account.customer_buy.order_id=@order_id";
-        
         
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.Query<Avatar>(sql, new { order_id });
         }
     }
-   
-    
-    
 }
