@@ -12,7 +12,7 @@ import { TokenService } from "src/services/token.service";
       <ion-list [inset]="true">
         <ion-item [id]="'card_'+user.id" *ngFor="let user of users$ | async">
           <ion-label>
-            <h2>{{user.fullName}}</h2>
+            <h2>{{user.full_name}}</h2>
             <p>Email: {{user.email}}</p>
           </ion-label>
         </ion-item>

@@ -3,9 +3,9 @@ import { FormBuilder, Validators } from "@angular/forms";
 import {firstValueFrom} from "rxjs";
 import { ToastController } from "@ionic/angular";
 import { CustomValidators } from "../custom-validators";
-import { AccountService} from "./account.service";
+import {AccountService, ResponseDto} from "./account.service";
 import {environment} from "../../environments/environment.prod";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   template: `
@@ -15,10 +15,10 @@ import {HttpClient} from "@angular/common/http";
         <ion-list>
 
           <ion-item>
-            <ion-input formControlName="fullName" data-testid="fullNameInput" placeholder="Your full name"
+            <ion-input formControlName="full_name" data-testid="full_nameInput" placeholder="Your full name"
                        label-placement="floating">
               <div slot="label">Name
-                <ion-text *ngIf="fullName.touched && fullName.invalid" color="danger">
+                <ion-text *ngIf="full_name.touched && full_name.invalid" color="danger">
                   Required
                 </ion-text>
               </div>
@@ -95,23 +95,38 @@ import {HttpClient} from "@angular/common/http";
 
 export class RegisterComponent {
   form = this.fb.group({
-    fullName: ['', Validators.required],
-    street:['', Validators.required],
-    zip:[0, Validators.required],
+    full_name: ['', Validators.required],
+    street: ['', Validators.required],
+    zip: [0, Validators.required],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     passwordRepeat: ['', [Validators.required, CustomValidators.matchOther('password')]]
   });
 
 
+  get full_name() {
+    return this.form.controls.full_name;
+  }
 
-  get fullName() { return this.form.controls.fullName; }
-  get street() { return this.form.controls.street; }
-  get zip() { return this.form.controls.zip; }
-  get email() { return this.form.controls.email; }
-  get password() { return this.form.controls.password }
-  get passwordRepeat() { return this.form.controls.passwordRepeat }
+  get street() {
+    return this.form.controls.street;
+  }
 
+  get zip() {
+    return this.form.controls.zip;
+  }
+
+  get email() {
+    return this.form.controls.email;
+  }
+
+  get password() {
+    return this.form.controls.password
+  }
+
+  get passwordRepeat() {
+    return this.form.controls.passwordRepeat
+  }
 
 
   constructor(
@@ -123,15 +138,22 @@ export class RegisterComponent {
   }
 
 
-
   async submit() {
-    if (this.form.invalid) return;
-    await firstValueFrom(this.http.post<any>(environment.baseUrl + '/api/account/register', this.form.getRawValue()));
+    try {
+      if (this.form.invalid) return;
+      await firstValueFrom(this.http.post<ResponseDto<any>>(environment.baseUrl + '/api/account/register', this.form.value));
 
-    (await this.toast.create({
-      message: "Thank you for signing up!",
-      color: "success",
-      duration: 5000
+      (await this.toast.create({
+        message: "Thank you for signing up!",
+        color: "success",
+        duration: 5000
+      })).present();
+    } catch (e) {
+      (await this.toast.create({
+      message: (e as HttpErrorResponse).error.messageToClient,
+        color :"danger",
+        duration: 5000
     })).present();
+    }
   }
 }

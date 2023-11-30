@@ -9,7 +9,7 @@ import { AccountService, User } from "./account.service";
       <form>
         <ion-list class="field-list" *ngIf="account$ | async as account;">
           <ion-item>
-            <ion-input label="Name" [value]="account.fullName"></ion-input>
+            <ion-input label="Name" [value]="account.full_name"></ion-input>
           </ion-item>
 
           <ion-item>

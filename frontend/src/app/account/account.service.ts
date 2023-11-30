@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 
 export interface User {
     id: number;
-    fullName: string;
+    full_name: string;
     email: string;
     isAdmin: boolean;
 }
@@ -14,11 +14,16 @@ export interface Credentials {
 }
 
 export interface Registration {
-    fullName: string;
-    address: string;
-    zipcode: number;
+    full_name: string;
+    street: string;
+    zip: number;
     email: string;
     password: string;
+}
+
+export class ResponseDto<T> {
+  responseData?: T;
+  messageToClient?: string;
 }
 
 @Injectable()

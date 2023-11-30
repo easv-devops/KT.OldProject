@@ -4,7 +4,6 @@ import { environment } from "src/environments/environment.prod";
 
 export interface ResponseDto<T> {
   responseData: T;
-
 }
 export interface Avatar {
   avatar_id: number;
