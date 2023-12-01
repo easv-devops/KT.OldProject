@@ -7,6 +7,10 @@ import { Router } from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment.prod";
 
+export interface ResponseDto<T> {
+  responseData: T;
+}
+
 @Component({
   template: `
       <app-title title="Login"></app-title>
@@ -68,10 +72,8 @@ export class LoginComponent {
 
   async submit() {
     if (this.form.invalid) return;
-    const { token } = await firstValueFrom(this.http.post<{ token: string }>(environment.baseUrl + '/api/account/login', this.form.getRawValue()));
-    this.token.setToken(token);
-
-    this.router.navigateByUrl('/home');
+    const response = await firstValueFrom(this.http.post<ResponseDto<TokenService>>(environment.baseUrl + '/api/account/login', this.form.value));
+    this.token.setToken(JSON.stringify(response.responseData));
 
     (await this.toast.create({
       message: "Welcome back!",
