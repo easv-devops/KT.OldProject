@@ -6,6 +6,7 @@ import { TokenService } from "src/services/token.service";
 import { Router } from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment.prod";
+import { jwtDecode } from "jwt-decode";
 
 export interface ResponseDto<T> {
   responseData: T;
@@ -74,6 +75,29 @@ export class LoginComponent {
     if (this.form.invalid) return;
     const response = await firstValueFrom(this.http.post<ResponseDto<TokenService>>(environment.baseUrl + '/api/account/login', this.form.value));
     this.token.setToken(JSON.stringify(response.responseData));
+
+
+
+    const encodedToken = JSON.stringify(sessionStorage.getItem("token"));
+    const decoded = jwtDecode(encodedToken);
+
+    console.log(decoded);
+
+    /* prints:
+     * {
+     *   foo: "bar",
+     *   exp: 1393286893,
+     *   iat: 1393268893
+     * }
+     */
+
+// decode header by passing in options (useful for when you need `kid` to verify a JWT):
+    const decodedHeader = jwtDecode(encodedToken, { header: true });
+    console.log(decodedHeader);
+
+
+
+
 
     (await this.toast.create({
       message: "Welcome back!",
