@@ -6,10 +6,7 @@ namespace Service;
 
 public class PasswordHash 
 {
-    public const string Name = "argon2id";
-
-    public  string GetName() => Name;
-
+   
     public  string HashPassword(string password, string salt)
     {
         using var hashAlgo = new Argon2id(Encoding.UTF8.GetBytes(password))

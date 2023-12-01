@@ -81,11 +81,11 @@ public class EmailService
         message.Body = builder.ToMessageBody();
 
 
-        foreach (Avatar avatar in _emailRespository.GetOrdersAvatars(order_id))
-        {
-            string fileName = avatar.avatar_name + ".png";
-            File.Delete(Path.Combine(fileName));
-        }   
+       // foreach (Avatar avatar in _emailRespository.GetOrdersAvatars(order_id))
+      //  {
+      //      string fileName = avatar.avatar_name + ".png";
+      //      File.Delete(Path.Combine(fileName));
+     //   }   
     }
     
     
