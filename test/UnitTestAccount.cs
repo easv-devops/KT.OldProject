@@ -59,4 +59,34 @@ public class Tests
            httpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
     }
+    [TestCase("bobyugbhnj@cool.com", "123456789" )]
+    public async Task UserCanSuccessfullyLogin( string email, string password)
+    {
+        Helper.TriggerRebuild();
+        var testUser = new User
+        {
+            full_name = "Bent",
+            street = "Bentgade",
+            zip = 1234,
+            email = email,
+            password = password
+        };
+        
+        await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "api/account/register", testUser);
+        
+        testUser = new User ()
+        {
+            email = email,
+            password = password
+        };
+        
+        var httpResponse = await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "api/account/login", testUser);
+        var responseBodyString = await httpResponse.Content.ReadAsStringAsync();
+        var obj = JsonConvert.DeserializeObject<ResponseDto<User>>(responseBodyString);
+        
+        await using (await Helper.DataSource.OpenConnectionAsync())
+        {
+            obj.MessageToClient.Should().Be("Welcome Bent");
+        }
+    }
 }
