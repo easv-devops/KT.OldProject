@@ -18,14 +18,7 @@ public class UserRepository
         const string sql = $@"
 INSERT INTO account.users (full_name, street, zip, email, admin)
 VALUES (@full_name, @street, @zip,@email, @admin)
-RETURNING
-    user_id as {nameof(User.user_id)},
-    full_name as {nameof(User.full_name)},
-    street as {nameof(User.Street)},
-    zip as {nameof(User.Zip)},
-    email as {nameof(User.Email)},
-    admin as {nameof(User.admin)}
-    ;
+RETURNING *;
 ";
         using (var connection = _dataSource.OpenConnection())
         {
