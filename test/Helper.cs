@@ -52,7 +52,7 @@ DROP SCHEMA IF EXISTS account CASCADE;
 CREATE SCHEMA IF NOT EXISTS account;
 create table account.users
 (
-    user_id    SERIAL PRIMARY KEY,
+    user_id         SERIAL PRIMARY KEY,
     full_name  VARCHAR(50)  NOT NULL,
     street     VARCHAR(50)   not NULL,
     zip        integer   not NULL,
@@ -71,17 +71,17 @@ create table account.avatar
 
 create table account.order
 (
-    id SERIAL PRIMARY KEY,
+    order_id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES account.users (user_id)
 );
 
 create table account.customer_buy
 (
-    id SERIAL PRIMARY KEY,
+    customer_buy_id SERIAL PRIMARY KEY,
     order_id INTEGER NOT NUll,
-    avatar_id INTEGER NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES account.order (id),
+    avatar_id INTEGER NOT NUll,
+    FOREIGN KEY (order_id) REFERENCES account.order (order_id),
     FOREIGN KEY (avatar_id) REFERENCES account.avatar (avatar_id)
 );
 
@@ -90,8 +90,7 @@ create table account.password_hash
     user_id   integer      NOT NULL,
     hash      VARCHAR(350) NOT NULL,
     salt      VARCHAR(180) NOT NULL,
-    algorithm VARCHAR(12)  NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES account.users (user_id)
+     FOREIGN KEY (user_id) REFERENCES account.users (user_id)
 );
 ";
 }
