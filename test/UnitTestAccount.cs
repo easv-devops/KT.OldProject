@@ -62,15 +62,19 @@ public class Tests
     [TestCase("bobyugbhnj@cool.com", "123456789" )]
     public async Task UserCanSuccessfullyLogin( string email, string password)
     {
-        
-        
         Helper.TriggerRebuild();
-        await using (var conn = await Helper.DataSource.OpenConnectionAsync())
+        var testUser = new User
         {
-            conn.Execute("INSERT INTO account.users (full_name, street, zip, email, password) VALUES (Bent, Bentgade, 1234, @email, @password) RETURNING *;");
-        }
+            full_name = "Bent",
+            street = "Bentgade",
+            zip = 1234,
+            email = email,
+            password = password
+        };
         
-        var testUser = new User ()
+        await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "api/account/register", testUser);
+        
+        testUser = new User ()
         {
             email = email,
             password = password
@@ -82,8 +86,7 @@ public class Tests
         
         await using (await Helper.DataSource.OpenConnectionAsync())
         {
-            obj.ResponseData.email.Should().BeEquivalentTo(testUser.email);
+            obj.MessageToClient.Should().Be("Welcome Bent");
         }
     }
-    
 }
