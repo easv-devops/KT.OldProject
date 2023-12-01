@@ -17,10 +17,9 @@ public class PasswordHashRepository
     {
         const string sql = $@"
     SELECT 
-    users.user_id as {nameof(PasswordHash.UserId)},
+    password_hash.user_id as {nameof(PasswordHash.UserId)},
     hash as {nameof(PasswordHash.Hash)},
-    salt as {nameof(PasswordHash.Salt)},
-    algorithm as {nameof(PasswordHash.Algorithm)}
+    salt as {nameof(PasswordHash.Salt)}
     FROM account.password_hash
     JOIN account.users ON account.password_hash.user_id = account.users.user_id
     WHERE email = @email;
