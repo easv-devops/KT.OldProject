@@ -2,8 +2,8 @@ namespace infrastructure.DataModels;
 
 public class PasswordHash
 {
-    public int UserId { get; set; }
-    public required string Hash { get; set; }
-    public required string Salt { get; set; }
-    public required string Algorithm { get; set; }
+    public int user_id { get; set; }
+    public required string hash { get; set; }
+    public required string salt { get; set; }
+    
 }

@@ -27,10 +27,10 @@ public class AccountService
         try
         {
             var passwordHash = _passwordHashRepository.GetByEmail(model.Email);
-           Console.WriteLine("Test  : "+passwordHash.Hash);
+           Console.WriteLine("Test  : "+passwordHash.hash);
             var hashAlgorithm = new PasswordHash();
-            var isValid = hashAlgorithm.VerifyHashedPassword(model.Password, passwordHash.Hash, passwordHash.Salt);
-            if (isValid) return _userRepository.GetById(passwordHash.UserId);
+            var isValid = hashAlgorithm.VerifyHashedPassword(model.Password, passwordHash.hash, passwordHash.salt);
+            if (isValid) return _userRepository.GetById(passwordHash.user_id);
         }
         catch (Exception e)
         {
