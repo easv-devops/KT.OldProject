@@ -16,7 +16,7 @@ public class AccountService
     private readonly PasswordHashRepository _passwordHashRepository;
     private readonly UserRepository _userRepository;
 
-    public AccountService(ILogger<AccountService> logger, UserRepository userRepository,
+    public AccountService( UserRepository userRepository,
         PasswordHashRepository passwordHashRepository)
     {
         
@@ -27,19 +27,14 @@ public class AccountService
     public User? Authenticate(LoginCommandModel model)
     {
         
-        try
-        {
+       
            var passwordHash = _passwordHashRepository.GetByEmail(model.Email);
-           var isValid = HashPassword(model.Password, passwordHash.salt).SequenceEqual(passwordHash.hash);
-           if (isValid) return _userRepository.GetById(passwordHash.user_id);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
+           
+            if (HashPassword(model.Password, passwordHash.salt).SequenceEqual(passwordHash.hash)) 
+               return _userRepository.GetById(passwordHash.user_id);
+           else
             throw new ValidationException("Wrong Username or Password");
-        }
-
-        return null;
+        
     }
 
     
