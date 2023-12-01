@@ -25,21 +25,6 @@ public class AccountController : ControllerBase
     public ResponseDto Login([FromBody] LoginCommandModel model)
     {
         var user = _service.Authenticate(model);
-
-        if (ReferenceEquals(user, null))
-        {
-            HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized; 
-            return new ResponseDto()
-            {
-                MessageToClient = "Unauthorized ",
-                ResponseData =Unauthorized() 
-            };
-            
-            
-        }
-            
-            
-        
         var token = _jwtService.IssueToken(SessionData.FromUser(user!));
         
         return new ResponseDto()

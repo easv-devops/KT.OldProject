@@ -1,22 +1,25 @@
+using System.ComponentModel.DataAnnotations;
 using System.Security.Authentication;
+using System.Security.Cryptography;
+using System.Text;
 using infrastructure.DataModels;
 using infrastructure.Repositories;
+using Konscious.Security.Cryptography;
 using Microsoft.Extensions.Logging;
-using Service;
-using PasswordHash = Service.PasswordHash;
+
 
 namespace service.Services;
 
 public class AccountService
 {
-    private readonly ILogger<AccountService> _logger;
+    
     private readonly PasswordHashRepository _passwordHashRepository;
     private readonly UserRepository _userRepository;
 
     public AccountService(ILogger<AccountService> logger, UserRepository userRepository,
         PasswordHashRepository passwordHashRepository)
     {
-        _logger = logger;
+        
         _userRepository = userRepository;
         _passwordHashRepository = passwordHashRepository;
     }
@@ -26,34 +29,46 @@ public class AccountService
         
         try
         {
-            var passwordHash = _passwordHashRepository.GetByEmail(model.Email);
-           Console.WriteLine("Test  : "+passwordHash.hash);
-            var hashAlgorithm = new PasswordHash();
-            var isValid = hashAlgorithm.VerifyHashedPassword(model.Password, passwordHash.hash, passwordHash.salt);
-            if (isValid) return _userRepository.GetById(passwordHash.user_id);
+           var passwordHash = _passwordHashRepository.GetByEmail(model.Email);
+           var isValid = HashPassword(model.Password, passwordHash.salt).SequenceEqual(passwordHash.hash);
+           if (isValid) return _userRepository.GetById(passwordHash.user_id);
         }
         catch (Exception e)
         {
-            _logger.LogError("Authenticate error: {Message}", e);
+            Console.WriteLine(e);
+            throw new ValidationException("Wrong Username or Password");
         }
 
         return null;
     }
 
+    
     public User Register(RegisterCommandModel model)
     {
-        var hashAlgorithm = new PasswordHash();
-        var salt = hashAlgorithm.GenerateSalt();
-        var hash = hashAlgorithm.HashPassword(model.password, salt);
+        var salt = Convert.ToBase64String(RandomNumberGenerator.GetBytes(128));
+        var hash = HashPassword(model.password, salt);
         var user = _userRepository.Create(model);
         _passwordHashRepository.Create(user.user_id, hash, salt);
         return user;
     }
 
+ 
+    public  string HashPassword(string password, string salt)
+    {
+        using var hashAlgo = new Argon2id(Encoding.UTF8.GetBytes(password))
+        {
+            Salt = Convert.FromBase64String(salt),
+            MemorySize = 12288,
+            Iterations = 3,
+            DegreeOfParallelism = 1,
+        };
+        return Convert.ToBase64String(hashAlgo.GetBytes(256));
+           
+    }
+    
     public User GetAccountInfo()
     {
         return _userRepository.GetAccountInfo();
 
     }
-    
 }
