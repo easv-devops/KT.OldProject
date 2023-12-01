@@ -28,11 +28,11 @@ public class PasswordHashRepository
         return connection.QuerySingle<PasswordHash>(sql, new { email });
     }
     
-    public void Create(int userId, string hash, string salt, string algorithm)
+    public void Create(int userId, string hash, string salt)
     {
-        const string sql = $@"INSERT INTO account.password_hash (user_id, hash, salt, algorithm) VALUES (@userId, @hash, @salt, @algorithm)";
+        const string sql = $@"INSERT INTO account.password_hash (user_id, hash, salt) VALUES (@userId, @hash, @salt)";
         using var connection = _dataSource.OpenConnection();
-        connection.Execute(sql, new { userId, hash, salt, algorithm });
+        connection.Execute(sql, new { userId, hash, salt  });
     }
 }
 

@@ -46,7 +46,7 @@ public class AccountService
         var salt = hashAlgorithm.GenerateSalt();
         var hash = hashAlgorithm.HashPassword(model.password, salt);
         var user = _userRepository.Create(model);
-        _passwordHashRepository.Create(user.user_id, hash, salt, "argon2id");
+        _passwordHashRepository.Create(user.user_id, hash, salt);
         return user;
     }
 

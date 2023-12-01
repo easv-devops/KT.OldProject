@@ -23,7 +23,7 @@ RETURNING
     full_name as {nameof(User.full_name)},
     street as {nameof(User.Street)},
     zip as {nameof(User.Zip)},
-    email as {nameof(User.Email)},
+    users.email as {nameof(User.Email)},
     admin as {nameof(User.IsAdmin)}
     ;
 ";
