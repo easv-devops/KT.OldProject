@@ -62,20 +62,27 @@ public class Tests
     [TestCase("bobyugbhnj@cool.com", "123456789" )]
     public async Task UserCanSuccessfullyLogin( string email, string password)
     {
-        // Create a new user.
-        var testUser = new User
+        
+        
+        Helper.TriggerRebuild();
+        await using (var conn = await Helper.DataSource.OpenConnectionAsync())
         {
-            email = "bobyugbhnj@cool.com",
-            password = "123456789"
+            conn.Execute("INSERT INTO account.users (full_name, street, zip, email, password) VALUES (Bent, Bentgade, 1234, @email, @password) RETURNING *;");
+        }
+        
+        var testUser = new User ()
+        {
+            email = email,
+            password = password
         };
-
-        var httpResponse  =await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "api/account/login", testUser);
+        
+        var httpResponse = await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "api/account/login", testUser);
         var responseBodyString = await httpResponse.Content.ReadAsStringAsync();
         var obj = JsonConvert.DeserializeObject<ResponseDto<User>>(responseBodyString);
-
+        
         await using (await Helper.DataSource.OpenConnectionAsync())
         {
-            obj.ResponseData.Should().Be(HttpStatusCode.OK);
+            obj.ResponseData.email.Should().BeEquivalentTo(testUser.email);
         }
     }
     
