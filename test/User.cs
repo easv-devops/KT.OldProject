@@ -6,6 +6,7 @@ namespace test;
 
 public class User
 {
+    public int user_id { get; set; }
     public string full_name { get; set; }
     public string street { get; set; }
     public int zip { get; set; }
@@ -26,4 +27,10 @@ public class ResponseDto<T>
 {
     public string MessageToClient { get; set; }
     public T? ResponseData { get; set; }
+}
+
+public class Order
+{
+    public int order_id { get; set; }
+    public int user_id { get; set; }
 }
