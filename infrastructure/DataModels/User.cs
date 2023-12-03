@@ -8,5 +8,5 @@ public class User
     public required string Street { get; set; }
     public required int Zip { get; set; }
     public required string Email { get; set; }
-    public required bool IsAdmin { get; set; }
+    public required bool admin { get; set; }
 }
