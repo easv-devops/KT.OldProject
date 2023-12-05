@@ -2,16 +2,17 @@ using System.Security.Cryptography;
 using System.Text;
 using Konscious.Security.Cryptography;
 
-namespace service.Services;
+namespace Service;
 
-public class PasswordHashService
+public class PasswordHash 
 {
+   
     public  string HashPassword(string password, string salt)
     {
         using var hashAlgo = new Argon2id(Encoding.UTF8.GetBytes(password))
         {
             Salt = Convert.FromBase64String(salt),
-            MemorySize = 12288,
+                MemorySize = 12288,
             Iterations = 3,
             DegreeOfParallelism = 1,
         };
@@ -29,4 +30,5 @@ public class PasswordHashService
         return Convert.ToBase64String(RandomNumberGenerator.GetBytes(128));
             
     }
+    
 }

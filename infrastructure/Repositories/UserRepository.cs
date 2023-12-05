@@ -13,39 +13,61 @@ public class UserRepository
         _dataSource = dataSource;
     }
 
-    public UserModel Create(RegisterModel model)
+    public User Create(RegisterCommandModel model)
     {
         const string sql = $@"
-INSERT INTO webshop.users (full_name, email, admin)
-VALUES (@name, @mail, @admin)
+INSERT INTO account.users (full_name, street, zip, email, admin)
+VALUES (@full_name, @street, @zip,@email, @admin)
 RETURNING
-    user_id as {nameof(UserModel.Id)},
-    full_name as {nameof(UserModel.Name)},
-    email as {nameof(UserModel.Mail)},
-    admin as {nameof(UserModel.Admin)}
+    user_id as {nameof(User.user_id)},
+    full_name as {nameof(User.full_name)},
+    street as {nameof(User.Street)},
+    zip as {nameof(User.Zip)},
+    users.email as {nameof(User.Email)},
+    admin as {nameof(User.IsAdmin)}
     ;
 ";
         using (var connection = _dataSource.OpenConnection())
         {
-            return connection.QueryFirst<UserModel>(sql,
-                new { name = model.Name, mail = model.Mail, admin = model.Admin });
+            return connection.QueryFirst<User>(sql, new { full_name = model.full_name, street = model.Street, zip = model.Zip, email = model.Email, admin = false });
         }
     }
 
-    public UserModel? GetById(int id)
+    public User? GetById(int id)
     {
         const string sql = $@"
 SELECT
-   user_id as {nameof(UserModel.Id)},
-    full_name as {nameof(UserModel.Name)},
-    email as {nameof(UserModel.Mail)},
-    admin as {nameof(UserModel.Admin)}
-FROM webshop.users
+   user_id as {nameof(User.user_id)},
+    full_name as {nameof(User.full_name)},
+    street as {nameof(User.Street)},
+    zip as {nameof(User.Zip)},
+    email as {nameof(User.Email)},
+    admin as {nameof(User.IsAdmin)}
+FROM account.users
 WHERE user_id = @id;
 ";
         using (var connection = _dataSource.OpenConnection())
         {
-            return connection.QueryFirstOrDefault<UserModel>(sql, new { id });
+            return connection.QueryFirstOrDefault<User>(sql, new { id });
+        }
+    }
+
+    public User GetAccountInfo()
+    {
+        const string sql = $@"
+SELECT
+   user_id as {nameof(User.user_id)},
+    full_name as {nameof(User.full_name)},
+    street as {nameof(User.Street)},
+    zip as {nameof(User.Zip)},
+    email as {nameof(User.Email)},
+    admin as {nameof(User.IsAdmin)}
+FROM account.users
+WHERE user_id = 2;
+";
+        using (var connection = _dataSource.OpenConnection())
+        {
+            return connection.QueryFirstOrDefault<User>(sql);
         }
     }
 }
