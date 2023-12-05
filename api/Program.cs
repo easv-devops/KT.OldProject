@@ -1,14 +1,11 @@
-using api;
-using api.Middleware;
-using infrastructure;
+using System.Text;
 using infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using service;
 using service.Services;
-using EmailService = service.Services.EmailService;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 
 if (builder.Environment.IsDevelopment())
@@ -22,11 +19,9 @@ if (builder.Environment.IsProduction())
     builder.Services.AddNpgsqlDataSource(Utilities.ProperlyFormattedConnectionString);
 }
 
-//Test
-
 builder.Services.AddSingleton<UserRepository>();
 builder.Services.AddSingleton<PasswordHashRepository>();
-builder.Services.AddSingleton<AccountService>();
+builder.Services.AddSingleton<LoginService>();
 builder.Services.AddSingleton<AvatarService>();
 builder.Services.AddSingleton<AvatarRepository>();
 builder.Services.AddSingleton<CustomerBuyRepository>();
@@ -36,10 +31,7 @@ builder.Services.AddSingleton<OrderService>();
 builder.Services.AddSingleton<SearchService>();
 builder.Services.AddSingleton<SearchRepository>();
 builder.Services.AddSingleton<EmailService>();
-builder.Services.AddSingleton<EmailRespository>();
-
-builder.Services.AddJwtService();
-builder.Services.AddSwaggerGenWithBearerJWT();
+builder.Services.AddSingleton<EmailRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -47,6 +39,31 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var frontEndRelativePath = "./../frontend/www";
 builder.Services.AddSpaStaticFiles(conf => conf.RootPath = frontEndRelativePath);
+
+
+
+// Add services to the container.
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+
+//For JWT
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration.GetValue<string>("Jwt:Issuer"),
+        ValidAudience = builder.Configuration.GetValue<string>("Jwt:Audience"),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("Jwt:Key")))
+    };
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -63,11 +80,8 @@ app.UseCors(options => {
         .AllowCredentials();
 });
 
-app.UseSecurityHeaders();
-
-//app.UseSpaStaticFiles();
-//app.UseSpa(conf => { conf.Options.SourcePath = frontEndRelativePath; });
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
-app.UseMiddleware<GlobalExceptionHandler>();
+app.UseHttpsRedirection();
 app.Run();
