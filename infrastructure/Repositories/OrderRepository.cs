@@ -57,14 +57,23 @@ public class OrderRepository
             conn.QueryFirst<Order>(sql, new { user_id });
 
             var sql2 =
-                @"select * from account.order where user_id= (@user_id)  and order_id = ( SELECT MAX(order_id) FROM account.order);";                                                                                     
-            
+                @"select * from account.order where user_id= (@user_id)  and order_id = ( SELECT MAX(order_id) FROM account.order);";
+
             var result = conn.QueryFirst<Order>(sql2, new { user_id }, transaction);
-              
-            
-            
-             
-             transaction.Commit();
+
+
+            for (int i = 0; i < avatars.Length; i++)
+            {
+
+                var sql3 =
+                    @"INSERT INTO account.customer_buy (order_id, avatar_id) VALUES (@order_id, @avatar_id) RETURNING *;";
+
+                conn.QueryFirst(sql3, new { order_id = result.order_id, avatar_id = avatars[i] }, transaction);
+            }
+            transaction.Commit();
+        }
+
+      
 
         }
 
@@ -74,4 +83,3 @@ public class OrderRepository
         
         
     }
-}
