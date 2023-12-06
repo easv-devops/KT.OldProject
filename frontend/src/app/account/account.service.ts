@@ -5,11 +5,11 @@ export interface User {
     user_id: number;
     full_name: string;
     email: string;
-<<<<<<< Updated upstream
+
     admin: string;
-=======
+
     Admin: string;
->>>>>>> Stashed changes
+
 }
 
 export interface Credentials {

@@ -29,11 +29,17 @@ public class LoginController : ControllerBase
         {
             var token = _service.Generate(user);
             
-            return new ResponseDto{token,"Hey here ya go!"};
+            return new ResponseDto()
+            {
+                MessageToClient = "Welcome "+ user.Name,
+                ResponseData =new { token }
+            };
         }
-
-        return NotFound("User not found");
-
+        return new ResponseDto()
+        {
+            MessageToClient = "it ain work",
+            ResponseData = new {  }
+        };
     }
     
     [HttpPost]
