@@ -81,6 +81,7 @@ export class LoginComponent {
   async submit() {
     if (this.form.invalid) return;
 
+<<<<<<< Updated upstream
     console.log(this.form.getRawValue())
 
     const response = this.http.post<{ token: string }>('/api/account/login', this.form.getRawValue());
@@ -88,6 +89,10 @@ export class LoginComponent {
     console.log("this is the token " + response);
 
     this.token.setToken(JSON.stringify(response));
+=======
+    const response = await firstValueFrom(this.http.post<ResponseDto<TokenService>>(environment.baseUrl + '/api/account/login', this.form.value));
+    this.token.setToken(JSON.stringify(response.responseData));
+>>>>>>> Stashed changes
 
 
     //const encodedToken = JSON.stringify(sessionStorage.getItem("token"));

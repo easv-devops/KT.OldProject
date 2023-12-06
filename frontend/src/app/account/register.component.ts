@@ -25,6 +25,11 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
             </ion-input>
           </ion-item>
 
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
           <ion-item>
             <ion-input formControlName="email" data-testid="emailInput" placeholder="Email (also used for login)"
                        label-placement="floating">
@@ -74,8 +79,6 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 export class RegisterComponent {
   form = this.fb.group({
     full_name: ['', Validators.required],
-    street: ['', Validators.required],
-    zip: [0, Validators.required],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     passwordRepeat: ['', [Validators.required, CustomValidators.matchOther('password')]]
