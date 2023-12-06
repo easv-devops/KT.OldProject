@@ -32,7 +32,7 @@ public class LoginController : ControllerBase
             return new ResponseDto()
             {
                 MessageToClient = "Welcome "+ user.Name,
-                ResponseData =new { token }
+                ResponseData = new { token }
             };
         }
         return new ResponseDto()

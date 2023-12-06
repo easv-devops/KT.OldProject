@@ -15,15 +15,9 @@ import { AccountService, User } from "./account.service";
           <ion-item>
             <ion-input label="Email" [value]="account.email"></ion-input>
           </ion-item>
-
-<<<<<<< Updated upstream
           <ion-item>
             <ion-input label="Admin" [value]="account.admin"></ion-input>
           </ion-item>
-
-
-=======
->>>>>>> Stashed changes
         </ion-list>
         <ion-button>Update</ion-button>
       </form>

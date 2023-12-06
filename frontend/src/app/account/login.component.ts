@@ -81,11 +81,15 @@ export class LoginComponent {
   async submit() {
     if (this.form.invalid) return;
 
-    const response = this.http.post<ResponseDto<string>>('/api/account/login', this.form);
+    console.log(this.form.getRawValue());
 
-    console.log(response);
 
+    const response = (this.http.post<ResponseDto<TokenService>>('/api/account/login', this.form.getRawValue()));
     this.token.setToken(JSON.stringify(response));
+
+
+
+
 
 
     //const encodedToken = JSON.stringify(sessionStorage.getItem("token"));

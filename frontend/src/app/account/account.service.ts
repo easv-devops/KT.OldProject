@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import {environment} from "../../environments/environment";
 
 export interface User {
     user_id: number;
@@ -30,13 +31,12 @@ export class ResponseDto<T> {
 
 @Injectable()
 export class AccountService {
-    constructor(private readonly http: HttpClient) { }
+  constructor(private readonly http: HttpClient) {
+  }
 
-    getCurrentUser() {
-        return this.http.get<User>('/api/account/getinfo');
-    }
+  getCurrentUser() {
+    return this.http.get<User>('/api/get');
+  }
 
-    loginToAccount(value: Credentials) {
-        return this.http.post<{ token: string }>('/api/account/login', value);
-    }
+
 }

@@ -16,6 +16,9 @@ public class UserController : ControllerBase
         return Ok($"Hi {currentUser.Name} you are an {currentUser.Admin}");
     }
     
+    
+    [Route("api/get")]
+    [HttpGet]
     private UserModel GetCurrentUser()
     {
         var identity = HttpContext.User.Identity as ClaimsIdentity;
