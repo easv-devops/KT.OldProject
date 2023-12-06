@@ -19,15 +19,17 @@ public class LoginController : ControllerBase
     [AllowAnonymous]
     [HttpPost]
     [Route("/api/account/login")]
-    public IActionResult Login([FromBody] LoginModel model)
+    public ResponseDto Login([FromBody] LoginModel model)
     {
-   
-        var user = _service.Authenticate(model);
-
+        Console.WriteLine("LOGIN CREDENTIals!" + model.Password +"and " +   model.Mail);
+        
+        UserModel user = _service.Authenticate(model);
+        
         if (model != null)
         {
             var token = _service.Generate(user);
-            return Ok(token);
+            
+            return new ResponseDto{token,"Hey here ya go!"};
         }
 
         return NotFound("User not found");

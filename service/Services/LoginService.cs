@@ -28,8 +28,9 @@ public class LoginService
     
     
     
-    public UserModel? Authenticate(LoginModel model)
+    public UserModel Authenticate(LoginModel model)
     {
+        Console.WriteLine("this is the serviec layer " + model.Mail );
         
         try
         {
