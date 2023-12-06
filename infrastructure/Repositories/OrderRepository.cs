@@ -71,15 +71,21 @@ public class OrderRepository
                 conn.QueryFirst(sql3, new { order_id = result.order_id, avatar_id = avatars[i] }, transaction);
             }
             transaction.Commit();
-        }
-
-      
+            }
 
         }
 
+    public Order getLastOrderToEmail(int user_id)
+    {
+        var sql2 =
+            @"select * from account.order where user_id= (@user_id)  and order_id = ( SELECT MAX(order_id) FROM account.order);";
+
+         
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return   conn.QueryFirst<Order>(sql2, new { user_id });
+        }
+    }
        
-       
-        
-        
         
     }

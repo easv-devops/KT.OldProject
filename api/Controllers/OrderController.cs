@@ -9,10 +9,12 @@ namespace api.Controllers;
 public class OrderController : Controller
 {
     private readonly OrderService _orderService;
+    private readonly EmailService _emailService;
 
-    public OrderController(OrderService orderService)
+    public OrderController(OrderService orderService, EmailService emailService)
     {
         _orderService = orderService;
+        _emailService = emailService;
     }
 
     [HttpGet]
@@ -60,6 +62,13 @@ public class OrderController : Controller
     {
         HttpContext.Response.StatusCode = StatusCodes.Status201Created;
         _orderService.CreateCustomerBuy(order.user_id, avatar_id);
+
+       Order order1 = _orderService.getLastOrderToEmail(order.user_id);
+        
+       
+       
+      _emailService.SendEmail(order1.order_id);
+        
         
         return new ResponseDto()
         {
