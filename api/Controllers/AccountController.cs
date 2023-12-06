@@ -11,20 +11,21 @@ namespace api.Controllers;
 [ApiController]
 public class AccountController : ControllerBase
 {
-    private readonly AccountService _service;
+    private readonly AccountService _accountService;
     private readonly JwtService _jwtService;
 
-    public AccountController(AccountService service, JwtService jwtService)
+    public AccountController(AccountService accountService, JwtService jwtService)
     {
-        _service = service;
+        _accountService = accountService;
         _jwtService = jwtService;
+        
     }
 
     [HttpPost]
     [Route("/api/account/login")]
     public ResponseDto Login([FromBody] LoginCommandModel model)
     {
-        var user = _service.Authenticate(model);
+        var user = _accountService.Authenticate(model);
         var token = _jwtService.IssueToken(SessionData.FromUser(user!));
         
         return new ResponseDto()
@@ -41,7 +42,7 @@ public class AccountController : ControllerBase
         return new ResponseDto()
         {
             MessageToClient = "Register new user",
-            ResponseData =_service.Register(model)
+            ResponseData =_accountService.Register(model)
         };
     }
 
@@ -50,6 +51,6 @@ public class AccountController : ControllerBase
     public User GetInfo()
     {
         //Hardcoded til account 2?
-        return _service.GetAccountInfo();
+        return _accountService.GetAccountInfo();
     }
 }

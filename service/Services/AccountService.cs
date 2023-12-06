@@ -64,4 +64,11 @@ public class AccountService
             return _userRepository.GetAccountInfo();
 
         }
+
+        public User? Get(SessionData user_id)
+        {
+            return _userRepository.GetById(user_id.User_Id);
+        }
+
+        
     }

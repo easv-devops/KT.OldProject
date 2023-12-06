@@ -10,11 +10,13 @@ public class OrderController : Controller
 {
     private readonly OrderService _orderService;
     private readonly EmailService _emailService;
+    private readonly AccountService _accountService;
 
-    public OrderController(OrderService orderService, EmailService emailService)
+    public OrderController(OrderService orderService, EmailService emailService, AccountService accountService)
     {
         _orderService = orderService;
         _emailService = emailService;
+        _accountService = accountService;
     }
 
     [HttpGet]
@@ -62,12 +64,13 @@ public class OrderController : Controller
     {
         HttpContext.Response.StatusCode = StatusCodes.Status201Created;
         _orderService.CreateCustomerBuy(order.user_id, avatar_id);
-
-       Order order1 = _orderService.getLastOrderToEmail(order.user_id);
         
+        var user = _accountService.Get(data);
+       Order order1 = _orderService.getLastOrderToEmail(order.user_id);
+
+      
        
-       
-      _emailService.SendEmail(order1.order_id);
+       _emailService.SendEmail(order1.order_id);
         
         
         return new ResponseDto()
@@ -76,6 +79,5 @@ public class OrderController : Controller
              
         };
     }
-    
-    
-}
+
+    }
