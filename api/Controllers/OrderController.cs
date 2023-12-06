@@ -51,4 +51,22 @@ public class OrderController : Controller
             MessageToClient = "Succesfully deleted an order"
         };
     }
+    
+    
+    [HttpPost]
+    [ValidateModel]
+    [Route("/orderWithProducts")]
+    public ResponseDto postOrder([FromBody] Order order, int[] avatar_id)
+    {
+        HttpContext.Response.StatusCode = StatusCodes.Status201Created;
+        _orderService.CreateCustomerBuy(order.user_id, avatar_id);
+        
+        return new ResponseDto()
+        {
+            MessageToClient = "Successfully created an order"
+             
+        };
+    }
+    
+    
 }

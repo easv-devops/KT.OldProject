@@ -43,4 +43,35 @@ public class OrderRepository
             conn.QueryFirst<Order>(sql, new { order_id });
         }
     }
+
+
+    public void CreateCustomerBuy(int user_id, int[] avatars)
+    {
+        using (var conn = _dataSource.OpenConnection())
+        {
+
+            var transaction = conn.BeginTransaction();
+
+            var sql =
+                @"INSERT INTO account.order (user_id) VALUES (@user_id) RETURNING *;";
+            conn.QueryFirst<Order>(sql, new { user_id });
+
+            var sql2 =
+                @"select * from account.order where user_id= (@user_id)  and order_id = ( SELECT MAX(order_id) FROM account.order);";                                                                                     
+            
+            var result = conn.QueryFirst<Order>(sql2, new { user_id }, transaction);
+              
+            
+            
+             
+             transaction.Commit();
+
+        }
+
+       
+       
+        
+        
+        
+    }
 }
