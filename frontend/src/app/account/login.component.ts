@@ -82,9 +82,10 @@ export class LoginComponent {
     if (this.form.invalid) return;
 
     console.log(this.form.getRawValue());
-
-    const response = (this.http.post<ResponseDto<TokenService>>('/api/account/login', this.form.getRawValue()));
-    this.token.setToken(JSON.stringify(response));
+    let dto = {mail: this.form.get('email')?.value,
+    password: this.form.get('password')?.value}
+    const response = await firstValueFrom(this.http.post<ResponseDto<TokenResponse>>('/api/account/login', dto));
+    this.token.setToken(response.responseData.token!);
 
 
     (await this.toast.create({
@@ -93,4 +94,8 @@ export class LoginComponent {
       duration: 5000
     })).present();
   }
+}
+
+export interface TokenResponse {
+  token?: string
 }
