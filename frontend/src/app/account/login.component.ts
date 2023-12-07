@@ -7,6 +7,7 @@ import { Router } from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment.prod";
 import { jwtDecode } from "jwt-decode";
+import {AccountService, Credentials} from "./account.service";
 
 export interface ResponseDto<T> {
   responseData: T;
@@ -20,7 +21,7 @@ export interface ResponseDto<T> {
               <ion-list>
 
                   <ion-item>
-                      <ion-input formControlName="email" data-testid="emailInput" placeholder="name@company.com"
+                      <ion-input formControlName="email" id="mailInput" data-testid="emailInput" placeholder="name@company.com"
                                  label-placement="floating">
                           <div slot="label">Email
                               <ion-text *ngIf="email.touched && email.invalid"
@@ -32,7 +33,7 @@ export interface ResponseDto<T> {
                   </ion-item>
 
                   <ion-item>
-                      <ion-input type="password" formControlName="password" data-testid="passwordInput"
+                      <ion-input type="password" id="passwordInput" formControlName="password" data-testid="passwordInput"
                                  placeholder="****************" label-placement="floating">
                           <div slot="label">Password
                               <ion-text
@@ -63,40 +64,28 @@ export class LoginComponent {
   get email() { return this.form.controls.email; }
   get password() { return this.form.controls.password; }
 
+
+
   constructor(
     private readonly fb: FormBuilder,
     private readonly http: HttpClient,
     private readonly router: Router,
     private readonly toast: ToastController,
-    private readonly token: TokenService
-  ) { }
+    private readonly token: TokenService,
+    private service: AccountService)
+  {
+
+  }
+
 
   async submit() {
     if (this.form.invalid) return;
-    const response = await firstValueFrom(this.http.post<ResponseDto<TokenService>>(environment.baseUrl + '/api/account/login', this.form.value));
-    this.token.setToken(JSON.stringify(response.responseData));
 
-
-
-    const encodedToken = JSON.stringify(sessionStorage.getItem("token"));
-    const decoded = jwtDecode(encodedToken);
-
-    console.log(decoded);
-
-    /* prints:
-     * {
-     *   foo: "bar",
-     *   exp: 1393286893,
-     *   iat: 1393268893
-     * }
-     */
-
-// decode header by passing in options (useful for when you need `kid` to verify a JWT):
-    const decodedHeader = jwtDecode(encodedToken, { header: true });
-    console.log(decodedHeader);
-
-
-
+    console.log(this.form.getRawValue());
+    let dto = {mail: this.form.get('email')?.value,
+    password: this.form.get('password')?.value}
+    const response = await firstValueFrom(this.http.post<ResponseDto<TokenResponse>>('/api/account/login', dto));
+    this.token.setToken(response.responseData.token!);
 
 
     (await this.toast.create({
@@ -105,4 +94,8 @@ export class LoginComponent {
       duration: 5000
     })).present();
   }
+}
+
+export interface TokenResponse {
+  token?: string
 }
