@@ -65,7 +65,7 @@ public class OrderController : Controller
         HttpContext.Response.StatusCode = StatusCodes.Status201Created;
         _orderService.CreateCustomerBuy(order.user_id, avatar_id);
         
-        var user = _accountService.Get(data);
+        
        Order order1 = _orderService.getLastOrderToEmail(order.user_id);
 
       
