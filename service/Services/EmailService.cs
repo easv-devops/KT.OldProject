@@ -78,9 +78,9 @@ public class EmailService
         message.Body = builder.ToMessageBody();
 
 
-       foreach (Avatar avatar in _emailRespository.GetOrdersAvatars(order_id))
+       foreach (AvatarModel avatar in _emailRespository.GetOrdersAvatars(order_id))
        {
-           string fileName = avatar.avatar_name + ".png";
+           string fileName = avatar.AvatarName + ".png";
            File.Delete(Path.Combine(fileName));
        }   
     }

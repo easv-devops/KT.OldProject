@@ -10,13 +10,11 @@ public class OrderController : Controller
 {
     private readonly OrderService _orderService;
     private readonly EmailService _emailService;
-    private readonly AccountService _accountService;
 
-    public OrderController(OrderService orderService, EmailService emailService, AccountService accountService)
+    public OrderController(OrderService orderService, EmailService emailService)
     {
         _orderService = orderService;
         _emailService = emailService;
-        _accountService = accountService;
     }
 
     [HttpGet]
@@ -60,17 +58,17 @@ public class OrderController : Controller
     [HttpPost]
     [ValidateModel]
     [Route("/orderWithProducts")]
-    public ResponseDto postOrder([FromBody] Order order, int[] avatar_id)
+    public ResponseDto postOrder([FromBody] OrderModel order, int[] avatar_id)
     {
         HttpContext.Response.StatusCode = StatusCodes.Status201Created;
-        _orderService.CreateCustomerBuy(order.user_id, avatar_id);
+        _orderService.CreateCustomerBuy(order.UserId, avatar_id);
         
         
-       Order order1 = _orderService.getLastOrderToEmail(order.user_id);
+       OrderModel order1 = _orderService.getLastOrderToEmail(order.UserId);
 
       
        
-       _emailService.SendEmail(order1.order_id);
+       _emailService.SendEmail(order1.OrderId);
         
         
         return new ResponseDto()

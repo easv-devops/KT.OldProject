@@ -33,7 +33,7 @@ public class OrderService
          
     }
 
-    public Order getLastOrderToEmail(int user_id)
+    public OrderModel getLastOrderToEmail(int user_id)
     {
         return _orderRepository.getLastOrderToEmail(user_id);
     }
