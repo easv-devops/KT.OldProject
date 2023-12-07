@@ -83,31 +83,8 @@ export class LoginComponent {
 
     console.log(this.form.getRawValue());
 
-
     const response = (this.http.post<ResponseDto<TokenService>>('/api/account/login', this.form.getRawValue()));
     this.token.setToken(JSON.stringify(response));
-
-
-
-
-
-
-    //const encodedToken = JSON.stringify(sessionStorage.getItem("token"));
-    //const decoded = jwtDecode(encodedToken);
-
-    //console.log(decoded);
-
-    /* prints:
-     * {
-     *   foo: "bar",
-     *   exp: 1393286893,
-     *   iat: 1393268893
-     * }
-     */
-
-// decode header by passing in options (useful for when you need `kid` to verify a JWT):
-    //const decodedHeader = jwtDecode(encodedToken, { header: true });
-    //console.log(decodedHeader);
 
 
     (await this.toast.create({
