@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { ReactiveFormsModule } from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +21,7 @@ import { AccountService } from './account/account.service';
 import { ProductsService } from './products/products.service';
 import {CartService} from "./cart/cart.service";
 import {CartComponent} from "./cart/cart.component";
+import {SearchComponent} from "./products/search.component";
 
 @NgModule({
   declarations: [
@@ -32,15 +33,17 @@ import {CartComponent} from "./cart/cart.component";
     AccountComponent,
     RegisterComponent,
     LoginComponent,
-    CartComponent
+    CartComponent,
+    SearchComponent
   ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot({ mode: 'ios' }),
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot({mode: 'ios'}),
+        AppRoutingModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        FormsModule
+    ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorHttpInterceptor, multi: true },

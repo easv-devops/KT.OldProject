@@ -1,15 +1,20 @@
-import { Component, OnInit } from "@angular/core";
+import {Component, EventEmitter, OnInit} from "@angular/core";
 import {ProductsService, Avatar} from './products.service';
 import {Router} from "@angular/router";
 
 @Component({
   template: `
     <app-title title="AVATARS"></app-title>
+
     <ion-content>
+      <app-search (searchTextChanged)="onSearchTextEntered($event)" style="position: absolute; top: 0;"></app-search>
+
+
+
       <ion-grid [fixed]="true">
         <ion-row>
           <ion-col *ngFor="let avatar of avatar$; index as i">
-            <ion-card>
+            <ion-card *ngIf="searchText === '' || avatar.avatar_name.toLowerCase().includes(searchText)">
               <ion-card-header>
                 <ion-card-title class="name">{{avatar.avatar_name}}</ion-card-title>
                 <ion-card-title class="price">{{avatar.avatar_price}} € </ion-card-title>
@@ -38,6 +43,15 @@ export class ProductsComponent implements OnInit {
   constructor(private productService: ProductsService, readonly router: Router) {
     this.cartArray = [];
 }
+
+  searchText: string = '';
+
+  onSearchTextEntered(searchValue: string) {
+    this.searchText = searchValue;
+    console.log(this.searchText)
+  }
+
+
 
   saveData(avatar: Avatar){
     this.cartArray.push(avatar);
