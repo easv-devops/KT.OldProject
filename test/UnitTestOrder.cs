@@ -17,8 +17,6 @@ public class UnitTestOrder
         {
             user_id = 1,
             full_name = "Bent",
-            street = "Bentgade",
-            zip = 1234,
             email = "bent@email.com",
             password = "123456789"
         };
@@ -53,8 +51,6 @@ public class UnitTestOrder
             {
                 user_id = i,
                 full_name = "Jens den 1",
-                street = "jensvej 2" ,
-                zip = 1234,
                 email = "jens" + i + "@email.com",
                 password = "123456789"
             };
