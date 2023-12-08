@@ -6,7 +6,7 @@ namespace Tests;
 public static class Helper
 {
     public static readonly NpgsqlDataSource DataSource;
-
+    //TEST
     public static readonly string ApiBaseUrl = "http://localhost:5000/";
 
     static Helper()
