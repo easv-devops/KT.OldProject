@@ -43,7 +43,7 @@ public class OrderController : Controller
     
     [HttpDelete]
     //[ValidateModel]
-    [Route("api/order/{oroder_id}")]
+    [Route("api/order/{order_id}")]
     public void deleteOrder([FromRoute] int order_id)
     {
         HttpContext.Response.StatusCode = 204;
