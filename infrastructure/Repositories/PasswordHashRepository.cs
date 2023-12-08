@@ -29,7 +29,7 @@ public class PasswordHashRepository
     salt as {nameof(PasswordHashModel.salt)}
     FROM webshop.password_hash
     JOIN webshop.users ON webshop.password_hash.user_id = webshop.users.user_id
-    WHERE email = @mail;
+    WHERE email = lower(@mail);
     ";
         using var connection = _dataSource.OpenConnection();
         return connection.QuerySingle<PasswordHashModel>(sql, new { mail });

@@ -22,7 +22,7 @@ RETURNING *;
 ";
         using (var connection = _dataSource.OpenConnection())
         {
-            return connection.QueryFirst<UserModel>(sql, new { name = model.full_name,  mail = model.email });
+            return connection.QueryFirst<UserModel>(sql, new { name = model.full_name,  mail = model.email.ToLower() });
         }
     }
     
