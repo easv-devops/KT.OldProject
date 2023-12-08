@@ -30,9 +30,9 @@ public class LoginService
     public UserModel Authenticate(LoginModel model)
     {
      
-            var passwordHash = _passwordHashRepository.GetByEmail(model.Mail);
+            var passwordHash = _passwordHashRepository.GetByEmail(model.email);
             var hashAlgorithm = new PasswordHashService();
-            var isValid = hashAlgorithm.VerifyHashedPassword(model.Password, passwordHash.hash, passwordHash.salt);
+            var isValid = hashAlgorithm.VerifyHashedPassword(model.password, passwordHash.hash, passwordHash.salt);
             if (isValid) return _userRepository.GetById(passwordHash.user_id);
             else throw new ValidationException("Wrong username or password");
     }
