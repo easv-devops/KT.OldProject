@@ -4,7 +4,6 @@ using System.Threading.Channels;
 using Dapper;
 using FluentAssertions;
 using FluentAssertions.Execution;
-using infrastructure.DataModels;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using test;
@@ -22,7 +21,7 @@ public class UnitTestAvatar
         var expected = new List<object>();
         for (var i = 1; i < 3; i++)
         {
-            var avatar = new Avatar()
+            var avatar = new AvatarModel()
             {
                 avatar_id = i,
                 avatar_name = "Kajkage",
@@ -40,7 +39,7 @@ public class UnitTestAvatar
         }
         
         var response = await new HttpClient().GetAsync(Helper.ApiBaseUrl + "avatar/all");
-        ResponseDto<List<Avatar>> obj = JsonConvert.DeserializeObject<ResponseDto<List<Avatar>>>(await response.Content.ReadAsStringAsync());
+        ResponseDto<List<AvatarModel>> obj = JsonConvert.DeserializeObject<ResponseDto<List<AvatarModel>>>(await response.Content.ReadAsStringAsync());
 
         using (await Helper.DataSource.OpenConnectionAsync())
         {
@@ -64,7 +63,7 @@ public class UnitTestAvatar
 
         var httpResponse = await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "avatar", testAvatar);
         var responseBodyString = await httpResponse.Content.ReadAsStringAsync();
-        var obj = JsonConvert.DeserializeObject<ResponseDto<Avatar>>(responseBodyString);
+        var obj = JsonConvert.DeserializeObject<ResponseDto<AvatarModel>>(responseBodyString);
         
         await using (await Helper.DataSource.OpenConnectionAsync())
         {
@@ -77,7 +76,7 @@ public class UnitTestAvatar
     public async Task AvatarShouldRejectCreation(string avatar_name, int avatar_price, string information)
     {
       Helper.TriggerRebuild();
-      var testAvatar = new Avatar()
+      var testAvatar = new AvatarModel()
       {
           avatar_id = 1,
           avatar_name = avatar_name,
@@ -115,7 +114,7 @@ public class UnitTestAvatar
         
         var httpResponse = await new HttpClient().PutAsJsonAsync(Helper.ApiBaseUrl + "avatar/1", testAvatar);
         var responseBodyString = await httpResponse.Content.ReadAsStringAsync();
-        var obj = JsonConvert.DeserializeObject<ResponseDto<Avatar>>(responseBodyString);
+        var obj = JsonConvert.DeserializeObject<ResponseDto<AvatarModel>>(responseBodyString);
         
         await using (await Helper.DataSource.OpenConnectionAsync())
         {
@@ -133,7 +132,7 @@ public class UnitTestAvatar
             conn.Execute("INSERT INTO webshop.avatar(avatar_name, avatar_price, information) VALUES ('Jerry', 11, 'This is a picture of Jerry') RETURNING *;");
         }
 
-        var testAvatar = new Avatar()
+        var testAvatar = new AvatarModel()
         {
             avatar_id = 1,
             avatar_name = avatar_name,

@@ -29,7 +29,7 @@ public class AvatarController : Controller
     }
     
     [HttpPost]
-    //[ValidateModel]
+    [ValidateModel]
     [Route("/avatar")]
     public ResponseDto postAvatar([FromBody] AvatarModel avatar)
     {

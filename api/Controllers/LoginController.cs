@@ -1,3 +1,4 @@
+using api.Filters;
 using api.TransferModels;
 using infrastructure.DataModels;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +7,7 @@ using service.Services;
 
 namespace api.Controllers;
 
+[ApiController]
 public class LoginController : ControllerBase
 {
     private LoginService _service;

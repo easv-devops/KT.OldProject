@@ -4,16 +4,19 @@ using System.ComponentModel.DataAnnotations;
 namespace test;
 
 
-public class User
+public class UserModel
 {
+    
     public int user_id { get; set; }
-    public string full_name { get; set; }
-    public string email { get; set; }
-    public string password { get; set; }
+    [Required] [MinLength(2)] public required string full_name { get; set; }
+   
+    [Required] [MinLength(7)] public required string email { get; set; }
+   
+    [Required] [MinLength(8)] public required string password { get; set; }
     
 }
 
-public class Avatar
+public class AvatarModel
 {
     public int avatar_id { get; set; }
     public string avatar_name { get; set; }

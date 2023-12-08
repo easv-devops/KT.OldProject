@@ -2,7 +2,7 @@ using System.Net;
 using System.Net.Http.Json;
 using Dapper;
 using FluentAssertions;
-using infrastructure.DataModels;
+
 using Newtonsoft.Json;
 using NUnit.Framework;
 using test;
@@ -18,7 +18,7 @@ public class Tests
     public async Task UserCanSuccessfullyBeCreated(string full_name, string email, string password)
     {
         Helper.TriggerRebuild();
-        var testUser = new RegisterModel
+        var testUser = new UserModel
         {
             full_name = full_name,
             email = email,
@@ -27,7 +27,7 @@ public class Tests
         
         var httpResponse  =await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "api/account/register", testUser);
         var responseBodyString = await httpResponse.Content.ReadAsStringAsync();
-        var obj = JsonConvert.DeserializeObject<ResponseDto<User>>(responseBodyString);
+        var obj = JsonConvert.DeserializeObject<ResponseDto<UserModel>>(responseBodyString);
 
         await using (await Helper.DataSource.OpenConnectionAsync())
         {
@@ -36,13 +36,12 @@ public class Tests
     }
     
     [TestCase("t", "bobyugbhnj@cool.com", "123456789" )]
-    [TestCase("Birgitte", "bobyugbhnj@cool.com", "123456789" )]
-    [TestCase("Benter", "cool.com", "123456789" )]
-    [TestCase("Benter", "bobyugbhnj@cool.com", "123456789" )]
+    [TestCase("Benter", "l.com", "123456789" )]
+    [TestCase("Benter", "bobyugbhnj@cool.com", "7" )]
     public async Task CanNotCreateUserWithInvalidCharacter(string full_name, string email, string password)
     {
         Helper.TriggerRebuild();
-        var testUser = new RegisterModel
+        var testUser = new UserModel
         {
             full_name = full_name,
             email = email,
@@ -60,25 +59,19 @@ public class Tests
     public async Task UserCanSuccessfullyLogin( string email, string password)
     {
         Helper.TriggerRebuild();
-        var testUser = new RegisterModel
+        var testUser = new UserModel
         {
-            full_name = "Bent",
-            email = email,
-            password = password
-        };
-        
-        await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "api/account/register", testUser);
-        
-        testUser = new RegisterModel ()
-        {
+            
             email = email,
             password = password,
             full_name = "Bent"
         };
+
+        await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "api/account/register", testUser);
         
         var httpResponse = await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "api/account/login", testUser);
         var responseBodyString = await httpResponse.Content.ReadAsStringAsync();
-        var obj = JsonConvert.DeserializeObject<ResponseDto<User>>(responseBodyString);
+        var obj = JsonConvert.DeserializeObject<ResponseDto<UserModel>>(responseBodyString);
         
         await using (await Helper.DataSource.OpenConnectionAsync())
         {

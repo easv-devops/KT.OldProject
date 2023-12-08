@@ -13,7 +13,7 @@ public class UnitTestOrder
     public async Task GetAllAvatars()
     {
         Helper.TriggerRebuild();
-        var testUser = new User
+        var testUser = new UserModel
         {
             user_id = 1,
             full_name = "Bent",
@@ -47,7 +47,7 @@ public class UnitTestOrder
         Helper.TriggerRebuild();
         for (var i = 1; i <= 2; i++)
         {
-            var user = new User()
+            var user = new UserModel()
             {
                 user_id = i,
                 full_name = "Jens den 1",
