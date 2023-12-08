@@ -8,5 +8,5 @@ public class AvatarModel
     [MinLength(3)] public string avatar_name { get; set; }
     [Range(1, Int32.MaxValue)] public int avatar_price { get; set;  }
     public string information { get; set;  }
-    public string deleted { get; set; }
+    public bool deleted { get; set; }
 }
