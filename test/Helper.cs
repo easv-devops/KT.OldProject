@@ -7,7 +7,7 @@ public static class Helper
 {
     public static readonly NpgsqlDataSource DataSource;
 
-    public static readonly string ApiBaseUrl = "http://localhost:5500/";
+    public static readonly string ApiBaseUrl = "http://localhost:5000/";
 
     static Helper()
     {
@@ -48,49 +48,55 @@ public static class Helper
     }
 
     public static string RebuildScript = @"
-DROP SCHEMA IF EXISTS account CASCADE;
-CREATE SCHEMA IF NOT EXISTS account;
-create table account.users
+
+DROP SCHEMA IF EXISTS webshop CASCADE;
+CREATE SCHEMA IF NOT EXISTS webshop;
+DROP TABLE IF EXISTS webshop.password_hash;
+DROP TABLE IF EXISTS webshop.customer_buy;
+DROP TABLE IF EXISTS webshop.avatar;
+DROP TABLE IF EXISTS webshop.order;
+DROP TABLE IF EXISTS webshop.users;
+
+create table webshop.users
 (
     user_id         SERIAL PRIMARY KEY,
     full_name  VARCHAR(50)  NOT NULL,
-    street     VARCHAR(50)   not NULL,
-    zip        integer   not NULL,
     email      VARCHAR(50)  NOT NULL UNIQUE,
-    admin      BOOLEAN      NOT NULL CHECK (admin IN (FALSE, TRUE)) DEFAULT FALSE
+    admin      VARCHAR(20)      NOT NULL
 );
 
-create table account.avatar
+create table webshop.avatar
 (
     avatar_id     SERIAL PRIMARY KEY,
     avatar_name  VARCHAR(50)  NOT NULL,
     avatar_price        integer   not NULL,
     information VARCHAR(300),
     deleted bool not null DEFAULT FALSE
-    );
+);
 
-create table account.order
+
+create table webshop.order
 (
     order_id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES account.users (user_id)
+    FOREIGN KEY (user_id) REFERENCES webshop.users (user_id)
 );
 
-create table account.customer_buy
+create table webshop.customer_buy
 (
     customer_buy_id SERIAL PRIMARY KEY,
     order_id INTEGER NOT NUll,
     avatar_id INTEGER NOT NUll,
-    FOREIGN KEY (order_id) REFERENCES account.order (order_id),
-    FOREIGN KEY (avatar_id) REFERENCES account.avatar (avatar_id)
+    FOREIGN KEY (order_id) REFERENCES webshop.order (order_id),
+    FOREIGN KEY (avatar_id) REFERENCES webshop.avatar (avatar_id)
 );
 
-create table account.password_hash
+create table webshop.password_hash
 (
     user_id   integer      NOT NULL,
     hash      VARCHAR(350) NOT NULL,
     salt      VARCHAR(180) NOT NULL,
-     FOREIGN KEY (user_id) REFERENCES account.users (user_id)
+    FOREIGN KEY (user_id) REFERENCES webshop.users (user_id)
 );
 ";
 }

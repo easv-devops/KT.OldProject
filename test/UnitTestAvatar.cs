@@ -31,14 +31,14 @@ public class UnitTestAvatar
             };
             expected.Add(avatar);
             var sql =
-                @"INSERT INTO account.avatar(avatar_name, avatar_price, information) VALUES (@avatar_name, @avatar_price, @information);";
+                @"INSERT INTO webshop.avatar(avatar_name, avatar_price, information) VALUES (@avatar_name, @avatar_price, @information);";
             using (var conn = Helper.DataSource.OpenConnection())
             {
                 conn.Execute(sql, avatar);
             }
         }
         
-        var response = await new HttpClient().GetAsync(Helper.ApiBaseUrl + "avatar/all");
+        var response = await new HttpClient().GetAsync(Helper.ApiBaseUrl + "/avatar/all");
         ResponseDto<List<Avatar>> obj = JsonConvert.DeserializeObject<ResponseDto<List<Avatar>>>(await response.Content.ReadAsStringAsync());
 
         using (await Helper.DataSource.OpenConnectionAsync())
@@ -69,8 +69,8 @@ public class UnitTestAvatar
     }
     */
     
-    [TestCase("Kaj-avatar", 1000, "")]
-    [TestCase("Andrea-avatar", 2000, "")]
+    [TestCase("Kaj-avatar", 1000, "rctfvgybh")]
+    [TestCase("Andrea-avatar", 2000, "fhgjbnkm")]
     public async Task AvatarCanSuccessfullyBeCreated(string avatar_name, int avatar_price, string information)
     {
         Helper.TriggerRebuild();
@@ -83,7 +83,7 @@ public class UnitTestAvatar
             deleted = false
         };
 
-        var httpResponse = await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "avatar", testAvatar);
+        var httpResponse = await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "/avatar", testAvatar);
         var responseBodyString = await httpResponse.Content.ReadAsStringAsync();
         var obj = JsonConvert.DeserializeObject<ResponseDto<Avatar>>(responseBodyString);
         
@@ -122,7 +122,7 @@ public class UnitTestAvatar
         Helper.TriggerRebuild();
         await using (var conn = await Helper.DataSource.OpenConnectionAsync())
         {
-            conn.Execute("INSERT INTO account.avatar(avatar_id, avatar_name, avatar_price, information, deleted) VALUES ( 1, 'Erik', 11, 'This is a picture of Erik', false) RETURNING *;");
+            conn.Execute("INSERT INTO webshop.avatar(avatar_id, avatar_name, avatar_price, information, deleted) VALUES ( 1, 'Erik', 11, 'This is a picture of Erik', false) RETURNING *;");
         }
 
         var testAvatar = new Avatar()
@@ -151,7 +151,7 @@ public class UnitTestAvatar
         Helper.TriggerRebuild();
         await using (var conn = await Helper.DataSource.OpenConnectionAsync())
         {
-            conn.Execute("INSERT INTO account.avatar(avatar_name, avatar_price, information) VALUES ('Jerry', 11, 'This is a picture of Jerry') RETURNING *;");
+            conn.Execute("INSERT INTO webshop.avatar(avatar_name, avatar_price, information) VALUES ('Jerry', 11, 'This is a picture of Jerry') RETURNING *;");
         }
 
         var testAvatar = new Avatar()
@@ -178,7 +178,7 @@ public class UnitTestAvatar
         await using (var conn = await Helper.DataSource.OpenConnectionAsync())
         {
             conn.Execute(
-                "INSERT INTO account.avatar(avatar_name, avatar_price, information) VALUES ('Mathias', 2, 'This is a picture of Mathias') RETURNING *;");
+                "INSERT INTO webshop.avatar(avatar_name, avatar_price, information) VALUES ('Mathias', 2, 'This is a picture of Mathias') RETURNING *;");
         }
 
         var httpResponse = await new HttpClient().DeleteAsync(Helper.ApiBaseUrl + "avatar/1");

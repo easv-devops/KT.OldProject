@@ -4,7 +4,7 @@ CREATE SCHEMA IF NOT EXISTS webshop;
 DROP TABLE IF EXISTS webshop.password_hash;
 DROP TABLE IF EXISTS webshop.customer_buy;
 DROP TABLE IF EXISTS webshop.avatar;
-DROP TABLE IF EXISTS webshop.ordre;
+DROP TABLE IF EXISTS webshop.order;
 DROP TABLE IF EXISTS webshop.users;
 
 create table webshop.users
