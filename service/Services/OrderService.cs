@@ -27,9 +27,9 @@ public class OrderService
         _orderRepository.DeleteOrder(ordre_id);
     }
     
-    public void CreateCustomerBuy(int user_id, int[] avatars)
+    public void CreateCustomerBuy(int user_id, AvatarModel[] avatars)
     {
-         _orderRepository.CreateCustomerBuy(user_id,avatars);
+         _orderRepository.CreateCustomerBuy(user_id, avatars);
          
     }
 

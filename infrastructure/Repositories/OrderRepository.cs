@@ -45,8 +45,9 @@ public class OrderRepository
     }
 
 
-    public void CreateCustomerBuy(int user_id, int[] avatars)
+    public void CreateCustomerBuy(int user_id, AvatarModel[] avatars)
     {
+        
         using (var conn = _dataSource.OpenConnection())
         {
 
@@ -68,7 +69,7 @@ public class OrderRepository
                 var sql3 =
                     @"INSERT INTO webshop.customer_buy (order_id, avatar_id) VALUES (@order_id, @avatar_id) RETURNING *;";
 
-                conn.QueryFirst(sql3, new { order_id = result.order_id, avatar_id = avatars[i] }, transaction);
+                conn.QueryFirst(sql3, new { order_id = result.order_id, avatar_id = avatars[i].avatar_id }, transaction);
             }
             transaction.Commit();
             }
