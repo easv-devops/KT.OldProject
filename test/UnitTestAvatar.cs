@@ -4,6 +4,7 @@ using System.Threading.Channels;
 using Dapper;
 using FluentAssertions;
 using FluentAssertions.Execution;
+using infrastructure.DataModels;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using test;
@@ -38,7 +39,7 @@ public class UnitTestAvatar
             }
         }
         
-        var response = await new HttpClient().GetAsync(Helper.ApiBaseUrl + "/avatar/all");
+        var response = await new HttpClient().GetAsync(Helper.ApiBaseUrl + "avatar/all");
         ResponseDto<List<Avatar>> obj = JsonConvert.DeserializeObject<ResponseDto<List<Avatar>>>(await response.Content.ReadAsStringAsync());
 
         using (await Helper.DataSource.OpenConnectionAsync())
@@ -46,35 +47,13 @@ public class UnitTestAvatar
             obj.ResponseData.Should().BeEquivalentTo(expected);
         }
     }
-  /**  
-    [TestCase("Bamse-avatar", 20000, "Avatar af den gamle bamsefar.")]
-    [TestCase("Kylling-avatar", 360,"JEG KAN GODT LIDE KYYYYYYYYYYYYYLLING")]
-    public async Task GetInfoOnProduct(string avatar_name, int avatar_price, string information)
-    {
-        Helper.TriggerRebuild();
-        var testAvatar = new Avatar()
-        {
-            avatar_name = avatar_name,
-            avatar_price = avatar_price,
-            information = information
-        };
-        var sql =
-            "INSERT INTO account.avatar(avatar_name, avatar_price, information) VALUES (@avatar_name, @avatar_price, @information) RETURNING *;";
-        using (var conn = Helper.DataSource.OpenConnection())
-        {
-            conn.Execute(sql, testAvatar);
-        }
-
-        var response = await new HttpClient().GetAsync(Helper.ApiBaseUrl + "");
-    }
-    */
     
-    [TestCase("Kaj-avatar", 1000, "rctfvgybh")]
-    [TestCase("Andrea-avatar", 2000, "fhgjbnkm")]
+    [TestCase("Kaj-avatar", 1000, "q")]
+    [TestCase("Andrea-avatar", 2000, "w")]
     public async Task AvatarCanSuccessfullyBeCreated(string avatar_name, int avatar_price, string information)
     {
         Helper.TriggerRebuild();
-        var testAvatar = new Avatar
+        var testAvatar = new AvatarModel
         {
             avatar_id = 1,
             avatar_name = avatar_name,
@@ -83,7 +62,7 @@ public class UnitTestAvatar
             deleted = false
         };
 
-        var httpResponse = await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "/avatar", testAvatar);
+        var httpResponse = await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "avatar", testAvatar);
         var responseBodyString = await httpResponse.Content.ReadAsStringAsync();
         var obj = JsonConvert.DeserializeObject<ResponseDto<Avatar>>(responseBodyString);
         
@@ -125,7 +104,7 @@ public class UnitTestAvatar
             conn.Execute("INSERT INTO webshop.avatar(avatar_id, avatar_name, avatar_price, information, deleted) VALUES ( 1, 'Erik', 11, 'This is a picture of Erik', false) RETURNING *;");
         }
 
-        var testAvatar = new Avatar()
+        var testAvatar = new AvatarModel()
         {
             avatar_id = 1,
             avatar_name = avatar_name,
