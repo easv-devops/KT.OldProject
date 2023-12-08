@@ -61,10 +61,9 @@ public class Tests
         Helper.TriggerRebuild();
         var testUser = new UserModel
         {
-            
+            full_name = "Bent",
             email = email,
-            password = password,
-            full_name = "Bent"
+            password = password
         };
 
         await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "api/account/register", testUser);
