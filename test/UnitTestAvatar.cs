@@ -19,7 +19,7 @@ public class UnitTestAvatar
     { 
         Helper.TriggerRebuild();
         var expected = new List<object>();
-        for (var i = 1; i < 3; i++)
+        for (var i = 1; i <= 2; i++)
         {
             var avatar = new AvatarModel()
             {
