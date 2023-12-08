@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http.Json;
 using Dapper;
 using FluentAssertions;
+using infrastructure.DataModels;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using test;
@@ -17,7 +18,7 @@ public class Tests
     public async Task UserCanSuccessfullyBeCreated(string full_name, string email, string password)
     {
         Helper.TriggerRebuild();
-        var testUser = new User
+        var testUser = new RegisterModel
         {
             full_name = full_name,
             email = email,
@@ -41,7 +42,7 @@ public class Tests
     public async Task CanNotCreateUserWithInvalidCharacter(string full_name, string email, string password)
     {
         Helper.TriggerRebuild();
-        var testUser = new User
+        var testUser = new RegisterModel
         {
             full_name = full_name,
             email = email,
@@ -59,7 +60,7 @@ public class Tests
     public async Task UserCanSuccessfullyLogin( string email, string password)
     {
         Helper.TriggerRebuild();
-        var testUser = new User
+        var testUser = new RegisterModel
         {
             full_name = "Bent",
             email = email,
@@ -68,10 +69,11 @@ public class Tests
         
         await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "api/account/register", testUser);
         
-        testUser = new User ()
+        testUser = new RegisterModel ()
         {
             email = email,
-            password = password
+            password = password,
+            full_name = "Bent"
         };
         
         var httpResponse = await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "api/account/login", testUser);
