@@ -31,7 +31,7 @@ public class LoginController : ControllerBase
             
             return new ResponseDto()
             {
-                MessageToClient = "Welcome "+ user.Name,
+                MessageToClient = "Welcome "+ user.full_name,
                 ResponseData = new { token }
             };
         }

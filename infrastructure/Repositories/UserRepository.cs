@@ -15,30 +15,21 @@ public class UserRepository
     
     public UserModel Create(RegisterModel model)
     {
-        const string sql = $@"
-INSERT INTO webshop.users (full_name, email, admin)
+        const string sql = @"
+INSERT INTO webshop.users (full_name, email)
 VALUES (@name, @mail, @admin)
-RETURNING
-    user_id as {nameof(UserModel.Id)},
-    full_name as {nameof(UserModel.Name)},
-    email as {nameof(UserModel.Mail)},
-    admin as {nameof(UserModel.Admin)}
-    ;
+RETURNING *;
 ";
         using (var connection = _dataSource.OpenConnection())
         {
-            return connection.QueryFirst<UserModel>(sql, new { name = model.Name,  mail = model.Mail, admin = model.Admin });
+            return connection.QueryFirst<UserModel>(sql, new { name = model.full_name,  mail = model.email });
         }
     }
     
     public UserModel? GetById(int id)
     {
-        const string sql = $@"
-SELECT
-   user_id as {nameof(UserModel.Id)},
-    full_name as {nameof(UserModel.Name)},
-    email as {nameof(UserModel.Mail)},
-    admin as {nameof(UserModel.Admin)}
+        const string sql = @"
+SELECT *
 FROM webshop.users
 WHERE user_id = @id;
 ";

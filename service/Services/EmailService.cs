@@ -39,7 +39,7 @@ public class EmailService
         
         
         message.From.Add(new MailboxAddress("The Webshop Inc. order no: " + order_id, Environment.GetEnvironmentVariable("fromemail")));
-        message.To.Add(new MailboxAddress("Customer", user.Mail));
+        message.To.Add(new MailboxAddress("Customer", user.email));
         message.Subject = "Your order confirmation";
 
     }
@@ -50,11 +50,11 @@ public class EmailService
         string emailBody=""; 
 
         foreach (AvatarModel avatar in _emailRespository.GetOrdersAvatars(order_id))
-            emailBody = emailBody + avatar.AvatarName+"\n";
+            emailBody = emailBody + avatar.avatar_name+"\n";
 
 
         
-            builder.TextBody = " Hello " + user.Name + "\n" + "\n" +
+            builder.TextBody = " Hello " + user.full_name + "\n" + "\n" +
                                "Thanks for your order no: "+order_id +" including the following items: " + "\n" + "\n"
                                + emailBody + "\n" +
                                "Your items is attached to this email." + "\n" + "\n" +
@@ -69,7 +69,7 @@ public class EmailService
 
         foreach (AvatarModel avatar in _emailRespository.GetOrdersAvatars(order_id))
         {
-            string fileName = avatar.AvatarName + ".png";
+            string fileName = avatar.avatar_name + ".png";
             webClient.DownloadFile("https://robohash.org/"+fileName, Path.Combine(fileName));   
             builder.Attachments.Add (Path.Combine(fileName));
                 
@@ -80,7 +80,7 @@ public class EmailService
 
        foreach (AvatarModel avatar in _emailRespository.GetOrdersAvatars(order_id))
        {
-           string fileName = avatar.AvatarName + ".png";
+           string fileName = avatar.avatar_name + ".png";
            File.Delete(Path.Combine(fileName));
        }   
     }

@@ -4,8 +4,7 @@ namespace infrastructure.DataModels;
 
 public class OrderModel
 {
-    public int OrderId { get; set; }
-    public int UserId { get; set; }
+    public int order_id { get; set; }
+    public int user_id { get; set; }
     
-
 }

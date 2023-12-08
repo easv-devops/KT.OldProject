@@ -32,7 +32,7 @@ public class AvatarRepository
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<AvatarModel>(sql, new { avatar_name=avatar.AvatarName, avatar_price=avatar.AvatarPrice, information=avatar.Information});
+            return conn.QueryFirst<AvatarModel>(sql, new { avatar_name=avatar.avatar_name, avatar_price=avatar.avatar_price, information=avatar.information});
         }
     }
     
@@ -44,7 +44,7 @@ RETURNING *";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<AvatarModel>(sql, new { avatar_id, avatar_name=avatar.AvatarName, avatar_price=avatar.AvatarPrice,information=avatar.Information});
+            return conn.QueryFirst<AvatarModel>(sql, new { avatar_id, avatar_name=avatar.avatar_name, avatar_price=avatar.avatar_price,information=avatar.information});
         }
     }
 

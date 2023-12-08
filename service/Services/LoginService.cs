@@ -35,10 +35,10 @@ public class LoginService
         try
         {
             var passwordHash = _passwordHashRepository.GetByEmail(model.Mail);
-            Console.WriteLine("Test  : "+passwordHash.Hash);
+            Console.WriteLine("Test  : "+passwordHash.hash);
             var hashAlgorithm = new PasswordHashService();
-            var isValid = hashAlgorithm.VerifyHashedPassword(model.Password, passwordHash.Hash, passwordHash.Salt);
-            if (isValid) return _userRepository.GetById(passwordHash.Id);
+            var isValid = hashAlgorithm.VerifyHashedPassword(model.Password, passwordHash.hash, passwordHash.salt);
+            if (isValid) return _userRepository.GetById(passwordHash.user_id);
         }
         catch (Exception e)
         {
@@ -55,9 +55,9 @@ public class LoginService
 
         var claims = new[]
         {
-            new Claim(ClaimTypes.NameIdentifier, model.Name),
-            new Claim(ClaimTypes.Email, model.Mail),
-            new Claim(ClaimTypes.Role, model.Admin)
+            new Claim(ClaimTypes.NameIdentifier, model.full_name),
+            new Claim(ClaimTypes.Email, model.email),
+            new Claim(ClaimTypes.Role, model.admin)
         };
 
         var token = new JwtSecurityToken(_config.GetValue<string>("Jwt:Issuer"),
@@ -73,9 +73,9 @@ public class LoginService
     {
         var hashAlgorithm = new PasswordHashService();
         var salt = hashAlgorithm.GenerateSalt();
-        var hash = hashAlgorithm.HashPassword(model.Password, salt);
+        var hash = hashAlgorithm.HashPassword(model.password, salt);
         var user = _userRepository.Create(model);
-        _passwordHashRepository.Create(user.Id, hash, salt);
+        _passwordHashRepository.Create(user.user_id, hash, salt);
         return user;
     }
 

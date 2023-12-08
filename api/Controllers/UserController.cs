@@ -13,7 +13,7 @@ public class UserController : ControllerBase
     public IActionResult AdminsEndpoint()
     {
         var currentUser = GetCurrentUser();
-        return Ok($"Hi {currentUser.Name} you are an {currentUser.Admin}");
+        return Ok($"Hi {currentUser.full_name} you are an {currentUser.admin}");
     }
     
     
@@ -29,9 +29,9 @@ public class UserController : ControllerBase
 
             return new UserModel
             {
-                Name = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value,
-                Mail = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
-                Admin = userClaims.FirstOrDefault(o=>  o.Type == ClaimTypes.Role)?.Value
+                full_name = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value,
+                email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
+                admin = userClaims.FirstOrDefault(o=>  o.Type == ClaimTypes.Role)?.Value
                 
             };
         }

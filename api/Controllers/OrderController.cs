@@ -37,7 +37,7 @@ public class OrderController : Controller
         return new ResponseDto()
         {
             MessageToClient = "Successfully created an order",
-            ResponseData = _orderService.CreateOrder(order.UserId)
+            ResponseData = _orderService.CreateOrder(order.user_id)
         };
     }
     
@@ -61,14 +61,14 @@ public class OrderController : Controller
     public ResponseDto postOrder([FromBody] OrderModel order, int[] avatar_id)
     {
         HttpContext.Response.StatusCode = StatusCodes.Status201Created;
-        _orderService.CreateCustomerBuy(order.UserId, avatar_id);
+        _orderService.CreateCustomerBuy(order.user_id, avatar_id);
         
         
-       OrderModel order1 = _orderService.getLastOrderToEmail(order.UserId);
+       OrderModel order1 = _orderService.getLastOrderToEmail(order.user_id);
 
       
        
-       _emailService.SendEmail(order1.OrderId);
+       _emailService.SendEmail(order1.order_id);
         
         
         return new ResponseDto()

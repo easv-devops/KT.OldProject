@@ -6,11 +6,7 @@ export interface User {
     user_id: number;
     full_name: string;
     email: string;
-
     admin: string;
-
-    Admin: string;
-
 }
 
 export interface Credentials {
@@ -37,6 +33,4 @@ export class AccountService {
   getCurrentUser() {
     return this.http.get<User>('/api/get');
   }
-
-
 }

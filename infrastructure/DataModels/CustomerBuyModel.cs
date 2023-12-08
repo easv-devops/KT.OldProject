@@ -4,10 +4,7 @@ namespace infrastructure.DataModels;
 
 public class CustomerBuyModel
 {
-    public int CustomerBuyId { get; set; }
-    public int OrderId { get; set; }
-    public int AvatarId { get; set; }
-    
-    
-    
+    public int customer_buy_id { get; set; }
+    public int order_id { get; set; }
+    public int avatar_id { get; set; }
 }

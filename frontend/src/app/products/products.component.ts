@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import {ProductsService, Avatar} from './products.service';
-import {CartService} from '../cart/cart.service';
 import {Router} from "@angular/router";
 
 @Component({
@@ -37,23 +36,17 @@ export class ProductsComponent implements OnInit {
 
 
   constructor(private productService: ProductsService, readonly router: Router) {
-
     this.cartArray = [];
-
 }
 
   saveData(avatar: Avatar){
-
     this.cartArray.push(avatar);
     sessionStorage.setItem("cart", JSON.stringify(this.cartArray))
-
   }
 
   ngOnInit(): void {
-
     this.productService.getAllProducts().subscribe(result => {
       this.avatar$ = result.responseData;
     })
   }
-
 }

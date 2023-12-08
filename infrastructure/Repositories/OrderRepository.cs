@@ -68,7 +68,7 @@ public class OrderRepository
                 var sql3 =
                     @"INSERT INTO webshop.customer_buy (order_id, avatar_id) VALUES (@order_id, @avatar_id) RETURNING *;";
 
-                conn.QueryFirst(sql3, new { order_id = result.OrderId, avatar_id = avatars[i] }, transaction);
+                conn.QueryFirst(sql3, new { order_id = result.order_id, avatar_id = avatars[i] }, transaction);
             }
             transaction.Commit();
             }

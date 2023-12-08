@@ -34,7 +34,7 @@ public class AvatarService
     public AvatarModel CreateAvatar(AvatarModel avatar)
     {
 
-        if (!ReferenceEquals(_avatarRepository.CheckIfNameExist(avatar.AvatarName), null))
+        if (!ReferenceEquals(_avatarRepository.CheckIfNameExist(avatar.avatar_name), null))
             throw new ValidationException("Already exists");
         
         try

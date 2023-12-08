@@ -30,7 +30,7 @@ public class CustomerBuyRepository
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<CustomerBuyModel>(sql, new { order_id=customerBuy.OrderId, avatar_id=customerBuy.AvatarId });
+            return conn.QueryFirst<CustomerBuyModel>(sql, new { order_id=customerBuy.order_id, avatar_id=customerBuy.avatar_id });
         }
     }
     
