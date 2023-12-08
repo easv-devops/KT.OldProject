@@ -58,17 +58,17 @@ public class OrderController : Controller
     [HttpPost]
     [ValidateModel]
     [Route("/orderWithProducts")]
-    public ResponseDto postOrder([FromBody] OrderModel order, int[] avatar_id)
+    public ResponseDto postOrder([FromBody] int user_id, AvatarModel[] avatars)
     {
         HttpContext.Response.StatusCode = StatusCodes.Status201Created;
-        _orderService.CreateCustomerBuy(order.user_id, avatar_id);
+        _orderService.CreateCustomerBuy(user_id, avatars);
         
         
-       OrderModel order1 = _orderService.getLastOrderToEmail(order.user_id);
+       //OrderModel order1 = _orderService.getLastOrderToEmail(user_id);
 
       
        
-       _emailService.SendEmail(order1.order_id);
+       //_emailService.SendEmail(order1.order_id);
         
         
         return new ResponseDto()

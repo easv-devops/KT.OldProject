@@ -8,30 +8,27 @@ import {ModalController} from "@ionic/angular";
   template: `
     <app-title title="AVATARS"></app-title>
 
-    <ion-content>
-      <app-search (searchTextChanged)="onSearchTextEntered($event)" style="position: absolute; top: 0;"></app-search>
+    <ion-content color="light">
+
+        <app-search (searchTextChanged)="onSearchTextEntered($event)" style="position: absolute; top: 0;"></app-search>
 
 
 
-      <ion-grid [fixed]="true">
-        <ion-row>
-          <ion-col *ngFor="let avatar of avatar$; index as i">
-            <ion-card *ngIf="searchText === '' || avatar.avatar_name.toLowerCase().includes(searchText)">
-              <ion-card-header>
-                <ion-card-title class="name">{{avatar.avatar_name}}</ion-card-title>
-                <ion-card-title class="price">{{avatar.avatar_price}} € </ion-card-title>
-              </ion-card-header>
-              <img src="https://robohash.org/{{avatar.avatar_name}}.png" height="150px" width="150px"/>
-              <ion-card-content>
-                <ion-button class="button" (click)="saveData(avatar)" fill="clear" >
-                  <ion-icon name="cart-outline"></ion-icon>
-                </ion-button>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-        <ion-button class="button" (click)="createAvatar()">Create</ion-button>
-      </ion-grid>
+      <br>
+
+      <ion-list inset="true" *ngFor="let avatar of avatar$; index as i">
+        <ion-item *ngIf="searchText === '' || avatar.avatar_name.toLowerCase().includes(searchText)">
+          <img src="https://robohash.org/{{avatar.avatar_name}}.png" height="150px" width="150px"/>
+          <ion-label>{{avatar.avatar_name}}</ion-label>
+          <ion-label>{{avatar.avatar_price}} €</ion-label>
+
+          <ion-button class="button" (click)="saveData(avatar)" fill="clear" >
+            <ion-icon name="cart-outline"></ion-icon>
+          </ion-button>
+
+        </ion-item>
+      </ion-list>
+      <ion-button class="button" (click)="createAvatar()">Create</ion-button>
     </ion-content>
   `
 })
