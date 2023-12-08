@@ -12,7 +12,7 @@ create table webshop.users
     user_id         SERIAL PRIMARY KEY,
     full_name  VARCHAR(50)  NOT NULL,
     email      VARCHAR(50)  NOT NULL UNIQUE,
-    admin      VARCHAR(20)      NOT NULL
+    admin      VARCHAR(20)      NOT NULL DEFAULT 'Non-admin'
 );
 
 create table webshop.avatar
