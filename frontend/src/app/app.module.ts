@@ -22,6 +22,8 @@ import { ProductsService } from './products/products.service';
 import {CartService} from "./cart/cart.service";
 import {CartComponent} from "./cart/cart.component";
 import {SearchComponent} from "./products/search.component";
+import {createAvatarComponent} from "./products/createAvatar.component";
+
 
 @NgModule({
   declarations: [
@@ -34,16 +36,17 @@ import {SearchComponent} from "./products/search.component";
     RegisterComponent,
     LoginComponent,
     CartComponent,
-    SearchComponent
+    SearchComponent,
+    createAvatarComponent
   ],
-    imports: [
-        BrowserModule,
-        IonicModule.forRoot({mode: 'ios'}),
-        AppRoutingModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        FormsModule
-    ],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot({ mode: 'ios' }),
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule
+  ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorHttpInterceptor, multi: true },

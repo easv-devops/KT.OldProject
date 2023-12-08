@@ -17,7 +17,7 @@ public class UserRepository
     {
         const string sql = @"
 INSERT INTO webshop.users (full_name, email)
-VALUES (@name, @mail, @admin)
+VALUES (@name, @mail)
 RETURNING *;
 ";
         using (var connection = _dataSource.OpenConnection())

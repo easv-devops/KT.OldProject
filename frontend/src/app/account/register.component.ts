@@ -24,12 +24,6 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
               </div>
             </ion-input>
           </ion-item>
-
-<<<<<<< Updated upstream
-=======
-
-
->>>>>>> Stashed changes
           <ion-item>
             <ion-input formControlName="email" data-testid="emailInput" placeholder="Email (also used for login)"
                        label-placement="floating">
