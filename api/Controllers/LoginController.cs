@@ -24,9 +24,7 @@ public class LoginController : ControllerBase
         Console.WriteLine("LOGIN CREDENTIals!" + model.Password +"and " +   model.Mail);
         
         UserModel user = _service.Authenticate(model);
-        
-        if (model != null)
-        {
+       
             var token = _service.Generate(user);
             
             return new ResponseDto()
@@ -34,12 +32,8 @@ public class LoginController : ControllerBase
                 MessageToClient = "Welcome "+ user.full_name,
                 ResponseData = new { token }
             };
-        }
-        return new ResponseDto()
-        {
-            MessageToClient = "it ain work",
-            ResponseData = new {  }
-        };
+     
+       
     }
     
     [HttpPost]

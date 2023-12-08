@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -11,7 +12,6 @@ namespace service.Services;
 
 public class LoginService
 {
-     private ILogger<LoginService> _logger;
     private PasswordHashRepository _passwordHashRepository;
     private UserRepository _userRepository;
     private IConfiguration _config;
@@ -19,8 +19,7 @@ public class LoginService
     public LoginService(ILogger<LoginService> logger, UserRepository userRepository,
         PasswordHashRepository passwordHashRepository, IConfiguration config)
     {
-        _logger = logger;
-        _userRepository = userRepository;
+       _userRepository = userRepository;
         _passwordHashRepository = passwordHashRepository;
         _config = config;
     }
@@ -30,22 +29,12 @@ public class LoginService
     
     public UserModel Authenticate(LoginModel model)
     {
-        Console.WriteLine("this is the serviec layer " + model.Mail );
-        
-        try
-        {
+     
             var passwordHash = _passwordHashRepository.GetByEmail(model.Mail);
-            Console.WriteLine("Test  : "+passwordHash.hash);
             var hashAlgorithm = new PasswordHashService();
             var isValid = hashAlgorithm.VerifyHashedPassword(model.Password, passwordHash.hash, passwordHash.salt);
             if (isValid) return _userRepository.GetById(passwordHash.user_id);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError("Authenticate error: {Message}", e);
-        }
-
-        return null;
+            else throw new ValidationException("Wrong username or password");
     }
 
     public string Generate(UserModel model)
