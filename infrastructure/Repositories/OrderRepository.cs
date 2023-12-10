@@ -45,7 +45,7 @@ public class OrderRepository
     }
 
 
-    public void CreateCustomerBuy(int user_id, AvatarModel[] avatars)
+    public void CreateCustomerBuy(OrderModel model)
     {
         
         using (var conn = _dataSource.OpenConnection())
@@ -55,21 +55,21 @@ public class OrderRepository
 
             var sql =
                 @"INSERT INTO webshop.order (user_id) VALUES (@user_id) RETURNING *;";
-            conn.QueryFirst<OrderModel>(sql, new { user_id });
+            conn.QueryFirst<OrderModel>(sql, new { model.user_id });
 
             var sql2 =
                 @"select * from webshop.order where user_id= (@user_id)  and order_id = ( SELECT MAX(order_id) FROM webshop.order);";
 
-            var result = conn.QueryFirst<OrderModel>(sql2, new { user_id }, transaction);
+            var result = conn.QueryFirst<OrderModel>(sql2, new { model.user_id }, transaction);
 
 
-            for (int i = 0; i < avatars.Length; i++)
+            for (int i = 0; i < model.avatarArray.Length; i++)
             {
 
                 var sql3 =
                     @"INSERT INTO webshop.customer_buy (order_id, avatar_id) VALUES (@order_id, @avatar_id) RETURNING *;";
 
-                conn.QueryFirst(sql3, new { order_id = result.order_id, avatar_id = avatars[i].avatar_id }, transaction);
+                conn.QueryFirst(sql3, new { order_id = result.user_id, avatar_id = model.avatarArray[i].avatar_id }, transaction);
             }
             transaction.Commit();
             }

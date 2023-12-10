@@ -22,14 +22,14 @@ public class OrderService
         return _orderRepository.CreateOrder(user_id);
     }
     
-    public void deleteOrder(int ordre_id)
+    public void DeleteOrder(int ordre_id)
     {
         _orderRepository.DeleteOrder(ordre_id);
     }
     
-    public void CreateCustomerBuy(int user_id, AvatarModel[] avatars)
+    public void CreateCustomerBuy(OrderModel model)
     {
-         _orderRepository.CreateCustomerBuy(user_id, avatars);
+         _orderRepository.CreateCustomerBuy(model);
          
     }
 

@@ -4,6 +4,8 @@ import {ToastController} from "@ionic/angular";
 import {Router} from "@angular/router";
 import {ResponseDto, TokenResponse} from "../account/login.component";
 import {HttpClient} from "@angular/common/http";
+import {OrderModel} from "./cart.service";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-cart',
@@ -31,7 +33,7 @@ import {HttpClient} from "@angular/common/http";
 export class CartComponent  implements OnInit {
 
   jsonArray: any;
-  myArr : Avatar[];
+  myArr: Avatar[];
   totalPrice: number;
 
   constructor(private readonly toast: ToastController, private readonly router: Router, private readonly http: HttpClient,) {
@@ -43,12 +45,15 @@ export class CartComponent  implements OnInit {
     this.jsonArray = sessionStorage.getItem("cart");
     this.myArr = JSON.parse(this.jsonArray);
     this.totalPrice = 0;
+
   }
 
   ngOnInit() {
-    for (let avatar of this.myArr) {
-      var price = avatar.avatar_price;
-      this.totalPrice = this.totalPrice + price
+    if (this.myArr != null) {
+      for (let avatar of this.myArr) {
+        var price = avatar.avatar_price;
+        this.totalPrice = this.totalPrice + price
+      }
     }
   }
 
@@ -70,20 +75,32 @@ export class CartComponent  implements OnInit {
     }
   }
 
-  async checkOut() {
+  public checkOut() {
 
-    this.http.post('/orderWithProducts', 2, this.myArr);
+    let order = {array: sessionStorage.getItem("cart"), id: 2}
 
-    (await this.toast.create({
-      message: 'Order Confirmed! Check your e-mail!',
-      color: 'success',
-      duration: 5000,
-      icon: 'success',
-    })).present();
+    console.log(order.id);
+    console.log(order.array);
 
-    sessionStorage.removeItem("cart");
-    setTimeout(() => {
-      document.location.reload();
-    }, 3000);
+    this.http.post(environment.baseUrl + 'api/orderWithProducts', order);
+
+    console.log("I was Called!");
+
+
+    /*
+        (await this.toast.create({
+          message: 'Order Confirmed! Check your e-mail!',
+          color: 'success',
+          duration: 5000,
+          icon: 'success',
+        })).present();
+
+        sessionStorage.removeItem("cart");
+        setTimeout(() => {
+          document.location.reload();
+        }, 3000);
+      }
+      */
+
   }
 }
