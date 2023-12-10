@@ -4,8 +4,6 @@ import {ToastController} from "@ionic/angular";
 import {Router} from "@angular/router";
 import {ResponseDto, TokenResponse} from "../account/login.component";
 import {HttpClient} from "@angular/common/http";
-import {OrderModel} from "./cart.service";
-import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-cart',
@@ -33,7 +31,7 @@ import {environment} from "../../environments/environment";
 export class CartComponent  implements OnInit {
 
   jsonArray: any;
-  myArr: Avatar[];
+  myArr : Avatar[];
   totalPrice: number;
 
   constructor(private readonly toast: ToastController, private readonly router: Router, private readonly http: HttpClient,) {
@@ -45,15 +43,12 @@ export class CartComponent  implements OnInit {
     this.jsonArray = sessionStorage.getItem("cart");
     this.myArr = JSON.parse(this.jsonArray);
     this.totalPrice = 0;
-
   }
 
   ngOnInit() {
-    if (this.myArr != null) {
-      for (let avatar of this.myArr) {
-        var price = avatar.avatar_price;
-        this.totalPrice = this.totalPrice + price
-      }
+    for (let avatar of this.myArr) {
+      var price = avatar.avatar_price;
+      this.totalPrice = this.totalPrice + price
     }
   }
 
@@ -75,32 +70,20 @@ export class CartComponent  implements OnInit {
     }
   }
 
-  public checkOut() {
+  async checkOut() {
 
-    let order = {array: sessionStorage.getItem("cart"), id: 2}
+    this.http.post('/orderWithProducts', 2, this.myArr);
 
-    console.log(order.id);
-    console.log(order.array);
+    (await this.toast.create({
+      message: 'Order Confirmed! Check your e-mail!',
+      color: 'success',
+      duration: 5000,
+      icon: 'success',
+    })).present();
 
-    this.http.post(environment.baseUrl + 'api/orderWithProducts', order);
-
-    console.log("I was Called!");
-
-
-    /*
-        (await this.toast.create({
-          message: 'Order Confirmed! Check your e-mail!',
-          color: 'success',
-          duration: 5000,
-          icon: 'success',
-        })).present();
-
-        sessionStorage.removeItem("cart");
-        setTimeout(() => {
-          document.location.reload();
-        }, 3000);
-      }
-      */
-
+    sessionStorage.removeItem("cart");
+    setTimeout(() => {
+      document.location.reload();
+    }, 3000);
   }
 }

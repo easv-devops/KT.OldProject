@@ -28,6 +28,18 @@ public class OrderController : Controller
         };
     }
 
+    [HttpPost]
+    //[ValidateModel]
+    [Route("api/order/post")]
+    public ResponseDto postOrder([FromBody] OrderModel order)
+    {
+        HttpContext.Response.StatusCode = StatusCodes.Status201Created;
+        return new ResponseDto()
+        {
+            MessageToClient = "Successfully created an order",
+            ResponseData = _orderService.CreateOrder(order.user_id)
+        };
+    }
     
     [HttpDelete]
     //[ValidateModel]
@@ -35,7 +47,7 @@ public class OrderController : Controller
     public void deleteOrder([FromRoute] int order_id)
     {
         HttpContext.Response.StatusCode = 204;
-        _orderService.DeleteOrder(order_id);
+        _orderService.deleteOrder(order_id);
         new ResponseDto()
         {
             MessageToClient = "Succesfully deleted an order"
@@ -45,28 +57,25 @@ public class OrderController : Controller
     
     [HttpPost]
     [ValidateModel]
-    [Route("/api/orderWithProducts")]
-    public void PostOrder([FromBody] OrderModel model)
+    [Route("/orderWithProducts")]
+    public ResponseDto postOrder([FromBody] int user_id, AvatarModel[] avatars)
     {
-        
-        Console.WriteLine(model.user_id);
-        Console.WriteLine(model.avatarArray[0]);
-        Console.WriteLine("HEJ MED DIG  JEG BLIVER KALDT");
-        
-        //HttpContext.Response.StatusCode = StatusCodes.Status201Created;
-        //_orderService.CreateCustomerBuy(model);
-        //_orderService.CreateOrder(model.user_id);
+        HttpContext.Response.StatusCode = StatusCodes.Status201Created;
+        _orderService.CreateCustomerBuy(user_id, avatars);
         
         
-        
-        
-       //OrderModel order1 = _orderService.getLastOrderToEmail(model.user_id);
+       //OrderModel order1 = _orderService.getLastOrderToEmail(user_id);
 
       
        
        //_emailService.SendEmail(order1.order_id);
         
-       
+        
+        return new ResponseDto()
+        {
+            MessageToClient = "Successfully created an order"
+             
+        };
     }
 
     }
