@@ -1,8 +1,10 @@
 import {Component, EventEmitter, OnInit} from "@angular/core";
 import {ProductsService, Avatar} from './products.service';
 import {Router} from "@angular/router";
-import {createAvatarComponent} from "./createAvatar.component";
+import {CreateAvatarComponent} from "./createAvatar.component";
 import {ModalController} from "@ionic/angular";
+import {DataService} from "../data.service";
+import {UpdateAvatarComponent} from "./updateAvatar.component";
 
 @Component({
   template: `
@@ -12,14 +14,12 @@ import {ModalController} from "@ionic/angular";
 
         <app-search (searchTextChanged)="onSearchTextEntered($event)" style="position: absolute; top: 0;"></app-search>
 
-
-
       <br>
-
       <ion-list inset="true" *ngFor="let avatar of avatar$; index as i">
         <ion-item *ngIf="searchText === '' || avatar.avatar_name.toLowerCase().includes(searchText)">
           <img src="https://robohash.org/{{avatar.avatar_name}}.png" height="150px" width="150px"/>
           <ion-label>{{avatar.avatar_name}}</ion-label>
+          <ion-button class="button" (click)="updateAvatar(avatar)" fill="clear">Update</ion-button>
           <ion-label>{{avatar.avatar_price}} €</ion-label>
 
           <ion-button class="button" (click)="saveData(avatar)" fill="clear" >
@@ -35,12 +35,12 @@ import {ModalController} from "@ionic/angular";
 
 export class ProductsComponent implements OnInit {
 
-
+  avatarElement: Avatar | undefined;
   avatar$?: Avatar[];
   cartArray: Avatar[];
 
 
-  constructor(private productService: ProductsService, readonly router: Router, public modalController: ModalController) {
+  constructor(private productService: ProductsService, readonly router: Router, public modalController: ModalController, private data: DataService) {
     this.cartArray = [];
 }
 
@@ -61,13 +61,23 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getAllProducts().subscribe(result => {
       this.avatar$ = result.responseData;
+      this.data.currentNumber.subscribe(avatarElement => this.avatarElement = avatarElement)
     })
   }
 
   async createAvatar(){
     const model = await this.modalController.create({
-      component: createAvatarComponent
+      component: CreateAvatarComponent
     })
     model.present();
+  }
+
+  async updateAvatar(avatarElement: Avatar){
+  this.data.changeAvatar(avatarElement)
+
+    const modal = await this.modalController.create({
+      component: UpdateAvatarComponent
+    });
+  modal.present();
   }
 }

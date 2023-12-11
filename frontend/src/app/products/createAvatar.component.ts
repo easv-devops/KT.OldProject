@@ -37,7 +37,7 @@ import {ModalController, ToastController} from "@ionic/angular";
     <ion-button [disabled]="createNewAvatarForm.invalid" (click)="submit()">Create new Avatar</ion-button>
   `
 })
-export class createAvatarComponent{
+export class CreateAvatarComponent{
   avatar_name = new FormControl('', [Validators.minLength(3), Validators.required])
   avatar_price = new FormControl(0, [Validators.min(1), Validators.required])
   information = new FormControl('')

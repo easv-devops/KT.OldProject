@@ -11,7 +11,6 @@ import { AccountService, User } from "./account.service";
           <ion-item>
             <ion-input label="Name" [value]="account.full_name"></ion-input>
           </ion-item>
-
           <ion-item>
             <ion-input label="Email" [value]="account.email"></ion-input>
           </ion-item>

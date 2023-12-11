@@ -9,6 +9,7 @@ export interface Avatar {
   avatar_id: number;
   avatar_name: string;
   avatar_price: number;
+  information: string;
 }
 
 @Injectable()

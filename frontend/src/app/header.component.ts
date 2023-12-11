@@ -37,6 +37,6 @@ export class HeaderComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.title.setTitle(`Blog - ${this.titleText}`)
+    this.title.setTitle(`AvatarShop - ${this.titleText}`)
   }
 }

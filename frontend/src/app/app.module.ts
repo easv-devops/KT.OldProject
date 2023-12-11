@@ -22,7 +22,8 @@ import { ProductsService } from './products/products.service';
 import {CartService} from "./cart/cart.service";
 import {CartComponent} from "./cart/cart.component";
 import {SearchComponent} from "./products/search.component";
-import {createAvatarComponent} from "./products/createAvatar.component";
+import {CreateAvatarComponent} from "./products/createAvatar.component";
+import {UpdateAvatarComponent} from "./products/updateAvatar.component";
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {createAvatarComponent} from "./products/createAvatar.component";
     LoginComponent,
     CartComponent,
     SearchComponent,
-    createAvatarComponent
+    CreateAvatarComponent,
+    UpdateAvatarComponent
   ],
   imports: [
     BrowserModule,
