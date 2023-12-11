@@ -4,6 +4,9 @@ import {ToastController} from "@ionic/angular";
 import {Router} from "@angular/router";
 import {ResponseDto, TokenResponse} from "../account/login.component";
 import {HttpClient} from "@angular/common/http";
+import {environment} from "../../environments/environment";
+import {firstValueFrom} from "rxjs";
+
 
 @Component({
   selector: 'app-cart',
@@ -72,18 +75,26 @@ export class CartComponent  implements OnInit {
 
   async checkOut() {
 
-    this.http.post('/orderWithProducts', [2, this.myArr]);
+    let dto = {
+      userId: 3,
+      avatar: this.myArr
+    }
+    console.log(dto.avatar)
+    var req = this.http.post<any>(environment.baseUrl+'/orderWithProducts', dto);
+
+
+    var result = await firstValueFrom<any>(req);
 
     (await this.toast.create({
       message: 'Order Confirmed! Check your e-mail!',
       color: 'success',
       duration: 5000,
-      icon: 'success',
+  //    icon: 'success',
     })).present();
 
     sessionStorage.removeItem("cart");
     setTimeout(() => {
-      document.location.reload();
+    //  document.location.reload();
     }, 3000);
   }
 }

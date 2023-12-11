@@ -1,4 +1,5 @@
-﻿using api.Filters;
+﻿using System.ComponentModel.DataAnnotations;
+using api.Filters;
 using api.TransferModels;
 using infrastructure.DataModels;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using service.Services;
 
 namespace api.Controllers;
 
+[ApiController]
 public class OrderController : Controller
 {
     private readonly OrderService _orderService;
@@ -23,7 +25,7 @@ public class OrderController : Controller
     {
         return new ResponseDto()
         {
-            MessageToClient = "Succesfully got all Order",
+            MessageToClient = "Successfully got all Order",
             ResponseData = _orderService.GetAllOrder()
         };
     }
@@ -50,25 +52,26 @@ public class OrderController : Controller
         _orderService.deleteOrder(order_id);
         new ResponseDto()
         {
-            MessageToClient = "Succesfully deleted an order"
+            MessageToClient = "Successfully deleted an order"
         };
     }
     
     
     [HttpPost]
-    [ValidateModel]
+   // [ValidateModel]
     [Route("/orderWithProducts")]
-    public ResponseDto postOrder([FromBody] int user_id, AvatarModel[] avatars)
+    public ResponseDto postOrder([FromBody] OrderWithProducts orderWithProducts)
     {
-        HttpContext.Response.StatusCode = StatusCodes.Status201Created;
-        _orderService.CreateCustomerBuy(user_id, avatars);
+        Console.WriteLine("Hej med dig "+orderWithProducts.userId);
+        //HttpContext.Response.StatusCode = StatusCodes.Status201Created;
+        _orderService.CreateCustomerBuy(orderWithProducts.userId, orderWithProducts.avatar);
         
-        
-       //OrderModel order1 = _orderService.getLastOrderToEmail(user_id);
+       
+       OrderModel order1 = _orderService.getLastOrderToEmail(orderWithProducts.userId);
 
       
        
-       //_emailService.SendEmail(order1.order_id);
+       _emailService.SendEmail(order1.order_id);
         
         
         return new ResponseDto()
@@ -79,3 +82,13 @@ public class OrderController : Controller
     }
 
     }
+    
+    
+
+public class OrderWithProducts
+{
+    [Required] [Range(1, Int32.MaxValue)]
+    public int userId { get; set; }
+    public AvatarModel[] avatar { get; set; }
+}
+    
