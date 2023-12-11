@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using api.Filters;
 using api.TransferModels;
 using infrastructure.DataModels;
@@ -62,8 +63,7 @@ public class OrderController : Controller
     [Route("/orderWithProducts")]
     public ResponseDto postOrder([FromBody] OrderWithProducts orderWithProducts)
     {
-        Console.WriteLine("Hej med dig "+orderWithProducts.userId);
-        //HttpContext.Response.StatusCode = StatusCodes.Status201Created;
+       
         _orderService.CreateCustomerBuy(orderWithProducts.userId, orderWithProducts.avatar);
         
        
@@ -89,6 +89,8 @@ public class OrderWithProducts
 {
     [Required] [Range(1, Int32.MaxValue)]
     public int userId { get; set; }
+    
+    [Required] [NotNull]
     public AvatarModel[] avatar { get; set; }
 }
     

@@ -25,7 +25,7 @@ create table webshop.avatar
 );
 
 INSERT INTO webshop.avatar (avatar_name,avatar_price, information, deleted)
-VALUES ('Nummer1', 10, null, false);
+VALUES ('Nummer1', 10, 'Her er lidt information', false);
 
 create table webshop.order
 (

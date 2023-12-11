@@ -83,14 +83,9 @@ export class CartComponent  implements OnInit {
       userId: 3,
       avatar: this.myArr
     }
-    console.log(dto.avatar)
+
     var req = this.http.post<any>(environment.baseUrl+'/orderWithProducts', dto);
-
-
     var result = await firstValueFrom<any>(req);
-
-
-
 
 
 
