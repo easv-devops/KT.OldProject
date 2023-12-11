@@ -53,7 +53,7 @@ export interface ResponseDto<T> {
           </form>
       </ion-content>
   `,
-  styleUrls: ['./form.css'],
+  //styleUrls: ['./form.css'],
 })
 export class LoginComponent {
   readonly form = this.fb.group({

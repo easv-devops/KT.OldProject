@@ -6,6 +6,7 @@ import {ResponseDto, TokenResponse} from "../account/login.component";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {firstValueFrom} from "rxjs";
+import {jwtDecode} from "jwt-decode";
 
 
 @Component({
@@ -70,10 +71,13 @@ export class CartComponent  implements OnInit {
 
       let newArr: Avatar[] = this.myArr.splice(toBeDeleted, 1);
       sessionStorage.setItem("cart", JSON.stringify(newArr));
+
+      this.GetUserId();
     }
   }
 
   async checkOut() {
+
 
     let dto = {
       userId: 3,
@@ -84,6 +88,11 @@ export class CartComponent  implements OnInit {
 
 
     var result = await firstValueFrom<any>(req);
+
+
+
+
+
 
     (await this.toast.create({
       message: 'Order Confirmed! Check your e-mail!',
@@ -96,5 +105,17 @@ export class CartComponent  implements OnInit {
     setTimeout(() => {
     //  document.location.reload();
     }, 3000);
+  }
+
+  public GetUserId(){
+
+    const token = JSON.stringify(sessionStorage.getItem("cart"));
+
+    const decodedToken = jwtDecode(token);
+
+    const userId = decodedToken;
+
+    console.log(decodedToken);
+
   }
 }
