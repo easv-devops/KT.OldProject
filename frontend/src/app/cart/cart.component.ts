@@ -85,7 +85,7 @@ export class CartComponent  implements OnInit {
     }
 
     var req = this.http.post<any>(environment.baseUrl+'/orderWithProducts', dto);
-    var result = await firstValueFrom<any>(req);
+     await firstValueFrom<any>(req);
 
 
 
@@ -93,13 +93,15 @@ export class CartComponent  implements OnInit {
       message: 'Order Confirmed! Check your e-mail!',
       color: 'success',
       duration: 5000,
-  //    icon: 'success',
+      icon: 'success',
     })).present();
 
     sessionStorage.removeItem("cart");
     setTimeout(() => {
-    //  document.location.reload();
+
+      this.navigateToCarts()
     }, 3000);
+
   }
 
   public GetUserId(){
@@ -113,4 +115,10 @@ export class CartComponent  implements OnInit {
     console.log(decodedToken);
 
   }
+
+  async navigateToCarts() {
+    // Use Angular's router to navigate to products
+    this.router.navigate(['/cart']);
+  }
+
 }

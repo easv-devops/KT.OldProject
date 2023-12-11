@@ -35,6 +35,7 @@ import {environment} from "../../environments/environment";
 
 export class UpdateAvatarComponent implements OnInit {
   avatarElement: Avatar | undefined;
+  private router: any;
 
   constructor(public fb: FormBuilder, private data: DataService, public state: State, public http: HttpClient, public toastController: ToastController, public modalController: ModalController) {
   }
@@ -65,7 +66,8 @@ export class UpdateAvatarComponent implements OnInit {
       const toast = await this.toastController.create({
         message: 'The avatar was successfully changed',
         duration: 1233,
-        color: "success"
+        color: "success",
+
       })
       toast.present();
 
@@ -75,8 +77,12 @@ export class UpdateAvatarComponent implements OnInit {
         message: 'The avatar was unsuccessfully changed',
         duration: 1233,
         color: "danger"
+
       })
       toast.present();
+
     }
   }
+
+
 }

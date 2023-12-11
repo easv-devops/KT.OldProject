@@ -70,6 +70,7 @@ export class CreateAvatarComponent{
         color: "danger"
       })
       toast.present();
+
     }
   }
 }
