@@ -82,7 +82,7 @@ export class LoginComponent {
     if (this.form.invalid) return;
 
     console.log(this.form.getRawValue());
-    let dto = {mail: this.form.get('email')?.value,
+    let dto = {email: this.form.get('email')?.value,
     password: this.form.get('password')?.value}
     const response = await firstValueFrom(this.http.post<ResponseDto<TokenResponse>>('/api/account/login', dto));
     this.token.setToken(response.responseData.token!);

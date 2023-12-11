@@ -72,7 +72,7 @@ export class CartComponent  implements OnInit {
 
   async checkOut() {
 
-    this.http.post('/orderWithProducts', 2, this.myArr);
+    this.http.post('/orderWithProducts', [2, this.myArr]);
 
     (await this.toast.create({
       message: 'Order Confirmed! Check your e-mail!',
