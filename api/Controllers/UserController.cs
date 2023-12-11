@@ -19,7 +19,7 @@ public class UserController : ControllerBase
     
     [Route("api/get")]
     [HttpGet]
-    private UserModel GetCurrentUser()
+    private AuthenticateModel GetCurrentUser()
     {
         var identity = HttpContext.User.Identity as ClaimsIdentity;
 
@@ -27,11 +27,12 @@ public class UserController : ControllerBase
         {
             var userClaims = identity.Claims;
 
-            return new UserModel
+            return new AuthenticateModel()
             {
                 full_name = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value,
                 email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
-                admin = userClaims.FirstOrDefault(o=>  o.Type == ClaimTypes.Role)?.Value
+                admin = userClaims.FirstOrDefault(o=>  o.Type == ClaimTypes.Role)?.Value,
+                user_id = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GivenName)?.Value
                 
             };
         }

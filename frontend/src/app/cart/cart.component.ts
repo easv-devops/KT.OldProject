@@ -4,6 +4,7 @@ import {ToastController} from "@ionic/angular";
 import {Router} from "@angular/router";
 import {ResponseDto, TokenResponse} from "../account/login.component";
 import {HttpClient} from "@angular/common/http";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   selector: 'app-cart',
@@ -67,12 +68,16 @@ export class CartComponent  implements OnInit {
 
       let newArr: Avatar[] = this.myArr.splice(toBeDeleted, 1);
       sessionStorage.setItem("cart", JSON.stringify(newArr));
+
+      this.GetUserId();
     }
   }
 
   async checkOut() {
 
-    this.http.post('/orderWithProducts', [2, this.myArr]);
+
+    this.http.post('/orderWithProducts', 2, this.myArr);
+
 
     (await this.toast.create({
       message: 'Order Confirmed! Check your e-mail!',
@@ -85,5 +90,17 @@ export class CartComponent  implements OnInit {
     setTimeout(() => {
       document.location.reload();
     }, 3000);
+  }
+
+  public GetUserId(){
+
+    const token = JSON.stringify(sessionStorage.getItem("cart"));
+
+    const decodedToken = jwtDecode(token);
+
+    const userId = decodedToken;
+
+    console.log(decodedToken);
+
   }
 }
