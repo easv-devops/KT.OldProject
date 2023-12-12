@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Avatar} from "../products/products.service";
 import {ToastController} from "@ionic/angular";
 import {Router} from "@angular/router";
-import {ResponseDto, TokenResponse} from "../account/login.component";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {firstValueFrom} from "rxjs";
@@ -37,6 +36,8 @@ export class CartComponent  implements OnInit {
   jsonArray: any;
   myArr : Avatar[];
   totalPrice: number;
+  userId: number;
+
 
   constructor(private readonly toast: ToastController, private readonly router: Router, private readonly http: HttpClient,) {
 
@@ -47,6 +48,8 @@ export class CartComponent  implements OnInit {
     this.jsonArray = sessionStorage.getItem("cart");
     this.myArr = JSON.parse(this.jsonArray);
     this.totalPrice = 0;
+    this.userId = this.GetUserId();
+
   }
 
   ngOnInit() {
@@ -80,9 +83,11 @@ export class CartComponent  implements OnInit {
 
 
     let dto = {
-      userId: 3,
+      userId: this.GetUserId(),
       avatar: this.myArr
     }
+
+    console.log(" Det her er noget lort " + dto.userId);
 
     var req = this.http.post<any>(environment.baseUrl+'/orderWithProducts', dto);
      await firstValueFrom<any>(req);
@@ -106,14 +111,15 @@ export class CartComponent  implements OnInit {
 
   public GetUserId(){
 
-    const token = JSON.stringify(sessionStorage.getItem("cart"));
+    const token: any = sessionStorage.getItem("token");
 
-    const decodedToken = jwtDecode(token);
+    const decodedToken  = jwtDecode(token);
 
-    const userId = decodedToken;
+    // @ts-ignore
+    console.log(decodedToken["Id"]!)
 
-    console.log(decodedToken);
-
+    // @ts-ignore
+    return decodedToken["Id"]!;
   }
 
   async navigateToCarts() {

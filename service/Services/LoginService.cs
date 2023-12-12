@@ -44,11 +44,10 @@ public class LoginService
 
         var claims = new[]
         {
-            new Claim(ClaimTypes.NameIdentifier, model.full_name),
-            new Claim(ClaimTypes.Email, model.email),
-            new Claim(ClaimTypes.Role, model.admin),
-            new Claim(ClaimTypes.GivenName, model.user_id.ToString())
-            
+            new Claim("Name", model.full_name),
+            new Claim("Email", model.email),
+            new Claim("IsAdmin", model.admin),
+            new Claim("Id", model.user_id.ToString())
         };
 
         var token = new JwtSecurityToken(_config.GetValue<string>("Jwt:Issuer"),
