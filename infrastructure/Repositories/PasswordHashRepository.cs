@@ -13,6 +13,9 @@ public class PasswordHashRepository
         _dataSource = dataSource;
     }
     
+    /*
+     * Creates a new password hash in the database. 
+     */
     public void Create(int id, string hash, string salt)
     {
         const string sql = $@"INSERT INTO webshop.password_hash (user_id, hash, salt) VALUES (@id, @hash, @salt)";
@@ -20,6 +23,9 @@ public class PasswordHashRepository
         connection.Execute(sql, new {id, hash, salt  });
     }
     
+    /*
+     * Gets the password hash for the given email address.
+     */
     public PasswordHashModel GetByEmail(string mail)
     {
         const string sql = $@"

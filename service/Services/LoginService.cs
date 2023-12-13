@@ -16,6 +16,9 @@ public class LoginService
     private UserRepository _userRepository;
     private IConfiguration _config;
 
+    /*
+     * Constructor to initialize the service with required dependencies.
+     */
     public LoginService(ILogger<LoginService> logger, UserRepository userRepository,
         PasswordHashRepository passwordHashRepository, IConfiguration config)
     {
@@ -24,9 +27,9 @@ public class LoginService
         _config = config;
     }
     
-    
-    
-    
+    /*
+     * Authenticating a user based on provided login credentials.
+     */
     public UserModel Authenticate(LoginModel model)
     {
      
@@ -37,6 +40,9 @@ public class LoginService
             else throw new ValidationException("Wrong username or password");
     }
 
+    /*
+     * Generating a JWT token based on user information.
+     */
     public string Generate(UserModel model)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetValue<string>("Jwt:Key")));
@@ -59,6 +65,9 @@ public class LoginService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
+    /*
+     * Registering a new user, including password hashing and storage.
+     */
     public UserModel Register(RegisterModel model)
     {
         var hashAlgorithm = new PasswordHashService();

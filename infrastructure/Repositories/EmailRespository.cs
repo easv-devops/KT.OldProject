@@ -13,6 +13,9 @@ public class EmailRepository
         _dataSource = dataSource;
     }
 
+    /*
+     * Gets the user who placed the order with the given id. 
+     */
     public UserModel GetOrdersUser(int order_id)
     {
         var sql = @"SELECT * 
@@ -26,6 +29,9 @@ public class EmailRepository
         }
     }
 
+    /*
+     * Gets all avatars that were bought in the order with the given id.
+     */
     public IEnumerable<AvatarModel> GetOrdersAvatars(int order_id)
     {
         var sql = @" SELECT * 

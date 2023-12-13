@@ -13,7 +13,9 @@ public class AvatarService
         _avatarRepository = avatarRepository;
     }
     
-    
+    /*
+     * Retrieves all avatars.
+     */
     public IEnumerable<AvatarModel> GetAllAvatars()
     {
         try
@@ -30,7 +32,9 @@ public class AvatarService
        
     }
     
-    
+    /*
+     * Creates a new avatar.
+     */
     public AvatarModel CreateAvatar(AvatarModel avatar)
     {
 
@@ -49,7 +53,9 @@ public class AvatarService
         }
         
     
-    
+    /*
+     * Updates an existing avatar.
+     */
     public AvatarModel UpdateAvatar(int avatarId, AvatarModel avatar)
     {
       
@@ -66,6 +72,9 @@ public class AvatarService
         
     }
     
+    /*
+     * Deletes an avatar by its ID.
+     */
     public void deleteAvatar(int avatar_id)
     {
         try
@@ -79,6 +88,9 @@ public class AvatarService
         }
     }
 
+    /*
+     * Retrieves information about a specific avatar.
+     */
     public string GetAvatarInformation(int avatar_id)
     {
         try

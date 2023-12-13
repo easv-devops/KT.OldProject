@@ -12,7 +12,9 @@ public class UserRepository
     {
         _dataSource = dataSource;
     }
-    
+    /*
+     * Create a new user in the database.
+     */
     public UserModel Create(RegisterModel model)
     {
         const string sql = @"
@@ -26,6 +28,9 @@ RETURNING *;
         }
     }
     
+    /*
+     * Retrieve a user by ID from the database.
+     */
     public UserModel? GetById(int id)
     {
         const string sql = @"

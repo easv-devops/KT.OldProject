@@ -13,6 +13,9 @@ public class CustomerBuyRepository
         _dataSource = dataSource;
     }
 
+    /*
+     * Gets all customer buys from the database. 
+     */
     public IEnumerable<CustomerBuyModel> GetAllCustomerBuy()
     {
         var sql =
@@ -23,6 +26,9 @@ public class CustomerBuyRepository
         }
     }
 
+    /*
+     * Creates a new customer buy in the database. 
+     */
     public CustomerBuyModel CreateCustomerBuy(CustomerBuyModel customerBuy)
     {
         var sql =
@@ -34,6 +40,9 @@ public class CustomerBuyRepository
         }
     }
     
+    /*
+     * Deletes a customer buy from the database.
+     */
     public void DeleteCustomerBuy(int customer_buy_id)
     {
         var sql = @"DELETE FROM webshop.customer_buy WHERE webshop.customer_buy.customer_buy_id = @customer_buy_id RETURNING *;";

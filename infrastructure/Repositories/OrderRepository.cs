@@ -12,7 +12,10 @@ public class OrderRepository
     {
         _dataSource = dataSource;
     }
-
+    
+    /*
+     * Gets all orders from the database. 
+     */
     public IEnumerable<OrderModel> GetAllOrder()
     {
         var sql = @"SELECT * FROM webshop.order ORDER BY order_id;";
@@ -23,6 +26,9 @@ public class OrderRepository
         }
     }
 
+    /*
+     * Creates a new order in the database. 
+     */
     public OrderModel CreateOrder(int user_id)
     {
         var sql =
@@ -34,6 +40,9 @@ public class OrderRepository
         }
     }
 
+    /*
+     * Deletes an order from the database. 
+     */
     public void DeleteOrder(int order_id)
     {
         var sql = @"DELETE FROM webshop.order WHERE order_id = @order_id RETURNING *;";
@@ -43,8 +52,10 @@ public class OrderRepository
             conn.QueryFirst<OrderModel>(sql, new { order_id });
         }
     }
-
-
+    
+    /*
+     * Creates a new customer buy in the database. 
+     */
     public void CreateCustomerBuy(int user_id, AvatarModel[] avatars)
     {
         
@@ -76,6 +87,9 @@ public class OrderRepository
 
         }
 
+    /*
+     * Gets the last order for the given user to email.
+     */
     public OrderModel getLastOrderToEmail(int user_id)
     {
         var sql2 =

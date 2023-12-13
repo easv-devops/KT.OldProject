@@ -16,8 +16,9 @@ public class EmailService
         _emailRespository = emailRespository;
     }
     
-    
-    
+    /*
+     * Sends an email for the specified order ID.
+     */
     public void SendEmail(int order_id)
     {
      
@@ -32,8 +33,10 @@ public class EmailService
         sendEmail(message);
       
     }
-
-
+    
+    /*
+     * Creates the email header with sender, recipient, and subject information.
+     */
     void makeEmailHeader(int order_id,UserModel user,MimeMessage message)
     {
         
@@ -44,7 +47,9 @@ public class EmailService
 
     }
     
-    
+    /*
+     * Creates the email body with personalized greeting, order details, and a closing message.
+     */
     public void makeEmailBody(int order_id, UserModel user,BodyBuilder builder)
     {
         string emailBody=""; 
@@ -61,8 +66,10 @@ public class EmailService
                                "" +
                                "Kind regards The Webshop Inc."; 
       }
-
-
+    
+    /*
+     * Downloads avatar images and attaches them to the email.
+     */
     public void attachment(int order_id,BodyBuilder builder, MimeMessage message)
     {
         WebClient webClient = new WebClient();
@@ -85,8 +92,9 @@ public class EmailService
        }   
     }
     
-    
-    
+    /*
+     * Sends the email using SMTP with Gmail credentials.
+     */
     public void sendEmail(MimeMessage message)
     {
         using (var client = new MailKit.Net.Smtp.SmtpClient())
@@ -97,8 +105,4 @@ public class EmailService
             client.Disconnect(true);
         }
     }
-
-   
-    
-    
 }

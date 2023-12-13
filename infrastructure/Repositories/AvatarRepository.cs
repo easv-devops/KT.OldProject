@@ -13,7 +13,9 @@ public class AvatarRepository
         _dataSource = dataSource;
     }
     
-    
+    /*
+     * Gets all avatars from the database
+     */
     public IEnumerable<AvatarModel> GetAllAvatars()
     {
         var sql = @"SELECT * FROM webshop.avatar where deleted=false ORDER BY avatar_id;";
@@ -24,7 +26,9 @@ public class AvatarRepository
         }
     }
     
-    
+    /*
+     * Creates a new avatar in the database.
+     */
     public AvatarModel CreateAvatar(AvatarModel avatar)
     {
         var sql =
@@ -36,6 +40,9 @@ public class AvatarRepository
         }
     }
     
+    /*
+     * Updates an existing avatar in the database. 
+     */
     public AvatarModel UpdateAvatar(int avatar_id, AvatarModel avatar)
     {
         var sql =
@@ -48,7 +55,9 @@ RETURNING *";
         }
     }
 
-    
+    /*
+     * Deletes an avatar from the database.
+     */
     public void DeleteAvatar(int avatar_id)
     {
         
@@ -62,6 +71,9 @@ RETURNING *";
         }
     }
     
+    /*
+     * Checks if an avatar with the given name exists in the database. 
+     */
     public AvatarModel CheckIfNameExist(string avatar_name)    {
 
         var sql = $@"SELECT * FROM webshop.avatar WHERE avatar_name = @avatar_name;";
@@ -71,6 +83,10 @@ RETURNING *";
             return conn.QueryFirstOrDefault<AvatarModel>(sql, new { avatar_name });
         }
     }
+    
+    /*
+     * Gets the information for an avatar with the given id.
+     */
     public string GetAvatarInformation(int avatar_id)
     {
         var sql = @"SELECT information FROM webshop.avatar where deleted = false AND avatar_id = @avatar_id;";
