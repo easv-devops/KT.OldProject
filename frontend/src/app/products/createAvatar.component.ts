@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
-import {Avatar} from "./products.service";
+import {Avatar, ResponseDto} from "./products.service";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {firstValueFrom} from "rxjs";
@@ -54,17 +54,15 @@ export class CreateAvatarComponent{
 
   async submit(){
     try{
-      const observable = this.http.post<Avatar>(environment.baseUrl + '/avatar', this.createNewAvatarForm.value)
+      const observable = this.http.post<ResponseDto<Avatar>>(environment.baseUrl + '/avatar', this.createNewAvatarForm.value)
       const response = await firstValueFrom(observable)
-      this.state.avatar.push(response!);
+      this.state.avatar.push(response.responseData!);
       const toast = await this.toastController.create({
         message: 'The avatar was successfully created',
         duration: 1233,
         color: "success"
       })
       toast.present();
-
-      this.router.navigate(['/products']);
 
       this.modalController.dismiss()
     } catch (e) {

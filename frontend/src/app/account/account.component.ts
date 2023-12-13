@@ -1,21 +1,20 @@
 import { Component, OnInit } from "@angular/core";
-import { Observable } from "rxjs";
-import { AccountService, User } from "./account.service";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   template: `
     <app-title title="Account"></app-title>
     <ion-content>
       <form>
-        <ion-list class="field-list" *ngIf="account$ | async as account;">
+        <ion-list class="field-list">
           <ion-item>
-            <ion-input label="Name" [value]="account.full_name"></ion-input>
+            <ion-input label="Name" [value]="this.name"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input label="Email" [value]="account.email"></ion-input>
+            <ion-input label="Email" [value]="this.email"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input label="Admin" [value]="account.admin"></ion-input>
+            <ion-input label="Admin" [value]="this.role"></ion-input>
           </ion-item>
         </ion-list>
         <ion-button>Update</ion-button>
@@ -25,11 +24,22 @@ import { AccountService, User } from "./account.service";
   styleUrls: ['./form.css'],
 })
 export class AccountComponent implements OnInit {
-  account$?: Observable<User>;
 
-  constructor(private readonly service: AccountService) { }
-
+  role: any;
+  name: any;
+  email: any;
   ngOnInit(): void {
-    this.account$ = this.service.getCurrentUser();
+    this.getUser()
+  }
+  public getUser(){
+    const token: any = sessionStorage.getItem("token");
+
+    const decodedToken  = jwtDecode(token);
+    // @ts-ignore
+    this.name = decodedToken["Name"]!;
+    // @ts-ignore
+    this.email = decodedToken["Email"]!;
+    // @ts-ignore
+    this.role = decodedToken["IsAdmin"]!;
   }
 }

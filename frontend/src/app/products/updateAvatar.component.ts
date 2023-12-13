@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {Avatar} from "./products.service";
+import {Avatar, ResponseDto} from "./products.service";
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {DataService} from "../data.service";
 import {firstValueFrom} from "rxjs";
@@ -58,21 +58,18 @@ export class UpdateAvatarComponent implements OnInit {
     let avatarNumber = this.avatarElement?.avatar_id
 
     try {
-      const observable = this.http.put<Avatar>(environment.baseUrl + '/avatar/' + avatarNumber, this.updateAvatarForm.value)
-      const response = await firstValueFrom(observable)
-      const id = this.state.avatar.findIndex(a => a.avatar_id == response.avatar_id);
-      this.state.avatar[id] = response;
+      const observable = this.http.put<ResponseDto<Avatar>>(environment.baseUrl + '/avatar/' + avatarNumber, this.updateAvatarForm.value)
+      const response = await firstValueFrom<ResponseDto<Avatar>>(observable)
+      const id = this.state.avatar.findIndex(a => a.avatar_id == response.responseData.avatar_id);
+      this.state.avatar[id] = response.responseData;
       const toast = await this.toastController.create({
         message: 'The avatar was successfully changed',
         duration: 1233,
         color: "success",
 
       })
-
       toast.present();
       this.modalController.dismiss();
-      this.router.navigate(['/products']);
-
     } catch (e) {
       const toast = await this.toastController.create({
         message: 'The avatar was unsuccessfully changed',

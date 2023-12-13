@@ -40,22 +40,22 @@ export class CartComponent  implements OnInit {
 
 
   constructor(private readonly toast: ToastController, private readonly router: Router, private readonly http: HttpClient,) {
-
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
 
-    this.jsonArray = sessionStorage.getItem("cart");
-    this.myArr = JSON.parse(this.jsonArray);
-    this.totalPrice = 0;
-    this.userId = this.GetUserId();
-
+      this.jsonArray = sessionStorage.getItem("cart");
+      this.myArr = JSON.parse(this.jsonArray);
+      this.totalPrice = 0;
+      this.userId = this.GetUserId();
   }
 
   ngOnInit() {
-    for (let avatar of this.myArr) {
-      var price = avatar.avatar_price;
-      this.totalPrice = this.totalPrice + price
+    if(this.myArr != null) {
+      for (let avatar of this.myArr) {
+        var price = avatar.avatar_price;
+        this.totalPrice = this.totalPrice + price
+      }
     }
   }
 

@@ -10,6 +10,7 @@ import {environment} from "../../environments/environment";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {State} from "../../state";
 import {DetailsAvatarComponent} from "./detailsAvatar.component";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   template: `
@@ -24,18 +25,17 @@ import {DetailsAvatarComponent} from "./detailsAvatar.component";
         <ion-item *ngIf="searchText === '' || avatar.avatar_name.toLowerCase().includes(searchText)">
           <img src="https://robohash.org/{{avatar.avatar_name}}.png" height="150px" width="150px"/>
           <ion-label>{{avatar.avatar_name}}</ion-label>
-          <ion-button class="button" (click)="details(avatar)" fill="clear">Information</ion-button>
-          <ion-button class="button" (click)="updateAvatar(avatar)" fill="clear">Update</ion-button>
+          <ion-button  class="button" (click)="details(avatar)" fill="clear">Information</ion-button>
+          <ion-button *ngIf="this.role === 'Admin'" class="button" (click)="updateAvatar(avatar)" fill="clear">Update</ion-button>
           <ion-label>{{avatar.avatar_price}} €</ion-label>
 
           <ion-button class="button" (click)="saveData(avatar)" fill="clear" >
             <ion-icon name="cart-outline"></ion-icon>
           </ion-button>
-          <ion-button class="button" (click)="deleteAvatar(avatar.avatar_id)" fill="clear">Delete</ion-button>
-
-        </ion-item>
+          <ion-button *ngIf="this.role === 'Admin'" class="button" (click)="deleteAvatar(avatar.avatar_id)" fill="clear">Delete</ion-button>
+          </ion-item>
       </ion-list>
-      <ion-button class="button" (click)="createAvatar()">Create</ion-button>
+      <ion-button *ngIf="this.role === 'Admin'" class="button" (click)="createAvatar()">Create</ion-button>
     </ion-content>
   `
 })
@@ -45,6 +45,7 @@ export class ProductsComponent implements OnInit {
   avatarElement: Avatar | undefined;
   avatar$?: Avatar[];
   cartArray: Avatar[];
+  role: any;
 
 
   constructor(private productService: ProductsService, readonly router: Router, public modalController: ModalController, private data: DataService, public http: HttpClient, public state: State, public toastController: ToastController) {
@@ -66,8 +67,10 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getAllProducts().subscribe(result => {
       this.avatar$ = result.responseData;
+      this.state.avatar = result.responseData;
       this.data.currentNumber.subscribe(avatarElement => this.avatarElement = avatarElement)
     })
+    this.getRole();
   }
 
   async createAvatar(){
@@ -91,13 +94,13 @@ export class ProductsComponent implements OnInit {
       try {
         await firstValueFrom(this.http.delete(environment.baseUrl + '/avatar/' + avatar_id))
         this.state.avatar = this.state.avatar.filter(a => a.avatar_id != avatar_id)
+        this.ngOnInit()
         const toast = await this.toastController.create({
           message: 'The avatar was successfully deleted',
           duration: 1233,
           color: "success"
         })
         toast.present();
-        this.router.navigate(['/products']);
       } catch (e) {
         if(e instanceof HttpErrorResponse){
           const toast = await this.toastController.create({
@@ -116,5 +119,17 @@ export class ProductsComponent implements OnInit {
       component: DetailsAvatarComponent
     })
     modal.present();
+  }
+
+  public getRole(){
+    const token: any = sessionStorage.getItem("token");
+
+    const decodedToken  = jwtDecode(token);
+
+    // @ts-ignore
+    console.log(decodedToken["IsAdmin"]!)
+
+    // @ts-ignore
+    this.role = decodedToken["IsAdmin"]!;
   }
 }
