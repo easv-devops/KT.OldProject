@@ -20,6 +20,9 @@ public class OrderController : Controller
         _emailService = emailService;
     }
 
+    /*
+     * Gets all orders from the database. 
+     */
     [HttpGet]
     [Route("api/order/all")]
     public ResponseDto GetAllOrder()
@@ -31,6 +34,9 @@ public class OrderController : Controller
         };
     }
 
+    /*
+     * Creates a new order in the database. 
+     */
     [HttpPost]
     //[ValidateModel]
     [Route("api/order/post")]
@@ -44,6 +50,9 @@ public class OrderController : Controller
         };
     }
     
+    /*
+     * Deletes an existing order from the database. 
+     */
     [HttpDelete]
     //[ValidateModel]
     [Route("api/order/{order_id}")]
@@ -57,9 +66,11 @@ public class OrderController : Controller
         };
     }
     
-    
+    /*
+     * Creates a new order in the database and sends an email to the
+     * customer with the order details.
+     */
     [HttpPost]
-   // [ValidateModel]
     [Route("/orderWithProducts")]
     public ResponseDto postOrder([FromBody] OrderWithProducts orderWithProducts)
     {

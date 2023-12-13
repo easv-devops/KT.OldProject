@@ -13,6 +13,9 @@ public class EmailController
         _emailService = emailService;
     }
  
+    /*
+     * Sends an email to the customer with the order details.
+     */
     [HttpPost]
     [Route("api/email/{order_id}")]
     public ResponseDto SendEmail([FromRoute] int order_id)

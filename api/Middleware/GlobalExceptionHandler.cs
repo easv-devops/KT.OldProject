@@ -4,6 +4,10 @@ using api.TransferModels;
 
 namespace api.Middleware;
 
+/*
+ * catches any unhandled exceptions that occur during the processing
+ * of an HTTP request and provides appropriate error responses.
+ */
 public class GlobalExceptionHandler
 {
     private readonly ILogger<GlobalExceptionHandler> _logger;
@@ -17,6 +21,10 @@ public class GlobalExceptionHandler
         _next = next;
     }
 
+    /*
+     * It invokes the next middleware in the pipeline
+     * and catches any exceptions that occur. 
+     */
     public async Task InvokeAsync(HttpContext http)
     {
         try
@@ -29,6 +37,11 @@ public class GlobalExceptionHandler
         }
     }
 
+    /*
+     * handles the exception by setting the HTTP response status code and content type
+     * based on the type of exception. It also logs the exception message. Depending on the type
+     * of exception, different status codes and response messages are returned to the client.
+     */
     private static Task HandleExceptionAsync(HttpContext http, Exception exception,
         ILogger<GlobalExceptionHandler> logger)
     {

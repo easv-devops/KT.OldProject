@@ -7,6 +7,13 @@ namespace api.Controllers;
 
 public class UserController : ControllerBase
 {
+    
+    /*
+     * endpoint for admin users.
+     * It requires the user to have the "Admin" role.
+     * It returns an OK response with a personalized message that includes
+     * the current user's full name and admin status. 
+     */
     [Route("api/admin")]
     [Authorize(Roles = "Admin")]
     [HttpGet]
@@ -16,7 +23,12 @@ public class UserController : ControllerBase
         return Ok($"Hi {currentUser.full_name} you are an {currentUser.admin}");
     }
     
-    
+    /*
+     * retrieves the current authenticated user's information.
+     * It extracts the user's full name, email, admin status, and user ID
+     * from the claims in the user's identity. It returns an AuthenticateModel
+     * object containing the user's information.
+     */
     [Route("api/get")]
     [HttpGet]
     private AuthenticateModel GetCurrentUser()

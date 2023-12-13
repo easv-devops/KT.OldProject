@@ -16,7 +16,9 @@ public class AvatarController : Controller
         _avatarService = avatarService;
     }
     
-    
+    /*
+     * Gets all avatars from the database.  
+     */
     [HttpGet]
     [Route("/avatar/all")]
     public ResponseDto GetAllAvatars()
@@ -28,6 +30,9 @@ public class AvatarController : Controller
         };
     }
     
+    /*
+     * Creates a new avatar in the database. 
+     */
     [HttpPost]
     [ValidateModel]
     [Route("/avatar")]
@@ -39,8 +44,10 @@ public class AvatarController : Controller
             ResponseData = _avatarService.CreateAvatar(avatar)
         };
     }
-        
-
+    
+    /*
+     * Updates an existing avatar in the database. 
+     */
     [HttpPut]
     [Route("/avatar/{avatar_id}")]
     public ResponseDto putAvatar([FromRoute] int avatar_id, [FromBody] AvatarModel avatar)
@@ -52,6 +59,9 @@ public class AvatarController : Controller
         };
     }
     
+    /*
+     * Deletes an existing avatar from the database. 
+     */
     [HttpDelete]
     //[ValidateModel]
     [Route("/avatar/{avatar_id}")]
@@ -63,6 +73,10 @@ public class AvatarController : Controller
             MessageToClient = "Succesfully deleted avatar"
         };
     }
+    
+    /*
+     * Gets the information of an existing avatar from the database.
+     */
     [HttpGet]
     //[ValidateModel]
     [Route("/avatar/{avatar_id}")]

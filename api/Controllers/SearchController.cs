@@ -15,8 +15,12 @@ public class SearchController : ControllerBase
         _searchService = searchService;
     }
 
+    /*
+     * performs a search for avatars based on a given search query.
+     * It takes a searchQuery parameter from the query string and returns a ResponseDto
+     * object with a success message and the search results.
+     */
     [HttpGet]
-    //[ValidateModel]
     [Route("api/search")]
     public ResponseDto SearchAvatar([FromQuery] string searchQuery)
     {

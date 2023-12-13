@@ -15,6 +15,9 @@ public class CustomerBuyController : Controller
         _customerBuyService = customerBuyService;
     }
 
+    /*
+     * Gets all customer buys from the database. 
+     */
     [HttpGet]
     [Route("/customerbuy/all")]
     public ResponseDto GetAllCustomerBuy()
@@ -26,6 +29,9 @@ public class CustomerBuyController : Controller
         };
     }
 
+    /*
+     * Creates a new customer buy in the database. 
+     */
     [HttpPost]
     //[ValidateModel]
     [Route("/customerbuy")]
@@ -39,6 +45,9 @@ public class CustomerBuyController : Controller
         };
     }
     
+    /*
+     * Deletes an existing customer buy from the database.
+     */
     [HttpDelete]
     //[ValidateModel]
     [Route("/customerbuy/{customer_buy_id}")]

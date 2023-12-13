@@ -18,6 +18,12 @@ public class LoginController : ControllerBase
        
     }
 
+    /*
+     * Handles the login functionality for users.
+     * It takes in a LoginModel object containing the user's email and password,
+     * authenticates the user, generates a token, and returns a
+     * ResponseDto object with a welcome message and the generated token. 
+     */
     [AllowAnonymous]
     [HttpPost]
     [Route("/api/account/login")]
@@ -38,6 +44,12 @@ public class LoginController : ControllerBase
        
     }
     
+    /*
+     * Handles the user registration functionality.
+     * It takes in a RegisterModel object containing the user's registration details,
+     * registers the user, and returns a ResponseDto object with a message
+     * indicating the successful registration.
+     */
     [HttpPost]
     [Route("/api/account/register")]
     public ResponseDto Register([FromBody] RegisterModel model)
