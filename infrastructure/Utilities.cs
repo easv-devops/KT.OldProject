@@ -1,6 +1,6 @@
 ﻿namespace service;
 
-public class xUtilities
+public class Utilities
 {
     /*
      * Private static readonly Uri instance initialized with the PostgreSQL connection string.
