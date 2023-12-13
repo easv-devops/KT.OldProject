@@ -1,7 +1,10 @@
 ﻿namespace service;
 
-public class Utilities
+public class xUtilities
 {
+    /*
+     * Private static readonly Uri instance initialized with the PostgreSQL connection string.
+     */
     private static readonly Uri Uri = new(Environment.GetEnvironmentVariable("pgconn")!);
 
     /*
