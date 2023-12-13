@@ -6,6 +6,7 @@ import {environment} from "../../environments/environment";
 import {firstValueFrom} from "rxjs";
 import {State} from "../../state";
 import {ModalController, ToastController} from "@ionic/angular";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -29,8 +30,8 @@ import {ModalController, ToastController} from "@ionic/angular";
 
     <ion-list>
       <ion-item>
-        <ion-input [formControl]="createNewAvatarForm.controls.information" label="Insert information for avatar">
-        </ion-input>
+        <ion-textarea class="ion-text-wrap" [formControl]="createNewAvatarForm.controls.information" label="Insert information for avatar">
+        </ion-textarea>
       </ion-item>
     </ion-list>
 
@@ -48,7 +49,7 @@ export class CreateAvatarComponent{
     information: this.information
   })
 
-  constructor(public fb: FormBuilder, public http: HttpClient, public state:State, public toastController: ToastController, public modalController: ModalController) {
+  constructor(public fb: FormBuilder, public http: HttpClient, public state:State, public toastController: ToastController, public modalController: ModalController, private readonly router: Router) {
   }
 
   async submit(){
@@ -62,6 +63,9 @@ export class CreateAvatarComponent{
         color: "success"
       })
       toast.present();
+
+      this.router.navigate(['/products']);
+
       this.modalController.dismiss()
     } catch (e) {
       const toast = await this.toastController.create({

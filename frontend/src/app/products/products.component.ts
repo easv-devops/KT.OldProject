@@ -2,9 +2,14 @@ import {Component, EventEmitter, OnInit} from "@angular/core";
 import {ProductsService, Avatar} from './products.service';
 import {Router} from "@angular/router";
 import {CreateAvatarComponent} from "./createAvatar.component";
-import {ModalController} from "@ionic/angular";
+import {ModalController, ToastController} from "@ionic/angular";
 import {DataService} from "../data.service";
 import {UpdateAvatarComponent} from "./updateAvatar.component";
+import {firstValueFrom} from "rxjs";
+import {environment} from "../../environments/environment";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {State} from "../../state";
+import {DetailsAvatarComponent} from "./detailsAvatar.component";
 
 @Component({
   template: `
@@ -19,12 +24,14 @@ import {UpdateAvatarComponent} from "./updateAvatar.component";
         <ion-item *ngIf="searchText === '' || avatar.avatar_name.toLowerCase().includes(searchText)">
           <img src="https://robohash.org/{{avatar.avatar_name}}.png" height="150px" width="150px"/>
           <ion-label>{{avatar.avatar_name}}</ion-label>
+          <ion-button class="button" (click)="details(avatar)" fill="clear">Information</ion-button>
           <ion-button class="button" (click)="updateAvatar(avatar)" fill="clear">Update</ion-button>
           <ion-label>{{avatar.avatar_price}} €</ion-label>
 
           <ion-button class="button" (click)="saveData(avatar)" fill="clear" >
             <ion-icon name="cart-outline"></ion-icon>
           </ion-button>
+          <ion-button class="button" (click)="deleteAvatar(avatar.avatar_id)" fill="clear">Delete</ion-button>
 
         </ion-item>
       </ion-list>
@@ -40,7 +47,7 @@ export class ProductsComponent implements OnInit {
   cartArray: Avatar[];
 
 
-  constructor(private productService: ProductsService, readonly router: Router, public modalController: ModalController, private data: DataService) {
+  constructor(private productService: ProductsService, readonly router: Router, public modalController: ModalController, private data: DataService, public http: HttpClient, public state: State, public toastController: ToastController) {
     this.cartArray = [];
 }
 
@@ -50,8 +57,6 @@ export class ProductsComponent implements OnInit {
     this.searchText = searchValue;
     console.log(this.searchText)
   }
-
-
 
   saveData(avatar: Avatar){
     this.cartArray.push(avatar);
@@ -79,5 +84,37 @@ export class ProductsComponent implements OnInit {
       component: UpdateAvatarComponent
     });
   modal.present();
+  }
+
+  async deleteAvatar(avatar_id: number | undefined) {
+    {
+      try {
+        await firstValueFrom(this.http.delete(environment.baseUrl + '/avatar/' + avatar_id))
+        this.state.avatar = this.state.avatar.filter(a => a.avatar_id != avatar_id)
+        const toast = await this.toastController.create({
+          message: 'The avatar was successfully deleted',
+          duration: 1233,
+          color: "success"
+        })
+        toast.present();
+        this.router.navigate(['/products']);
+      } catch (e) {
+        if(e instanceof HttpErrorResponse){
+          const toast = await this.toastController.create({
+            message: 'The avatar could not be deleted',
+            color: "danger"
+          })
+          toast.present();
+        }
+      }
+    }
+  }
+
+  async details(avatar: Avatar){
+    this.data.changeAvatar(avatar)
+    const modal = await this.modalController.create({
+      component: DetailsAvatarComponent
+    })
+    modal.present();
   }
 }

@@ -7,6 +7,7 @@ import {State} from "../../state";
 import {HttpClient} from "@angular/common/http";
 import {ModalController, ToastController} from "@ionic/angular";
 import {environment} from "../../environments/environment";
+import {Router} from "@angular/router";
 
 @Component({
   template: `
@@ -24,8 +25,8 @@ import {environment} from "../../environments/environment";
     </ion-item>
 
     <ion-item>
-      <ion-input [formControl]="updateAvatarForm.controls.information" label="Insert information for avatar">
-      </ion-input>
+      <ion-textarea class="ion-text-wrap" [formControl]="updateAvatarForm.controls.information" label="Insert information for avatar">
+      </ion-textarea>
     </ion-item>
   </ion-list>
 
@@ -35,9 +36,8 @@ import {environment} from "../../environments/environment";
 
 export class UpdateAvatarComponent implements OnInit {
   avatarElement: Avatar | undefined;
-  private router: any;
 
-  constructor(public fb: FormBuilder, private data: DataService, public state: State, public http: HttpClient, public toastController: ToastController, public modalController: ModalController) {
+  constructor(public fb: FormBuilder, private data: DataService, public state: State, public http: HttpClient, public toastController: ToastController, public modalController: ModalController, private readonly router: Router) {
   }
 
   ngOnInit() {
@@ -62,16 +62,17 @@ export class UpdateAvatarComponent implements OnInit {
       const response = await firstValueFrom(observable)
       const id = this.state.avatar.findIndex(a => a.avatar_id == response.avatar_id);
       this.state.avatar[id] = response;
-
       const toast = await this.toastController.create({
         message: 'The avatar was successfully changed',
         duration: 1233,
         color: "success",
 
       })
-      toast.present();
 
+      toast.present();
       this.modalController.dismiss();
+      this.router.navigate(['/products']);
+
     } catch (e) {
       const toast = await this.toastController.create({
         message: 'The avatar was unsuccessfully changed',

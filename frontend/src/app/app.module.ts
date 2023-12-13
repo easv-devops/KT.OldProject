@@ -24,6 +24,7 @@ import {CartComponent} from "./cart/cart.component";
 import {SearchComponent} from "./products/search.component";
 import {CreateAvatarComponent} from "./products/createAvatar.component";
 import {UpdateAvatarComponent} from "./products/updateAvatar.component";
+import {DetailsAvatarComponent} from "./products/detailsAvatar.component";
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import {UpdateAvatarComponent} from "./products/updateAvatar.component";
     CartComponent,
     SearchComponent,
     CreateAvatarComponent,
-    UpdateAvatarComponent
+    UpdateAvatarComponent,
+    DetailsAvatarComponent
   ],
   imports: [
     BrowserModule,

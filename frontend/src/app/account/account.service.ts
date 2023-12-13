@@ -14,12 +14,6 @@ export interface Credentials {
     password: string;
 }
 
-export interface Registration {
-    full_name: string;
-    email: string;
-    password: string;
-}
-
 export class ResponseDto<T> {
   responseData?: T;
   messageToClient?: string;
@@ -31,6 +25,6 @@ export class AccountService {
   }
 
   getCurrentUser() {
-    return this.http.get<User>('/api/get');
+    return this.http.get<User>(environment.baseUrl + '/api/get');
   }
 }
