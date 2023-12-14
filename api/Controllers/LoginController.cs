@@ -65,10 +65,12 @@ public class LoginController : ControllerBase
     [Route("/api/account/update/{user_id}")]
     public ResponseDto Update([FromBody] UserModel userModel, [FromRoute] int user_id)
     {
+        UserModel updatedUser = _service.Update(user_id, userModel);
+        var token = _service.Generate(updatedUser);
         return new ResponseDto()
         {
             MessageToClient = "Successfully updated a user",
-            ResponseData =  _service.Update(user_id, userModel)
+            ResponseData = new { token }
         };
     }
 }
