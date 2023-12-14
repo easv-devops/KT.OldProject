@@ -7,10 +7,12 @@ namespace api.Controllers;
 public class EmailController
 {
     private readonly EmailService _emailService;
+    private readonly PdfService _pdfService;
 
-    public EmailController(EmailService emailService)
+    public EmailController(EmailService emailService, PdfService pdfService)
     {
         _emailService = emailService;
+        _pdfService = pdfService;
     }
  
     /*
@@ -27,4 +29,19 @@ public class EmailController
             MessageToClient = "Successfully created an order",
         }; 
     }
+    
+    
+    [HttpPost]
+    [Route("api/PDF/{order_id}")]
+    public ResponseDto makePDF ([FromRoute] int order_id)
+    { 
+        _pdfService.CreatePdf(order_id);
+        
+        return new ResponseDto()
+        {
+            MessageToClient = "Successfully created an order",
+        }; 
+    }
+    
+    
 }
