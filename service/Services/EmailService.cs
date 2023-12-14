@@ -82,14 +82,15 @@ public class EmailService
                 
         }   
             
+        builder.Attachments.Add (Path.Combine("invoice.pdf"));
         message.Body = builder.ToMessageBody();
 
 
-       // foreach (AvatarModel avatar in _emailRespository.GetOrdersAvatars(order_id))
-       // {
-       //     string fileName = avatar.avatar_name + ".png";
-       //     File.Delete(Path.Combine(fileName));
-       // }   
+       foreach (AvatarModel avatar in _emailRespository.GetOrdersAvatars(order_id))
+       {
+           string fileName = avatar.avatar_name + ".png";
+           File.Delete(Path.Combine(fileName));
+       }   
     }
     
     /*

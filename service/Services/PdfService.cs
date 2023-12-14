@@ -1,4 +1,6 @@
 using System.Net;
+using infrastructure.DataModels;
+using infrastructure.Repositories;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -8,9 +10,24 @@ namespace service.Services;
 
 public class PdfService
 {
-    public void CreatePdf(int Order_nr)
+    private int _order_nr = 0;
+    private UserModel user;
+    private readonly EmailRepository _emailRespository;
+  
+    public PdfService(EmailRepository emailRespository)
     {
-        QuestPDF.Settings.License = LicenseType.Community; 
+        _emailRespository = emailRespository;
+    }
+    
+    
+    
+    
+    public void CreatePdf(int order_id)
+    {
+        QuestPDF.Settings.License = LicenseType.Community;
+        _order_nr = order_id;
+         user = _emailRespository.GetOrdersUser(order_id);
+        
 
         Document.Create(container =>
                 {
@@ -31,7 +48,7 @@ public class PdfService
                 }
 
             )
-            .GeneratePdf();
+            .GeneratePdf("invoice.pdf");
 
 
     }
@@ -44,7 +61,7 @@ void Header(IContainer container)
         {
             row.Spacing(25);
             row.ConstantItem(100)
-                .Image("service/Services/webshop.png");
+                .Image(Path.Combine("webshop.png"));
             
             row.RelativeItem().Column(column =>
             {
@@ -54,10 +71,9 @@ void Header(IContainer container)
                     .FontColor(Colors.Orange.Medium)
                     .SemiBold();
 
-                for (int i=0;i < 3; i++)
-                {
-                    column.Item().Text(Placeholders.Label());
-                }
+               
+                    column.Item().Text("Invoice for " + user.full_name);
+                    column.Item().Text("Getting order no: " + _order_nr);
             });
         });
 }
@@ -89,26 +105,39 @@ void Content(IContainer container)
             });
 
             WebClient webClient = new WebClient();
-            for (int i = 1; i < 8; i++)
+
+            int i = 0;
+            var total = 0;
+            foreach (AvatarModel avatar in _emailRespository.GetOrdersAvatars(_order_nr))
             {
-                string fileName = "avatar.avatar_name " +i+ ".png";
+                string fileName = avatar.avatar_name + ".png";
             
-                webClient.DownloadFile("https://robohash.org/"+fileName, Path.Combine(fileName)); 
-                var pris=12;
+                webClient.DownloadFile("https://robohash.org/"+fileName, Path.Combine(fileName));
+                i++;
+                total = total+avatar.avatar_price;
                 
                 table.Cell().Text(i);
                 table.Cell().Text("avatar.avatar_name " +i);
                 table.Cell().Image(fileName).FitArea();
-                table.Cell().AlignRight().Text($"{pris:F2} $");    
+                table.Cell().AlignRight().Text($"{avatar.avatar_price:F2} $");    
             }
 
-            var total = 123;
+           
             
             table.Cell().PaddingTop(5).BorderTop(2).Text("");
             table.Cell().PaddingTop(5).BorderTop(2).Text("Total");
             table.Cell().PaddingTop(5).BorderTop(2).Text("");
             table.Cell().PaddingTop(5).BorderTop(2).AlignRight().Text($"{total:F2} $");    
         });
+    
+    foreach (AvatarModel avatar in _emailRespository.GetOrdersAvatars(_order_nr))
+    {
+        string fileName = avatar.avatar_name + ".png";
+        File.Delete(Path.Combine(fileName));
+    }   
+    
+    
+    
 }
 
 
