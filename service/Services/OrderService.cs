@@ -1,4 +1,5 @@
-﻿using infrastructure.DataModels;
+﻿using System.ComponentModel.DataAnnotations;
+using infrastructure.DataModels;
 using infrastructure.Repositories;
 
 namespace service.Services;
@@ -9,6 +10,7 @@ public class OrderService
     
     public OrderService(OrderRepository orderRepository)
     {
+       
         _orderRepository = orderRepository;
     }
 
@@ -17,7 +19,17 @@ public class OrderService
      */
     public IEnumerable<OrderModel> GetAllOrder()
     {
-        return _orderRepository.GetAllOrder();
+     
+        try
+        {
+           return _orderRepository.GetAllOrder();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new ValidationException("Error getting all orders");
+        }
+        
     }
 
     /*
@@ -25,7 +37,18 @@ public class OrderService
      */
     public OrderModel CreateOrder(int user_id)
     {
-        return _orderRepository.CreateOrder(user_id);
+        
+        try
+        {
+            return _orderRepository.CreateOrder(user_id);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new ValidationException("Error creating an order");
+        }
+      
+        
     }
     
     /*
@@ -33,7 +56,20 @@ public class OrderService
      */
     public void deleteOrder(int ordre_id)
     {
-        _orderRepository.DeleteOrder(ordre_id);
+        
+        try
+        {
+            _orderRepository.DeleteOrder(ordre_id);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new ValidationException("Error deleting an order");
+        }
+        
+        
+       
+       
     }
     
     /*
@@ -41,7 +77,18 @@ public class OrderService
      */
     public void CreateCustomerBuy(int user_id, AvatarModel[] avatars)
     {
-         _orderRepository.CreateCustomerBuy(user_id, avatars);
+        
+        try
+        {
+            _orderRepository.CreateCustomerBuy(user_id, avatars);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new ValidationException("Error creating attaching Avatars to an order");
+        }
+        
+      
     }
 
     /*
@@ -49,7 +96,18 @@ public class OrderService
      */
     public OrderModel getLastOrderToEmail(int user_id)
     {
-        return _orderRepository.getLastOrderToEmail(user_id);
+        
+        try
+        {
+            return _orderRepository.getLastOrderToEmailOrPDF(user_id);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new ValidationException("Error in getting order to email or pdf");
+        }
+        
+        
     }
     
 }

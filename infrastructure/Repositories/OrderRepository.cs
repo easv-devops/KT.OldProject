@@ -90,7 +90,7 @@ public class OrderRepository
     /*
      * Gets the last order for the given user to email.
      */
-    public OrderModel getLastOrderToEmail(int user_id)
+    public OrderModel getLastOrderToEmailOrPDF(int user_id)
     {
         var sql2 =
             @"select * from webshop.order where user_id= (@user_id)  and order_id = ( SELECT MAX(order_id) FROM webshop.order);";

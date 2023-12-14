@@ -1,4 +1,5 @@
-﻿using infrastructure.DataModels;
+﻿using System.ComponentModel.DataAnnotations;
+using infrastructure.DataModels;
 using infrastructure.Repositories;
 
 namespace service.Services;
@@ -12,6 +13,7 @@ public class CustomerBuyService
      */
     public CustomerBuyService(CustomerBuyRepository customerBuyRepository)
     {
+       
         _customerBuyRepository = customerBuyRepository;
     }
 
@@ -20,7 +22,15 @@ public class CustomerBuyService
      */
     public IEnumerable<CustomerBuyModel> GetAllCustomerBuy()
     {
-        return _customerBuyRepository.GetAllCustomerBuy();
+        try
+        {
+            return _customerBuyRepository.GetAllCustomerBuy();
+        }
+        catch (Exception e)
+        {
+            throw new ValidationException("Error in getting all products attached to orders");
+        }
+       
     }
 
     /*
@@ -28,14 +38,35 @@ public class CustomerBuyService
      */
     public CustomerBuyModel CreateCustomerBuy(CustomerBuyModel customerBuy)
     {
-        return _customerBuyRepository.CreateCustomerBuy(customerBuy);
+        
+         try
+                {
+                    return _customerBuyRepository.CreateCustomerBuy(customerBuy);
+                }
+                catch (Exception e)
+                {
+                    throw new ValidationException("Error in attaching an avatar to an order");
+                }
+        
     }
     
     /*
      * Deletes a customer buy record based on its ID.
      */
     public void deleteCustomerBuy(int customer_buy_id)
+    
     {
-        _customerBuyRepository.DeleteCustomerBuy(customer_buy_id);
+    
+        try
+        {
+            _customerBuyRepository.DeleteCustomerBuy(customer_buy_id);
+        }
+        catch (Exception e)
+        {
+            throw new ValidationException("Error in deleting an avatar attached to an order");
+        }
+        
+        
+       
     }
 }

@@ -42,7 +42,7 @@ public class LoginService
     /*
      * Generating a JWT token based on user information.
      */
-    public string Generate(UserModel model)
+    public string GenerateToken(UserModel model)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetValue<string>("Jwt:Key")));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -68,12 +68,23 @@ public class LoginService
      */
     public UserModel Register(RegisterModel model)
     {
-        var hashAlgorithm = new PasswordHashService();
-        var salt = hashAlgorithm.GenerateSalt();
-        var hash = hashAlgorithm.HashPassword(model.password, salt);
-        var user = _userRepository.Create(model);
-        _passwordHashRepository.Create(user.user_id, hash, salt);
-        return user;
+        try
+        {
+            var hashAlgorithm = new PasswordHashService();
+            var salt = hashAlgorithm.GenerateSalt();
+            var hash = hashAlgorithm.HashPassword(model.password, salt);
+         
+            
+            
+            var user = _userRepository.Create(model);
+            _passwordHashRepository.Create(user.user_id, hash, salt);
+            return user;
+        }
+        catch (Exception e)
+        {
+            throw new ValidationException("Error in register user");
+        }
+      
     }
 
     public UserModel Update(int user_id, UserModel userModel)

@@ -29,7 +29,7 @@ public class LoginController : ControllerBase
     {
         Console.WriteLine("LOGIN CREDENTIals!" + model.password +"and " +   model.email);
         UserModel user = _service.Authenticate(model);
-            var token = _service.Generate(user);
+            var token = _service.GenerateToken(user);
             
             return new ResponseDto()
             {
@@ -60,7 +60,7 @@ public class LoginController : ControllerBase
     public ResponseDto Update([FromBody] UserModel userModel, [FromRoute] int user_id)
     {
         UserModel updatedUser = _service.Update(user_id, userModel);
-        var token = _service.Generate(updatedUser);
+        var token = _service.GenerateToken(updatedUser);
         return new ResponseDto()
         {
             MessageToClient = "Successfully updated a user",
