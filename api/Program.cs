@@ -1,5 +1,6 @@
 
 using System.Text;
+using api.Middleware;
 using infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -87,4 +88,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.UseHttpsRedirection();
+
+
+
+app.UseMiddleware<GlobalExceptionHandler>();
 app.Run();
