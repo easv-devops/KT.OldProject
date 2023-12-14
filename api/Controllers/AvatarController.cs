@@ -74,7 +74,6 @@ public class AvatarController : Controller
      * Deletes an existing avatar from the database. 
      */
     [HttpDelete]
-    //[ValidateModel]
     [Route("/avatar/{avatar_id}")]
     public object deleteAvatar([FromRoute] int avatar_id)
     {
@@ -100,7 +99,6 @@ public class AvatarController : Controller
      * Gets the information of an existing avatar from the database.
      */
     [HttpGet]
-    //[ValidateModel]
     [Route("/avatar/{avatar_id}")]
     public ResponseDto getAvatarInformation([FromRoute]int avatar_id)
     {

@@ -31,7 +31,6 @@ public class EmailService
         makeEmailBody(order_id, user, builder);
         attachment(order_id,builder,message);
         sendEmail(message);
-      
     }
     
     /*
@@ -39,12 +38,9 @@ public class EmailService
      */
     void makeEmailHeader(int order_id,UserModel user,MimeMessage message)
     {
-        
-        
         message.From.Add(new MailboxAddress("The Webshop Inc. order no: " + order_id, Environment.GetEnvironmentVariable("fromemail")));
         message.To.Add(new MailboxAddress("Customer", user.email));
         message.Subject = "Your order confirmation";
-
     }
     
     /*
@@ -53,11 +49,8 @@ public class EmailService
     public void makeEmailBody(int order_id, UserModel user,BodyBuilder builder)
     {
         string emailBody=""; 
-
         foreach (AvatarModel avatar in _emailRespository.GetOrdersAvatars(order_id))
             emailBody = emailBody + avatar.avatar_name+"\n";
-
-
         
             builder.TextBody = " Hello " + user.full_name + "\n" + "\n" +
                                "Thanks for your order no: "+order_id +" including the following items: " + "\n" + "\n"
@@ -79,13 +72,11 @@ public class EmailService
             string fileName = avatar.avatar_name + ".png";
             webClient.DownloadFile("https://robohash.org/"+fileName, Path.Combine(fileName));   
             builder.Attachments.Add (Path.Combine(fileName));
-                
         }   
             
         builder.Attachments.Add (Path.Combine("invoice.pdf"));
         message.Body = builder.ToMessageBody();
-
-
+        
        foreach (AvatarModel avatar in _emailRespository.GetOrdersAvatars(order_id))
        {
            string fileName = avatar.avatar_name + ".png";

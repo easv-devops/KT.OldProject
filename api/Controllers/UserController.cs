@@ -45,11 +45,8 @@ public class UserController : ControllerBase
                 email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
                 admin = userClaims.FirstOrDefault(o=>  o.Type == ClaimTypes.Role)?.Value,
                 user_id = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GivenName)?.Value
-                
             };
         }
         return null;
     }
-
-    
 }

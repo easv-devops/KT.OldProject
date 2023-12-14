@@ -1,5 +1,4 @@
-﻿using api.Filters;
-using api.TransferModels;
+﻿using api.TransferModels;
 using infrastructure.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using service.Services;
@@ -33,7 +32,6 @@ public class CustomerBuyController : Controller
      * Creates a new customer buy in the database. 
      */
     [HttpPost]
-    //[ValidateModel]
     [Route("/customerbuy")]
     public ResponseDto postCustomerBuy([FromBody] CustomerBuyModel customerbuy)
     {
@@ -49,7 +47,6 @@ public class CustomerBuyController : Controller
      * Deletes an existing customer buy from the database.
      */
     [HttpDelete]
-    //[ValidateModel]
     [Route("/customerbuy/{customer_buy_id}")]
     public void deleteCustomerBuy([FromRoute] int customer_buy_id)
     {
