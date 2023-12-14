@@ -21,7 +21,6 @@ public class EmailController
     public ResponseDto SendEmail([FromRoute] int order_id)
     { 
         _emailService.SendEmail(order_id);
-        
         return new ResponseDto()
         {
             MessageToClient = "Successfully created an order",

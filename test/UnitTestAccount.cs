@@ -1,8 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
-using Dapper;
 using FluentAssertions;
-
 using Newtonsoft.Json;
 using NUnit.Framework;
 using test;

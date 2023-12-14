@@ -38,7 +38,6 @@ public class OrderController : Controller
      * Creates a new order in the database. 
      */
     [HttpPost]
-    //[ValidateModel]
     [Route("api/order/post")]
     public ResponseDto postOrder([FromBody] OrderModel order)
     {
@@ -54,7 +53,6 @@ public class OrderController : Controller
      * Deletes an existing order from the database. 
      */
     [HttpDelete]
-    //[ValidateModel]
     [Route("api/order/{order_id}")]
     public void deleteOrder([FromRoute] int order_id)
     {
@@ -74,33 +72,21 @@ public class OrderController : Controller
     [Route("/orderWithProducts")]
     public ResponseDto postOrder([FromBody] OrderWithProducts orderWithProducts)
     {
-       
         _orderService.CreateCustomerBuy(orderWithProducts.userId, orderWithProducts.avatar);
-        
+        OrderModel order1 = _orderService.getLastOrderToEmail(orderWithProducts.userId);
+        _emailService.SendEmail(order1.order_id);
        
-       OrderModel order1 = _orderService.getLastOrderToEmail(orderWithProducts.userId);
-
-      
-       
-       _emailService.SendEmail(order1.order_id);
-        
-        
         return new ResponseDto()
         {
             MessageToClient = "Successfully created an order"
-             
         };
     }
-
-    }
-    
-    
+}
 
 public class OrderWithProducts
 {
     [Required] [Range(1, Int32.MaxValue)]
     public int userId { get; set; }
-    
     [Required] [NotNull]
     public AvatarModel[] avatar { get; set; }
 }

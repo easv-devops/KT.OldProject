@@ -32,7 +32,6 @@ public class LoginService
      */
     public UserModel Authenticate(LoginModel model)
     {
-     
             var passwordHash = _passwordHashRepository.GetByEmail(model.email);
             var hashAlgorithm = new PasswordHashService();
             var isValid = hashAlgorithm.VerifyHashedPassword(model.password, passwordHash.hash, passwordHash.salt);
@@ -47,7 +46,6 @@ public class LoginService
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetValue<string>("Jwt:Key")));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
         var claims = new[]
         {
             new Claim("Name", model.full_name),
@@ -90,5 +88,4 @@ public class LoginService
             throw new ValidationException("Error in updating a user");
         }
     }
-
 }

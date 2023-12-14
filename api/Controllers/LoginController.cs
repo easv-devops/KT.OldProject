@@ -1,4 +1,3 @@
-using api.Filters;
 using api.TransferModels;
 using infrastructure.DataModels;
 using Microsoft.AspNetCore.Authorization;
@@ -15,7 +14,6 @@ public class LoginController : ControllerBase
     public LoginController(LoginService service)
     {
         _service = service;
-       
     }
 
     /*
@@ -30,9 +28,7 @@ public class LoginController : ControllerBase
     public ResponseDto Login([FromBody] LoginModel model)
     {
         Console.WriteLine("LOGIN CREDENTIals!" + model.password +"and " +   model.email);
-        
         UserModel user = _service.Authenticate(model);
-       
             var token = _service.Generate(user);
             
             return new ResponseDto()
@@ -40,8 +36,6 @@ public class LoginController : ControllerBase
                 MessageToClient = "Welcome "+ user.full_name,
                 ResponseData = new { token }
             };
-     
-       
     }
     
     /*
