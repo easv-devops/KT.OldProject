@@ -3,6 +3,7 @@ import {Injectable} from "@angular/core";
 import { environment } from "src/environments/environment.prod";
 
 export interface ResponseDto<T> {
+  messageToClient: string;
   responseData: T;
 }
 export interface Avatar {

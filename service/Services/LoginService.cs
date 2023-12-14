@@ -32,11 +32,21 @@ public class LoginService
      */
     public UserModel Authenticate(LoginModel model)
     {
+        try
+        {
             var passwordHash = _passwordHashRepository.GetByEmail(model.email);
             var hashAlgorithm = new PasswordHashService();
             var isValid = hashAlgorithm.VerifyHashedPassword(model.password, passwordHash.hash, passwordHash.salt);
-            if (isValid) return _userRepository.GetById(passwordHash.user_id);
-            else throw new ValidationException("Wrong username or password");
+            if (isValid)
+            {
+                return _userRepository.GetById(passwordHash.user_id);
+            }
+        }
+        catch
+        {
+            throw new ValidationException("Wrong username or password");
+        }
+        return null;
     }
 
     /*
