@@ -82,6 +82,7 @@ public class EmailService
                 
         }   
             
+        builder.Attachments.Add (Path.Combine("invoice.pdf"));
         message.Body = builder.ToMessageBody();
 
 

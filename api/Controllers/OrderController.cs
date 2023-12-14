@@ -13,11 +13,13 @@ public class OrderController : Controller
 {
     private readonly OrderService _orderService;
     private readonly EmailService _emailService;
+    private readonly PdfService _pdfService;
 
-    public OrderController(OrderService orderService, EmailService emailService)
+    public OrderController(OrderService orderService, EmailService emailService, PdfService pdfService)
     {
         _orderService = orderService;
         _emailService = emailService;
+        _pdfService = pdfService;
     }
 
     /*
@@ -81,7 +83,7 @@ public class OrderController : Controller
        OrderModel order1 = _orderService.getLastOrderToEmail(orderWithProducts.userId);
 
       
-       
+       _pdfService.CreatePdf(order1.order_id);
        _emailService.SendEmail(order1.order_id);
         
         

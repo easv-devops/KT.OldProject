@@ -34,6 +34,7 @@ builder.Services.AddSingleton<SearchService>();
 builder.Services.AddSingleton<SearchRepository>();
 builder.Services.AddSingleton<EmailService>();
 builder.Services.AddSingleton<EmailRepository>();
+builder.Services.AddSingleton<PdfService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
