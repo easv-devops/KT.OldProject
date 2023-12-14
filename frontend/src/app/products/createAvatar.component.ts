@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {Avatar, ResponseDto} from "./products.service";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {firstValueFrom} from "rxjs";
 import {State} from "../../state";
@@ -51,28 +51,25 @@ export class CreateAvatarComponent{
 
   constructor(public fb: FormBuilder, public http: HttpClient, public state:State, public toastController: ToastController, public modalController: ModalController, private readonly router: Router) {
   }
+  observable: any;
+  response: any;
 
   async submit(){
-    try{
-      const observable = this.http.post<ResponseDto<Avatar>>(environment.baseUrl + '/avatar', this.createNewAvatarForm.value)
-      const response = await firstValueFrom(observable)
-      this.state.avatar.push(response.responseData!);
+    try {
+      let obs = this.http.post<ResponseDto<Avatar>>(environment.baseUrl + '/avatar', this.createNewAvatarForm.value)
+      var response = await firstValueFrom<ResponseDto<Avatar>>(obs)
+      this.state.avatar.push(response.responseData);
       const toast = await this.toastController.create({
-        message: 'The avatar was successfully created',
+        message: response.messageToClient,
         duration: 1233,
         color: "success"
       })
       toast.present();
-
-      this.modalController.dismiss()
-    } catch (e) {
-      const toast = await this.toastController.create({
-        message: 'The creation of the avatar was unsuccessful',
-        duration: 1233,
-        color: "danger"
-      })
-      toast.present();
+    } catch (e){
 
     }
+    finally{
+      this.modalController.dismiss()
+      }
   }
 }

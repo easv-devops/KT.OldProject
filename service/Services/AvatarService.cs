@@ -50,10 +50,10 @@ public class AvatarService
 
         if (!ReferenceEquals(_avatarRepository.CheckIfNameExist(avatar.avatar_name), null))
             throw new ValidationException("Already exists");
-        
         try {
                 return _avatarRepository.CreateAvatar(avatar);
-        }catch (Exception e) { throw new ValidationException("Error in creating an Avatar");
+        }catch (Exception e) { 
+            throw new ValidationException("Error in creating an Avatar");
         }
     }
         

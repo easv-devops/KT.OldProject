@@ -86,8 +86,6 @@ export class LoginComponent {
     password: this.form.get('password')?.value}
     const response = await firstValueFrom(this.http.post<ResponseDto<TokenResponse>>('/api/account/login', dto));
     this.token.setToken(response.responseData.token!);
-
-
     (await this.toast.create({
       message: "Welcome back!",
       color: "success",
