@@ -1,4 +1,3 @@
-using api.Filters;
 using api.TransferModels;
 using infrastructure.DataModels;
 using Microsoft.AspNetCore.Authorization;
@@ -15,7 +14,6 @@ public class LoginController : ControllerBase
     public LoginController(LoginService service)
     {
         _service = service;
-       
     }
 
     /*
@@ -30,9 +28,7 @@ public class LoginController : ControllerBase
     public ResponseDto Login([FromBody] LoginModel model)
     {
         Console.WriteLine("LOGIN CREDENTIals!" + model.password +"and " +   model.email);
-        
         UserModel user = _service.Authenticate(model);
-       
             var token = _service.Generate(user);
             
             return new ResponseDto()
@@ -40,8 +36,6 @@ public class LoginController : ControllerBase
                 MessageToClient = "Welcome "+ user.full_name,
                 ResponseData = new { token }
             };
-     
-       
     }
     
     /*
@@ -65,10 +59,12 @@ public class LoginController : ControllerBase
     [Route("/api/account/update/{user_id}")]
     public ResponseDto Update([FromBody] UserModel userModel, [FromRoute] int user_id)
     {
+        UserModel updatedUser = _service.Update(user_id, userModel);
+        var token = _service.Generate(updatedUser);
         return new ResponseDto()
         {
             MessageToClient = "Successfully updated a user",
-            ResponseData =  _service.Update(user_id, userModel)
+            ResponseData = new { token }
         };
     }
 }

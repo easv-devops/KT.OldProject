@@ -20,7 +20,6 @@ public class PasswordHashService
             DegreeOfParallelism = 1,
         };
         return Convert.ToBase64String(hashAlgo.GetBytes(256));
-           
     }
 
     /*
@@ -37,6 +36,5 @@ public class PasswordHashService
     public string GenerateSalt()
     {
         return Convert.ToBase64String(RandomNumberGenerator.GetBytes(128));
-            
     }
 }

@@ -42,7 +42,6 @@ public class OrderService
     public void CreateCustomerBuy(int user_id, AvatarModel[] avatars)
     {
          _orderRepository.CreateCustomerBuy(user_id, avatars);
-         
     }
 
     /*

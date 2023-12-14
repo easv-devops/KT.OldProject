@@ -1,8 +1,6 @@
-﻿using api.Filters;
-using api.TransferModels;
+﻿using api.TransferModels;
 using Microsoft.AspNetCore.Mvc;
 using service.Services;
-
 
 namespace api.Controllers;
 

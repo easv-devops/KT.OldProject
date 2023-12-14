@@ -25,7 +25,7 @@ public class AvatarService
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw new ValidationException("Error in getting all  Avatars");
+            throw new ValidationException("Error in getting all Avatars");
         }
     }
     

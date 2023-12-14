@@ -3,7 +3,12 @@ import {jwtDecode} from "jwt-decode";
 import {HttpClient} from "@angular/common/http";
 import {State} from "../../state";
 import {ToastController} from "@ionic/angular";
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, FormControl, Validators} from "@angular/forms";
+import {ResponseDto} from "./account.service";
+import {environment} from "../../environments/environment";
+import {firstValueFrom} from "rxjs";
+import {TokenResponse} from "./login.component";
+import {TokenService} from "../../services/token.service";
 
 @Component({
   template: `
@@ -12,16 +17,13 @@ import {FormBuilder} from "@angular/forms";
       <form>
         <ion-list class="field-list">
           <ion-item>
-            <ion-input label="Name" [value]="this.name"></ion-input>
+            <ion-input [formControl]="updateUserForm.controls.full_name" label="Name" ></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input label="Email" [value]="this.email"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input label="Admin" [value]="this.role"></ion-input>
+            <ion-input [formControl]="updateUserForm.controls.email" label="Email" ></ion-input>
           </ion-item>
         </ion-list>
-        <ion-button>Update</ion-button>
+        <ion-button (click)="UpdateUser()">Update</ion-button>
       </form>
     </ion-content>
   `,
@@ -29,37 +31,30 @@ import {FormBuilder} from "@angular/forms";
 })
 export class AccountComponent implements OnInit {
 
-  id: any;
-  role: any;
-  name: any;
-  email: any;
+  token: any = sessionStorage.getItem("token");
+  decodedToken: any = jwtDecode(this.token);
+  user_id: any;
 
   ngOnInit(): void {
-    this.getUser()
+    this.user_id = this.decodedToken["Id"]
   }
 
-  constructor(public http: HttpClient, public state: State, public toastController: ToastController, public fb: FormBuilder) {
+  constructor(public http: HttpClient, public state: State, public toastController: ToastController, public fb: FormBuilder, public newToken: TokenService) {
   }
+  // @ts-ignore
+  full_name = new FormControl(this.decodedToken["Name"], Validators.required)
+  // @ts-ignore
+  email = new FormControl(this.decodedToken["Email"], Validators.required)
 
-  public getUser() {
-    const token: any = sessionStorage.getItem("token");
-
-    const decodedToken = jwtDecode(token);
-    // @ts-ignore
-    this.id = decodedToken["Id"]!;
-    // @ts-ignore
-    this.name = decodedToken["Name"]!;
-    // @ts-ignore
-    this.email = decodedToken["Email"]!;
-    // @ts-ignore
-    this.role = decodedToken["IsAdmin"]!;
-  }
+  updateUserForm = this.fb.group({
+    full_name: this.full_name,
+    email: this.email
+  })
 
   async UpdateUser() {
     try {
-      //const observable = this.http.put<ResponseDto<User>>(environment.baseUrl + '/api/account/update/' + this.id, this.updateUserForm.value)
-      //const response = await firstValueFrom<ResponseDto<User>>(observable)
-      this.ngOnInit()
+     var response = await firstValueFrom(this.http.put<ResponseDto<TokenResponse>>(environment.baseUrl + '/api/account/update/' + this.user_id, this.updateUserForm.value))
+      this.newToken.setToken(response.responseData?.token!);
       const toast = await this.toastController.create({
         message: 'The user was successfully changed',
         duration: 1233,
