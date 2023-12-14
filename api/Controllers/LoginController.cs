@@ -60,4 +60,15 @@ public class LoginController : ControllerBase
             ResponseData =_service.Register(model)
         };
     }
+
+    [HttpPut]
+    [Route("/api/account/update/{user_id}")]
+    public ResponseDto Update([FromBody] UserModel userModel, [FromRoute] int user_id)
+    {
+        return new ResponseDto()
+        {
+            MessageToClient = "Successfully updated a user",
+            ResponseData =  _service.Update(user_id, userModel)
+        };
+    }
 }

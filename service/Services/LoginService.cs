@@ -78,4 +78,17 @@ public class LoginService
         return user;
     }
 
+    public UserModel Update(int user_id, UserModel userModel)
+    {
+        try
+        {
+            return _userRepository.Update(user_id,userModel);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.StackTrace);
+            throw new ValidationException("Error in updating a user");
+        }
+    }
+
 }

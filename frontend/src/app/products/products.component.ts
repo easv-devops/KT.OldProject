@@ -36,6 +36,16 @@ import {jwtDecode} from "jwt-decode";
           </ion-item>
       </ion-list>
       <ion-button *ngIf="this.role === 'Admin'" class="button" (click)="createAvatar()">Create</ion-button>
+
+      <ion-item *ngIf="this.role === 'Admin'">
+        <ion-list inset="true" *ngFor="let avatar of deletedAvatar; index as i">
+          <img src="https://robohash.org/{{avatar.avatar_name}}.png" height="150px" width="150px"/>
+          <ion-label>{{avatar.avatar_name}}</ion-label>
+          <ion-button  class="button" (click)="details(avatar)" fill="clear">Information</ion-button>
+          <ion-label>{{avatar.avatar_price}} €</ion-label>
+          <ion-button class="button" (click)="enable(avatar.avatar_id)" fill="clear">Enable</ion-button>
+          </ion-list>
+      </ion-item>
     </ion-content>
   `
 })
@@ -45,6 +55,7 @@ export class ProductsComponent implements OnInit {
   avatarElement: Avatar | undefined;
   avatar$?: Avatar[];
   cartArray: Avatar[];
+  deletedAvatar?: Avatar[];
   role: any;
 
 
@@ -70,6 +81,10 @@ export class ProductsComponent implements OnInit {
       this.state.avatar = result.responseData;
       this.data.currentNumber.subscribe(avatarElement => this.avatarElement = avatarElement)
     })
+
+    this.productService.getAllDeletedProducts().subscribe(result =>{
+      this.deletedAvatar = result.responseData;
+    })
     this.getRole();
   }
 
@@ -89,26 +104,24 @@ export class ProductsComponent implements OnInit {
   modal.present();
   }
 
-  async deleteAvatar(avatar_id: number | undefined) {
-    {
-      try {
-        await firstValueFrom(this.http.delete(environment.baseUrl + '/avatar/' + avatar_id))
-        this.state.avatar = this.state.avatar.filter(a => a.avatar_id != avatar_id)
-        this.ngOnInit()
+  async deleteAvatar(avatar_id: number | undefined)
+  {
+    try {
+      await firstValueFrom(this.http.delete(environment.baseUrl + '/avatar/' + avatar_id))
+      this.ngOnInit()
+      const toast = await this.toastController.create({
+        message: 'The avatar was successfully deleted',
+        duration: 1233,
+        color: "success"
+        })
+      toast.present();
+    } catch (e) {
+      if(e instanceof HttpErrorResponse){
         const toast = await this.toastController.create({
-          message: 'The avatar was successfully deleted',
-          duration: 1233,
-          color: "success"
+          message: 'The avatar could not be deleted',
+          color: "danger"
         })
         toast.present();
-      } catch (e) {
-        if(e instanceof HttpErrorResponse){
-          const toast = await this.toastController.create({
-            message: 'The avatar could not be deleted',
-            color: "danger"
-          })
-          toast.present();
-        }
       }
     }
   }
@@ -131,5 +144,26 @@ export class ProductsComponent implements OnInit {
 
     // @ts-ignore
     this.role = decodedToken["IsAdmin"]!;
+  }
+
+  async enable(avatar_id: number | undefined){
+    try {
+      await firstValueFrom(this.http.delete(environment.baseUrl + '/avatar/enable/' + avatar_id))
+      this.ngOnInit()
+      const toast = await this.toastController.create({
+        message: 'The avatar was successfully enabled',
+        duration: 1233,
+        color: "success"
+      })
+      toast.present();
+    } catch (e) {
+      if(e instanceof HttpErrorResponse){
+        const toast = await this.toastController.create({
+          message: 'The avatar could not be enabled',
+          color: "danger"
+        })
+        toast.present();
+      }
+    }
   }
 }

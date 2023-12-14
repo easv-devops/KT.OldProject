@@ -1,5 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import {jwtDecode} from "jwt-decode";
+import {HttpClient} from "@angular/common/http";
+import {State} from "../../state";
+import {ToastController} from "@ionic/angular";
+import {FormBuilder} from "@angular/forms";
 
 @Component({
   template: `
@@ -25,21 +29,51 @@ import {jwtDecode} from "jwt-decode";
 })
 export class AccountComponent implements OnInit {
 
+  id: any;
   role: any;
   name: any;
   email: any;
+
   ngOnInit(): void {
     this.getUser()
   }
-  public getUser(){
+
+  constructor(public http: HttpClient, public state: State, public toastController: ToastController, public fb: FormBuilder) {
+  }
+
+  public getUser() {
     const token: any = sessionStorage.getItem("token");
 
-    const decodedToken  = jwtDecode(token);
+    const decodedToken = jwtDecode(token);
+    // @ts-ignore
+    this.id = decodedToken["Id"]!;
     // @ts-ignore
     this.name = decodedToken["Name"]!;
     // @ts-ignore
     this.email = decodedToken["Email"]!;
     // @ts-ignore
     this.role = decodedToken["IsAdmin"]!;
+  }
+
+  async UpdateUser() {
+    try {
+      //const observable = this.http.put<ResponseDto<User>>(environment.baseUrl + '/api/account/update/' + this.id, this.updateUserForm.value)
+      //const response = await firstValueFrom<ResponseDto<User>>(observable)
+      this.ngOnInit()
+      const toast = await this.toastController.create({
+        message: 'The user was successfully changed',
+        duration: 1233,
+        color: "success",
+      })
+      toast.present();
+    } catch (e) {
+      const toast = await this.toastController.create({
+        message: 'The user was unsuccessfully changed',
+        duration: 1233,
+        color: "danger"
+
+      })
+      toast.present();
+    }
   }
 }

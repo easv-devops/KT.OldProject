@@ -21,4 +21,8 @@ export class ProductsService {
     return this.http.get<ResponseDto<Avatar[]>>(environment.baseUrl + "/avatar/all")
   }
 
+  public getAllDeletedProducts(){
+    return this.http.get<ResponseDto<Avatar[]>>(environment.baseUrl + "/avatar/allDeleted")
+  }
+
 }

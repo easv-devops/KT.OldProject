@@ -26,6 +26,16 @@ public class AvatarRepository
         }
     }
     
+    public IEnumerable<AvatarModel> GetAllDeletedAvatars()
+    {
+        var sql = @"SELECT * FROM webshop.avatar where deleted=true ORDER BY avatar_id;";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return conn.Query<AvatarModel>(sql);
+        }
+    }
+    
     /*
      * Creates a new avatar in the database.
      */
@@ -67,6 +77,16 @@ RETURNING *";
        
         using (var conn = _dataSource.OpenConnection())
         {
+            conn.QueryFirst<AvatarModel>(sql, new { avatar_id });
+        }
+    }
+
+    public void enableAvatar(int avatar_id)
+    {
+        var sql = @"UPDATE webshop.avatar SET deleted = false WHERE avatar_id = @avatar_id RETURNING*;";
+
+        using (var conn = _dataSource.OpenConnection())
+        { 
             conn.QueryFirst<AvatarModel>(sql, new { avatar_id });
         }
     }

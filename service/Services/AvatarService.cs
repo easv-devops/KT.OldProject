@@ -27,9 +27,19 @@ public class AvatarService
             Console.WriteLine(e);
             throw new ValidationException("Error in getting all  Avatars");
         }
-        
-        
-       
+    }
+    
+    public IEnumerable<AvatarModel> GetAllDeletedAvatars()
+    {
+        try
+        {
+            return _avatarRepository.GetAllDeletedAvatars();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new ValidationException("Error in getting all deleted Avatars");
+        }
     }
     
     /*
@@ -41,16 +51,11 @@ public class AvatarService
         if (!ReferenceEquals(_avatarRepository.CheckIfNameExist(avatar.avatar_name), null))
             throw new ValidationException("Already exists");
         
-        try
-            {
+        try {
                 return _avatarRepository.CreateAvatar(avatar);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw new ValidationException("Error in creating an Avatar");
-            }
+        }catch (Exception e) { throw new ValidationException("Error in creating an Avatar");
         }
+    }
         
     
     /*
@@ -58,7 +63,6 @@ public class AvatarService
      */
     public AvatarModel UpdateAvatar(int avatarId, AvatarModel avatar)
     {
-      
         try
         {
             return _avatarRepository.UpdateAvatar(avatarId,avatar);
@@ -68,8 +72,6 @@ public class AvatarService
             Console.WriteLine(e);
             throw new ValidationException("Error in updating an Avatar");
         }
-        
-        
     }
     
     /*
@@ -85,6 +87,19 @@ public class AvatarService
         {
             Console.WriteLine(e);
             throw new ValidationException("Error in deleting an Avatar");
+        }
+    }
+
+    public void enableAvatar(int avatar_id)
+    {
+        try
+        {
+           _avatarRepository.enableAvatar(avatar_id);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new ValidationException("Error while enabling an avatar");
         }
     }
 

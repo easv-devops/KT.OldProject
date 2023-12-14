@@ -30,6 +30,17 @@ public class AvatarController : Controller
         };
     }
     
+    [HttpGet]
+    [Route("/avatar/allDeleted")]
+    public ResponseDto GetAllDeletedAvatars()
+    {
+        return new ResponseDto()
+        {
+            MessageToClient = "Successfully got all deleted avatars",
+            ResponseData =  _avatarService.GetAllDeletedAvatars()
+        };
+    }
+    
     /*
      * Creates a new avatar in the database. 
      */
@@ -71,6 +82,17 @@ public class AvatarController : Controller
         return  new ResponseDto()
         {
             MessageToClient = "Succesfully deleted avatar"
+        };
+    }
+
+    [HttpDelete]
+    [Route("/avatar/enable/{avatar_id}")]
+    public object enableAvatar([FromRoute] int avatar_id)
+    {
+        _avatarService.enableAvatar(avatar_id);
+        return new ResponseDto()
+        {
+            MessageToClient = "Successfully enabled an avatar",
         };
     }
     
