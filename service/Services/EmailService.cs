@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Net;
 using infrastructure.DataModels;
 using infrastructure.Repositories;
 using MimeKit;
@@ -78,13 +79,19 @@ public class EmailService
         {
             string fileName = avatar.avatar_name + ".png";
             webClient.DownloadFile("https://robohash.org/"+fileName, Path.Combine(fileName));   
+            if (File.Exists(Path.Combine("filename")))
             builder.Attachments.Add (Path.Combine(fileName));
-                
+            else
+            {
+                throw new ValidationException("Something vent wrong with the attachment. Contact user services");
+            }    
         }   
-            
-        builder.Attachments.Add (Path.Combine("invoice.pdf"));
+        
+        if (File.Exists(Path.Combine("invoice.pdf"))) //Metoden kan kaldes uden at pdf filen eksisterer fra Swagger.
+        {   builder.Attachments.Add (Path.Combine("invoice.pdf"));
         message.Body = builder.ToMessageBody();
-
+        }
+        
 
        foreach (AvatarModel avatar in _emailRespository.GetOrdersAvatars(order_id))
        {
