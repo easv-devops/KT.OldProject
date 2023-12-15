@@ -84,7 +84,7 @@ export class LoginComponent {
     console.log(this.form.getRawValue());
     let dto = {email: this.form.get('email')?.value,
     password: this.form.get('password')?.value}
-    const response = await firstValueFrom(this.http.post<ResponseDto<TokenResponse>>('/api/account/login', dto));
+    const response = await firstValueFrom(this.http.post<ResponseDto<TokenResponse>>(environment.baseUrl + '/api/account/login', dto));
     this.token.setToken(response.responseData.token!);
     (await this.toast.create({
       message: "Welcome back!",

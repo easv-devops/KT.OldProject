@@ -108,7 +108,7 @@ export class RegisterComponent {
   async submit() {
     try {
       if (this.form.invalid) return;
-      await firstValueFrom(this.http.post<ResponseDto<any>>( '/api/account/register', this.form.value));
+      await firstValueFrom(this.http.post<ResponseDto<any>>(environment.baseUrl + '/api/account/register', this.form.value));
 
       (await this.toast.create({
         message: "Thank you for signing up!",
