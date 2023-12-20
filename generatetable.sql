@@ -15,12 +15,14 @@ create table webshop.users
     admin      VARCHAR(20)      NOT NULL DEFAULT 'Non-admin'
 );
 
+INSERT INTO webshop.users (full_name, email, admin)
+VALUES ('admin', 'admin@hotmail.com', 1); 
 create table webshop.avatar
 (
     avatar_id     SERIAL PRIMARY KEY,
     avatar_name  VARCHAR(50)  NOT NULL,
     avatar_price        integer   not NULL,
-    information VARCHAR(300),
+    information VARCHAR(500),
     deleted bool not null DEFAULT FALSE
 );
 
