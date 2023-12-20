@@ -14,9 +14,8 @@ create table webshop.users
     email      VARCHAR(50)  NOT NULL UNIQUE,
     admin      VARCHAR(20)      NOT NULL DEFAULT 'Non-admin'
 );
-
 INSERT INTO webshop.users (full_name, email, admin)
-VALUES ('admin', 'admin@hotmail.com', 1); 
+VALUES ('admin', 'admin@hotmail.com', TRUE);
 create table webshop.avatar
 (
     avatar_id     SERIAL PRIMARY KEY,
@@ -71,3 +70,6 @@ create table webshop.password_hash
     salt      VARCHAR(180) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES webshop.users (user_id)
 );
+SELECT hash, salt
+FROM webshop.password_hash
+WHERE user_id = 1;
