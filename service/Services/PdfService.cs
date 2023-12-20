@@ -26,8 +26,8 @@ public class PdfService
     public void CreatePdf(int order_id)
     {
 
-        try
-        {
+      //  try
+       // {
             QuestPDF.Settings.License = LicenseType.Community;
             _order_nr = order_id;
             user = _emailRespository.GetOrdersUser(order_id);
@@ -53,11 +53,11 @@ public class PdfService
 
                 )
                 .GeneratePdf("invoice.pdf");
-        }
-        catch (Exception e)
-        {
-            throw new ValidationException("Error in sending pdf");
-        }
+      //  }
+       // catch (Exception e)
+       // {
+       //     throw new ValidationException("Error in sending pdf");
+   //     }
        
 
 
@@ -66,33 +66,59 @@ public class PdfService
     
 void Header(IContainer container)
 {
-    container
-        .Row(row =>
-        {
-            row.Spacing(25);
-            row.ConstantItem(100)
-                .Image(Path.Combine("webshop.png"));
-            
-            row.RelativeItem().Column(column =>
+    
+  
+        container
+            .Row(row =>
             {
-                column.Item()
-                    .Text("Invoice")
-                    .FontSize(36)
-                    .FontColor(Colors.Orange.Medium)
-                    .SemiBold();
+                try
+                {
+                    //  byte[] imageData = File.ReadAllBytes(Path.Combine("webshop.png"));
+                    row.Spacing(25);
+                    row.ConstantItem(100)
+                        //.Image(imageData); //virker ikke med Azure men virker lokalt
+                        .Text("");
+                }
+                catch (Exception e)
+                {
+
+                    throw new ValidationException("Billede problemer");
+                }
+                
+                   
+           
+                
+               
+                row.RelativeItem().Column(column =>
+                {
+                   
+                    column.Item()
+                        .Text("Invoice")
+                        .FontSize(36)
+                        .FontColor(Colors.Orange.Medium)
+                        .SemiBold();
 
                
                     column.Item().Text("Invoice for " + user.full_name);
                     column.Item().Text("Getting order no: " + _order_nr);
+                    
+             
+                    
+                });
             });
-        });
+   
+    
+    
+   
 }
 
 
 
 void Content(IContainer container)
 {
-    container
+    
+   
+ container
         .PaddingVertical(25)
         .Table(table =>
         {
@@ -128,7 +154,11 @@ void Content(IContainer container)
                 
                 table.Cell().Text(i);
                 table.Cell().Text("avatar.avatar_name " +i);
-                table.Cell().Image(fileName).FitArea();
+              
+           //     byte[] imageData = File.ReadAllBytes((fileName));
+                table.Cell()
+                    //.Image(imageData).FitArea();
+                    .Text("");
                 table.Cell().AlignRight().Text($"{avatar.avatar_price:F2} $");    
             }
 
@@ -147,6 +177,9 @@ void Content(IContainer container)
     }   
     
     
+   
+   
+    
     
 }
 
@@ -155,15 +188,17 @@ void Content(IContainer container)
 
  void Footer(IContainer container)
 {
-    container.AlignCenter().Text(text =>
-    {
-    text.DefaultTextStyle(x=>x.FontSize(16));
-    text.Span("Page Numbner ");
-    text.CurrentPageNumber();
-    text.Span(" out of ");
-    text.TotalPages();
-    });
     
+   
+        container.AlignCenter().Text(text =>
+        {
+            text.DefaultTextStyle(x=>x.FontSize(16));
+            text.Span("Page Numbner ");
+            text.CurrentPageNumber();
+            text.Span(" out of ");
+            text.TotalPages();
+        });
+   
     
     
 }
