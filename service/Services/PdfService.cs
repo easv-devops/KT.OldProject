@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using infrastructure.DataModels;
 using infrastructure.Repositories;
@@ -24,31 +25,40 @@ public class PdfService
     
     public void CreatePdf(int order_id)
     {
-        QuestPDF.Settings.License = LicenseType.Community;
-        _order_nr = order_id;
-         user = _emailRespository.GetOrdersUser(order_id);
+
+        try
+        {
+            QuestPDF.Settings.License = LicenseType.Community;
+            _order_nr = order_id;
+            user = _emailRespository.GetOrdersUser(order_id);
         
 
-        Document.Create(container =>
-                {
-                    container.Page(page =>
+            Document.Create(container =>
                     {
-                        page.Size(PageSizes.A4);
-                        page.Margin(2, Unit.Centimetre);
-                        page.DefaultTextStyle(x => x.FontSize(16));
+                        container.Page(page =>
+                        {
+                            page.Size(PageSizes.A4);
+                            page.Margin(2, Unit.Centimetre);
+                            page.DefaultTextStyle(x => x.FontSize(16));
 
 
-                        page.Header()
-                            .Element(Header); //Element er et refraktoringsværktøj, hvor man kalder betoden fra.
-                        page.Content().Element(Content);
-                        page.Footer().Element(Footer);
+                            page.Header()
+                                .Element(Header); //Element er et refraktoringsværktøj, hvor man kalder betoden fra.
+                            page.Content().Element(Content);
+                            page.Footer().Element(Footer);
 
-                    });
+                        });
 
-                }
+                    }
 
-            )
-            .GeneratePdf("invoice.pdf");
+                )
+                .GeneratePdf("invoice.pdf");
+        }
+        catch (Exception e)
+        {
+            throw new ValidationException("Error in sending pdf");
+        }
+       
 
 
     }
