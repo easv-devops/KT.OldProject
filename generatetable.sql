@@ -15,7 +15,7 @@ create table webshop.users
     admin      VARCHAR(20)      NOT NULL DEFAULT 'Non-admin'
 );
 INSERT INTO webshop.users (full_name, email, admin)
-VALUES ('admin', 'admin@hotmail.com', TRUE);
+VALUES ('admin', 'admin@admin.dk', 'Admin');
 create table webshop.avatar
 (
     avatar_id     SERIAL PRIMARY KEY,
@@ -70,6 +70,5 @@ create table webshop.password_hash
     salt      VARCHAR(180) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES webshop.users (user_id)
 );
-SELECT hash, salt
-FROM webshop.password_hash
-WHERE user_id = 1;
+INSERT INTO webshop.password_hash (user_id, hash, salt)
+VALUES (1, 'ds95KY9aKPLc2uiQkK2YpWWmzCk7rKsjASNIgBjH8Fa7MCqOl2eiJvJurRQ9xnXX1RywgUu4EeFBmb/T5cxL1d7sjPip6MoQjAg8bwGrtVxpc3b+xNACs84ewlFBS2Kg/GJ7bRH8/eOG5MeniE5XGP/0H0SmE8RZr1yUAopZavuDwkW9HGhB4LzTwDZ8fzoGe0lB5rBQKgAMcFu5sQGhAHGJ5noWoe256jWahbvYPTFnQvSNhwu5teSRkkawx5cglX6X6TldG+8Q+A33brv61RBcmKhtGazoY6WN3acULvcOwF92xzcuI6ZtWJ2spmCXy062RdIL8vIT+7VmxxWp/g==', 'jMIG5H7Iik/W/4Dy0ZCr/BmCfbg0fCUmg4DnIdguPMAf4p6q85QvjaHonvg2+91B0HxW0ei9m+NSAnOA+AjrqKldOLV/beNlJDtY7gX7UOEAY+gV2adashri8m08qAGcBXM5TXHLX9toOHLa/QTvqoKCa7ySboyxXjnNFIG8fU0=')
