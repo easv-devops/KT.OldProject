@@ -27,7 +27,6 @@ public class LoginController : ControllerBase
     [Route("/api/account/login")]
     public ResponseDto Login([FromBody] LoginModel model)
     {
-        Console.WriteLine("LOGIN CREDENTIals!" + model.password +"and " +   model.email);
         UserModel user = _service.Authenticate(model);
             var token = _service.GenerateToken(user);
             

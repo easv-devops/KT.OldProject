@@ -67,12 +67,17 @@ export class ProductsComponent implements OnInit {
 
   onSearchTextEntered(searchValue: string) {
     this.searchText = searchValue;
-    console.log(this.searchText)
   }
 
-  saveData(avatar: Avatar){
+  async saveData(avatar: Avatar){
     this.cartArray.push(avatar);
     sessionStorage.setItem("cart", JSON.stringify(this.cartArray))
+    const toast = await this.toastController.create({
+      message: "Item added to your cart",
+      duration: 1233,
+      color: "success"
+    })
+    toast.present();
   }
 
   ngOnInit(): void {
@@ -138,9 +143,6 @@ export class ProductsComponent implements OnInit {
     const token: any = sessionStorage.getItem("token");
 
     const decodedToken  = jwtDecode(token);
-
-    // @ts-ignore
-    console.log(decodedToken["IsAdmin"]!)
 
     // @ts-ignore
     this.role = decodedToken["IsAdmin"]!;

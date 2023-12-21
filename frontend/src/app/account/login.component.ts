@@ -61,9 +61,13 @@ export class LoginComponent {
     password: ['', Validators.required],
   });
 
-  get email() { return this.form.controls.email; }
-  get password() { return this.form.controls.password; }
+  get email() {
+    return this.form.controls.email;
+  }
 
+  get password() {
+    return this.form.controls.password;
+  }
 
 
   constructor(
@@ -72,20 +76,20 @@ export class LoginComponent {
     private readonly router: Router,
     private readonly toast: ToastController,
     private readonly token: TokenService,
-    private service: AccountService)
-  {
+    private service: AccountService) {
 
   }
-
 
   async submit() {
     if (this.form.invalid) return;
 
-    console.log(this.form.getRawValue());
-    let dto = {email: this.form.get('email')?.value,
-    password: this.form.get('password')?.value}
+    let dto = {
+      email: this.form.get('email')?.value,
+      password: this.form.get('password')?.value
+    }
     const response = await firstValueFrom(this.http.post<ResponseDto<TokenResponse>>(environment.baseUrl + '/api/account/login', dto));
     this.token.setToken(response.responseData.token!);
+    this.router.navigate(['/products']);
     (await this.toast.create({
       message: "Welcome back!",
       color: "success",
