@@ -87,12 +87,8 @@ export class CartComponent  implements OnInit {
       avatar: this.myArr
     }
 
-    console.log(" Det her er noget lort " + dto.userId);
-
     var req = this.http.post<any>(environment.baseUrl+'/orderWithProducts', dto);
      await firstValueFrom<any>(req);
-
-
 
     (await this.toast.create({
       message: 'Order Confirmed! Check your e-mail!',
@@ -114,9 +110,6 @@ export class CartComponent  implements OnInit {
     const token: any = sessionStorage.getItem("token");
 
     const decodedToken  = jwtDecode(token);
-
-    // @ts-ignore
-    console.log(decodedToken["Id"]!)
 
     // @ts-ignore
     return decodedToken["Id"]!;

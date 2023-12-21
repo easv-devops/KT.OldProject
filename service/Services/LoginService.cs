@@ -105,7 +105,7 @@ public class LoginService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.StackTrace);
+            Console.WriteLine(e);
             throw new ValidationException("Error in updating a user");
         }
     }

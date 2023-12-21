@@ -19,7 +19,7 @@ import {TokenService} from "src/services/token.service";
                           <ion-icon slot="end" name="log-in"></ion-icon>
                       </ion-button>
                       <ion-button fill="solid" [routerLink]="'/register'">
-                          Regiser
+                          Register
                       </ion-button>
                   </ng-template>
               </ion-buttons>
