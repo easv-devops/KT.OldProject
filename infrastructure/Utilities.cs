@@ -19,11 +19,3 @@ public class Utilities
             Uri.UserInfo.Split(':')[1],
             Uri.Port > 0 ? Uri.Port : 5432);
 }
-
-public class newclass
-{
-    public void makeWriteline()
-    {
-        Console.WriteLine(Utilities.ProperlyFormattedConnectionString);
-    }
-}
