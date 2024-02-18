@@ -8,7 +8,7 @@ public class NewTests
 {
 
     [Test]
-    public async Task test()
+    public void test()
     { 
         Assert.That(AvatarController.DoSomething(), Is.EqualTo("Hello World3"));
     }
