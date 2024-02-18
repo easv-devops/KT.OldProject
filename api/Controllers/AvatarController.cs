@@ -111,7 +111,7 @@ public class AvatarController : Controller
     }
 
     [Route("/avatar/NotGonnaHappen")]
-    public string DoSomething()
+    public static string DoSomething()
     {
         var x = 1;
         var y = 2;

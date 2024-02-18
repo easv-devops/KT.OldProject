@@ -6,17 +6,10 @@ namespace Tests;
 [TestFixture]
 public class NewTests
 {
-    
-    private readonly AvatarController _avatarController;
-    
-    public NewTests(AvatarController avatarController)
-    {
-        _avatarController = avatarController;
-    }
 
     [Test]
-    public void test()
+    public async Task test()
     { 
-        Assert.That(_avatarController.DoSomething(), Is.EqualTo("Hello World3"));
+        Assert.That(AvatarController.DoSomething(), Is.EqualTo("Hello World3"));
     }
 }
