@@ -70,7 +70,7 @@ RETURNING *";
      */
     public void DeleteAvatar(int avatar_id)
     {
-     /**   
+        
         var sql =
             @"UPDATE webshop.avatar SET deleted = true where avatar_id = @avatar_id
 RETURNING *"; 
@@ -78,7 +78,7 @@ RETURNING *";
         using (var conn = _dataSource.OpenConnection())
         {
             conn.QueryFirst<AvatarModel>(sql, new { avatar_id });
-        }*/
+        }
     }
 
     public void enableAvatar(int avatar_id)
