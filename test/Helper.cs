@@ -12,7 +12,7 @@ public static class Helper
     static Helper()
     {
         var rawConnectionString =
-            "postgres://wvgldqtr:gIgEzwsDlIrYu1XRlg76RLRAVoBH6s1f@cornelius.db.elephantsql.com/wvgldqtr"; //Environment.GetEnvironmentVariable("pgconn");
+            Environment.GetEnvironmentVariable("pgconn");
         try
         {
             var uri = new Uri(rawConnectionString);
