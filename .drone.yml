@@ -6,7 +6,7 @@ steps:
   - name: code-analysis
     image: boulundeasv/dotnet-sdk-with-java
     environment:
-      PGCONN:
+      pgconn:
         from_secret: pgconn
     commands:
       - echo "pgconn=$pgconn" >> api/appsettings.test.json  # Provide the connection string to your tests
