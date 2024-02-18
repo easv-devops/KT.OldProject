@@ -3,16 +3,11 @@ type: docker
 name: integration
 
 steps:
-  - name: print-secret
-    image: boulundeasv/dotnet-sdk-with-java
-    commands:
-      - echo "PGCONN Secret: $pgconn"
-
   - name: code-analysis
     image: boulundeasv/dotnet-sdk-with-java
     environment:
       PGCONN:
-        from_secret: pgconn
+        from_secret: pgconn  # This line is likely causing the error
     commands:
       - echo "PGCONN=$PGCONN"  # Debug line to check if the variable is set correctly
       - echo "DB_CONNECTION_STRING=$PGCONN" >> api/appsettings.test.json  # Provide the connection string to your tests
