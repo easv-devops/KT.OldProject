@@ -11,25 +11,31 @@ public static class Helper
 
     static Helper()
     {
-        var rawConnectionString =
-            Environment.GetEnvironmentVariable("pgconn");
+        var rawConnectionString = Environment.GetEnvironmentVariable("pgconn");
         try
         {
+            if (string.IsNullOrEmpty(rawConnectionString))
+            {
+                throw new Exception("PostgreSQL connection string is empty or not set.");
+            }
+
             var uri = new Uri(rawConnectionString);
             var properlyFormattedConnectionString = string.Format(
                 "Server={0};Database={1};User Id={2};Password={3};Port={4};Pooling=false;",
-                uri.Host, 
+                uri.Host,
                 uri.AbsolutePath.Trim('/'),
                 uri.UserInfo.Split(':')[0],
                 uri.UserInfo.Split(':')[1],
                 uri.Port > 0 ? uri.Port : 5432);
-            DataSource =
-                new NpgsqlDataSourceBuilder(properlyFormattedConnectionString).Build();
+            DataSource = new NpgsqlDataSourceBuilder(properlyFormattedConnectionString).Build();
             DataSource.OpenConnection().Close();
         }
         catch (Exception e)
         {
-            throw new Exception("Didnt get connection to database", e);
+            // Log or print additional details about the exception
+            Console.WriteLine($"Exception during initialization: {e.Message}");
+            Console.WriteLine($"Stack Trace: {e.StackTrace}");
+            throw new Exception("Failed to initialize Helper class. See exception details for more information.", e);
         }
     }
 
