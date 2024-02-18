@@ -153,6 +153,7 @@ public class UnitTestAvatar
     }
     
     // Test case for rejecting avatar update.
+    [TestCase(null, 0, null)]
     [TestCase(null, 200, null)]
     [TestCase("Lille", 0, null)]
     public async Task AvatarShouldRejectUpdate(string avatar_name, int avatar_price, string information)
