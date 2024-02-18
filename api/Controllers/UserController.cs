@@ -31,14 +31,14 @@ public class UserController : ControllerBase
      */
     [Route("api/get")]
     [HttpGet]
-    private AuthenticateModel GetCurrentUser()
+    private Object GetCurrentUser()
     {
         var identity = HttpContext.User.Identity as ClaimsIdentity;
 
         if (identity != null)
         {
             var userClaims = identity.Claims;
-
+            
             return new AuthenticateModel()
             {
                 full_name = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value,
@@ -47,6 +47,6 @@ public class UserController : ControllerBase
                 user_id = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GivenName)?.Value
             };
         }
-        return null;
+        return new Exception("Failed to get current user");
     }
 }
