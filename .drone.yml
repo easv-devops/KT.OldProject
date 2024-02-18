@@ -1,8 +1,9 @@
 kind: pipeline
 type: docker
-name: OldProject
+name: oldProject
+
 steps:
 	- name: code-analysis
 	  image: mcr.microsoft.com/dotnet/sdk
 	  commands: 
-		  - dotnet build
+		  - cd api && dotnet build
