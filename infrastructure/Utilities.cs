@@ -5,8 +5,7 @@ public class Utilities
     /*
      * Private static readonly Uri instance initialized with the PostgreSQL connection string.
      */
-    private static readonly Uri Uri =
-        new(Environment.GetEnvironmentVariable("pgconn")!);
+    private static readonly Uri Uri = new(Environment.GetEnvironmentVariable("pgconn")!);
 
     /*
      * Publicly accessible properly formatted PostgreSQL connection string.
@@ -19,4 +18,12 @@ public class Utilities
             Uri.UserInfo.Split(':')[0],
             Uri.UserInfo.Split(':')[1],
             Uri.Port > 0 ? Uri.Port : 5432);
+}
+
+public class newclass
+{
+    public void makeWriteline()
+    {
+        Console.WriteLine(Utilities.ProperlyFormattedConnectionString);
+    }
 }
