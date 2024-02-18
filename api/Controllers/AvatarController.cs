@@ -110,6 +110,7 @@ public class AvatarController : Controller
         };
     }
 
+    [Route("/avatar/NotGonnaHappen")]
     public string DoSomething()
     {
         var x = 1;
