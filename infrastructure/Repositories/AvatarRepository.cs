@@ -19,7 +19,6 @@ public class AvatarRepository
     public IEnumerable<AvatarModel> GetAllAvatars()
     {
         var sql = @"SELECT * FROM webshop.avatar where deleted=false ORDER BY avatar_id;";
-        Console.WriteLine(sql);
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.Query<AvatarModel>(sql);
