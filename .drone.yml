@@ -4,7 +4,7 @@ name: integration
 
 steps:
   - name: code-analysis
-    image: boulund/dotnet-sdk-with-java
+    image: boulundeasv/dotnet-sdk-with-java
     commands:
       - dotnet sonarscanner begin /k:"easv-devops_KT.OldProject_AY28V3eNEVvRW2O60EAx" /d:sonar.host.url="http://sonar.setgo.dk:9000"  /d:sonar.token="sqp_390fcc672061c853f0cf54c066e3ff4f36206cee"
       - dotnet build
