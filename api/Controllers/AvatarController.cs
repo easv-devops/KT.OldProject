@@ -118,6 +118,6 @@ public class AvatarController : Controller
         var z = x + y;
         var number = z.ToString();
         var ello = "Hello World";
-        return ello + z;
+        return ello + number;
     }
 }

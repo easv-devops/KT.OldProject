@@ -17,6 +17,6 @@ public class NewTests
     [Test]
     public void test()
     { 
-        Assert.That(_avatarController.DoSomething(), Is.EqualTo("Hello World"));
+        Assert.That(_avatarController.DoSomething(), Is.EqualTo("Hello World3"));
     }
 }
