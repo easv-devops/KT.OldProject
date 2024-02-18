@@ -41,14 +41,13 @@ public class AvatarRepository
      */
     public AvatarModel CreateAvatar(AvatarModel avatar)
     {
-        return null;
-        /**   var sql =
+           var sql =
                @" INSERT INTO webshop.avatar (avatar_name, avatar_price, information,deleted) VALUES (@avatar_name, @avatar_price, @information, false) RETURNING *;";
 
            using (var conn = _dataSource.OpenConnection())
            {
                return conn.QueryFirst<AvatarModel>(sql, new { avatar_name=avatar.avatar_name, avatar_price=avatar.avatar_price, information=avatar.information});
-           }*/
+           }
     }
     
     /*
