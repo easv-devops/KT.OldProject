@@ -6,7 +6,6 @@ namespace Tests;
 public static class Helper
 {
     public static readonly NpgsqlDataSource DataSource;
-    //TEST
     public static readonly string ApiBaseUrl = "http://localhost:5000/";
 
     static Helper()
@@ -27,6 +26,9 @@ public static class Helper
                 uri.UserInfo.Split(':')[0],
                 uri.UserInfo.Split(':')[1],
                 uri.Port > 0 ? uri.Port : 5432);
+
+            Console.WriteLine($"Connecting to PostgreSQL with connection string: {properlyFormattedConnectionString}");
+
             DataSource = new NpgsqlDataSourceBuilder(properlyFormattedConnectionString).Build();
             DataSource.OpenConnection().Close();
         }
