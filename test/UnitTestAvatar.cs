@@ -214,4 +214,10 @@ public class UnitTestAvatar
             obj.MessageToClient.Should().Be("Succesfully deleted avatar");
         }
     }
+
+    [Test]
+    public void TestApiBase()
+    {
+        Assert.AreEqual("http://localhost:5000/", Helper.ApiBaseUrl);
+    }
 }
