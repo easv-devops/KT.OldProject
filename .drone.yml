@@ -1,7 +1,6 @@
 kind: pipeline
 type: docker
 name: OldProject
-
 steps:
 	- name: code-analysis
 	  image: boulundeasv/dotnet-sdk-with-java
