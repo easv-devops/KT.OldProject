@@ -11,6 +11,7 @@ public static class Helper
     static Helper()
     {
         var rawConnectionString = Environment.GetEnvironmentVariable("pgconn");
+        Console.WriteLine($"pgconn environment variable: {rawConnectionString}");
         try
         {
             if (string.IsNullOrEmpty(rawConnectionString))
