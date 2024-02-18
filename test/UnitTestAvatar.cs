@@ -218,6 +218,6 @@ public class UnitTestAvatar
     [Test]
     public void TestApiBase()
     {
-        Assert.AreEqual("http://localhost:5000/", Helper.ApiBaseUrl);
+        Assert.That(Helper.ApiBaseUrl, Is.EqualTo("http://localhost:5000/"));
     }
 }
