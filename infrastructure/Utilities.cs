@@ -5,7 +5,8 @@ public class Utilities
     /*
      * Private static readonly Uri instance initialized with the PostgreSQL connection string.
      */
-    private static readonly Uri Uri = new(Environment.GetEnvironmentVariable("pgconn")!);
+    private static readonly Uri Uri = 
+        new(Environment.GetEnvironmentVariable("pgconn")!);
 
     /*
      * Publicly accessible properly formatted PostgreSQL connection string.

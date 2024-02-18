@@ -109,9 +109,4 @@ public class AvatarController : Controller
             ResponseData =  _avatarService.GetAvatarInformation(avatar_id)
         };
     }
-
-    public string DoSomething()
-    {
-        return "Hello World";
-    }
 }
