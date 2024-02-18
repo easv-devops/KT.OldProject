@@ -3,6 +3,6 @@ type: docker
 name: OldProject
 steps:
 	- name: code-analysis
-	  image: boulundeasv/dotnet-sdk-with-java
+	  image: mcr.microsoft.com/dotnet/sdk
 	  commands: 
-		  -dotnet build
+		  - dotnet build
