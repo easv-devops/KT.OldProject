@@ -9,7 +9,7 @@ steps:
       PGCONN:
         from_secret: pgconn
     commands:
-      - echo "DB_CONNECTION_STRING=$PGCONN" >> api/appsettings.test.json  # Provide the connection string to your tests
+      - echo "pgconn=$pgconn" >> api/appsettings.test.json  # Provide the connection string to your tests
       - cat api/appsettings.test.json  # Debug line to display the content of the file
       - dotnet sonarscanner begin /k:"easv-devops_KT.OldProject_AY28V3eNEVvRW2O60EAx" /d:sonar.host.url="http://sonar.setgo.dk:9000" /d:sonar.token="sqp_390fcc672061c853f0cf54c066e3ff4f36206cee" /d:sonar.cs.vscodecoveragexml.reportsPaths=coverage.xml /d:sonar.qualitygate.wait=true
       - dotnet build --no-incremental
